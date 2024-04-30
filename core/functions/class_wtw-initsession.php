@@ -21,9 +21,9 @@ class wtw {
 	}	
 	
 	/* declare public $wtw variables */
-	public $version = '3.7.4';
+	public $version = '3.7.5';
 	public $dbversion = '1.2.22';
-	public $versiondate = '2023-11-29';
+	public $versiondate = '2024-04-30';
 	public $defaultbabylonversion = 'v6.x.x';
 	public $oldversion = '';
 	public $olddbversion = '';
@@ -715,6 +715,10 @@ class wtw {
 					} 
 				}
 				$zconn->close();
+				
+				
+				
+				
 				if ($zsetupstep == 3) { /* check for new install... previous Install with different prefix */
 					global $wtwdb;
 					$zresults = $wtwdb->query("select count(*) as scount 

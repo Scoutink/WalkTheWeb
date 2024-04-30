@@ -2296,7 +2296,7 @@ class wtwdb {
 		$zsuccess = false;
 		try {
 			if (defined('wtw_googleanalytics')) {
-				$zcurl=curl_init();
+/*				$zcurl=curl_init();
 				curl_setopt($zcurl, CURLOPT_URL,'http://www.google-analytics.com/collect/v=1&tid='.wtw_googleanalytics.'&cid=555&t=pageview&dp='.$zcurrentpage);
 				curl_setopt($zcurl, CURLOPT_CONNECTTIMEOUT, 2);
 				curl_setopt($zcurl, CURLOPT_RETURNTRANSFER, 1);
@@ -2304,7 +2304,7 @@ class wtwdb {
 				$zquery = curl_exec($zcurl);
 				curl_close($zcurl);
 				$zsuccess = true;
-			}
+*/			}
 		} catch (Exception $e) {
 			$this->serror("core-functions-class_wtwdb.php-trackPageView=".$e->getMessage());
 		}
