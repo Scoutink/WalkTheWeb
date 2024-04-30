@@ -517,6 +517,7 @@ WTWJS.prototype.processCSGAction = function(zcsgmoldname, zcsgmold, zmold, zcsga
 			zalttag = zmolddef.alttag.name;
 		}
 		znewmold.checkCollisions = zcheckcollisions;
+		znewmold.renderingGroupId = 1;
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_common.js-processCSGAction=' + ex.message);
 	} 
@@ -1482,7 +1483,7 @@ WTWJS.prototype.setExtendedGround = function () {
 		/* set physics on ground */
 		switch (WTW.physicsEngine) {
 			case 'havok':
-				var zgroundaggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
+//				var zgroundaggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
 				break;
 			case 'oimo':
 			case 'cannon':

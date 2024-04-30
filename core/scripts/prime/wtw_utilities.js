@@ -970,9 +970,11 @@ WTWJS.prototype.setCookie = function(zname, zvalue, zdays) {
 				zexpires = '; expires=' + zdate.toUTCString();
 			}
 			if (wtw_protocol == 'https://') {
-				document.cookie = zname + '=' + zvalue + zexpires + '; domain=' + wtw_domainname + ';SameSite=Strict;path=/;secure';
+//				document.cookie = zname + '=' + zvalue + zexpires + '; domain=' + wtw_domainname + ';SameSite=Strict;path=/;secure';
+				document.cookie = zname + '=' + zvalue + zexpires + '; domain=' + wtw_domainname + ';path=/;secure';
 			} else {
-				document.cookie = zname + 'non=' + zvalue + zexpires + ';SameSite=Strict;path=/';
+//				document.cookie = zname + 'non=' + zvalue + zexpires + ';SameSite=Strict;path=/';
+				document.cookie = zname + 'non=' + zvalue + zexpires + ';path=/';
 			}
 		} else if (zallowcookies == null) {
 			/* have not answered prompt yet, store possible cookies in an array */
@@ -1032,9 +1034,11 @@ WTWJS.prototype.deleteCookie = function(zname) {
 		zdate.setTime(zdate.getTime() - 2 * 24 * 60 * 60 * 1000);
 		var zexpires = '; expires=' + zdate.toUTCString();
 		if (wtw_protocol == 'https://') {
-			document.cookie = zname + '=' + zexpires + '; domain=' + wtw_domainname + ';SameSite=Strict;path=/;secure';
+//			document.cookie = zname + '=' + zexpires + '; domain=' + wtw_domainname + ';SameSite=Strict;path=/;secure';
+			document.cookie = zname + '=' + zexpires + '; domain=' + wtw_domainname + ';path=/;secure';
 		} else {
-			document.cookie = zname + 'non=' + zexpires + ';SameSite=Strict;path=/';
+//			document.cookie = zname + 'non=' + zexpires + ';SameSite=Strict;path=/';
+			document.cookie = zname + 'non=' + zexpires + ';path=/';
 		}
     } catch (ex) {
         WTW.log('core-scripts-prime-wtw_utilities.js-getCookie=' +ex.message);

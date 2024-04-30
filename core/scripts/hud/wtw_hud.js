@@ -366,6 +366,7 @@ WTWJS.prototype.hudMenuText = function(zmenu, zselectedid) {
 							zmenuitem.isPickable = true;
 							zmenuitem.isVisible = true;
 							zmenuitem.parent = zmenuitems;
+							zmenuitem.renderingGroupId = 3;
 							/* check to see if it closed before it finished loading */
 							zhud = WTW.getMeshOrNodeByID('hud-menuleft');
 							if (zhud == null) {

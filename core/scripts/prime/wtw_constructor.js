@@ -8,6 +8,8 @@
 var scene;
 var engine;
 var canvas;
+let havokInstance = null;
+let hk = null;
 
 function WTWJS() {
 

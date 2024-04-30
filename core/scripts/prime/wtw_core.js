@@ -350,9 +350,10 @@ WTWJS.prototype.initEnvironment = async function() {
 		} else {
 			WTW.doNotHandleContextLost = false;
 		}
-		
+
 //		engine = new BABYLON.Engine(canvas, true, {deterministicLockstep: false, lockstepMaxSteps: 4, doNotHandleContextLost: WTW.doNotHandleContextLost, stencil: true});
-		engine = new BABYLON.Engine(canvas, true);
+//		engine = new BABYLON.Engine(canvas, true);
+		engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: false, stencil: true, disableWebGL2Support: false });
 
 		/* add WalkTheWeb version to the console.log */
 		console.log('%c\r\n\r\nWalkTheWeb Open-Source 3D Internet\r\n' + wtw_versiontext + '\r\n', 'color:green;font-weight:bold;');
@@ -369,17 +370,17 @@ WTWJS.prototype.initEnvironment = async function() {
 		/* initialize scene */
 		scene = new BABYLON.Scene(engine);        
 		scene.name = 'WalkTheWeb';
-		scene.gravity = new BABYLON.Vector3(0, -WTW.init.gravity, 0);
-		
+
 		/* initialize physics engine if it is enabled */
 		switch (WTW.physicsEngine) {
 			case 'havok':
-				/* initialize Havok physics engine */
-				const zhavokinstance = await HavokPhysics();
-				// pass the engine to the plugin
-				const hk = new BABYLON.HavokPlugin(true, zhavokinstance);
-				// enable physics in the scene with a gravity
-				scene.enablePhysics(scene.gravity, hk);
+				if (WTW.babylonVersion == 'v6.x.x') {
+					/* initialize Havok physics engine */
+					HavokPhysics().then((havok) => {
+						/* Havok is now available */
+						havokInstance = havok;
+					});
+				}
 				break;
 			case 'cannon':
 				var zphysicsplugin = new BABYLON.CannonJSPlugin();
@@ -388,6 +389,9 @@ WTWJS.prototype.initEnvironment = async function() {
 			case 'oimo':
 				var zoimo = new BABYLON.OimoJSPlugin(undefined, OIMO);
 				scene.enablePhysics(scene.gravity, zoimo);
+				break;
+			default:
+				scene.gravity = new BABYLON.Vector3(0, -WTW.init.gravity, 0);
 				break;
 		}
 		
@@ -456,17 +460,26 @@ WTWJS.prototype.initEnvironment = async function() {
 		
 		/* create the extended ground that never ends while the avatar walks */
 		WTW.setExtendedGround();
-		
+
+		if (WTW.physicsEngine == 'havok' && WTW.babylonVersion == 'v6.x.x') {
+			/* initialize Havok physics engine */
+			havokInstance = await HavokPhysics();
+			hk = new BABYLON.HavokPlugin(true, havokInstance);
+//			scene.enablePhysics(new BABYLON.Vector3(0, -WTW.init.gravity, 0), hk);
+			scene.gravity = new BABYLON.Vector3(0, -WTW.init.gravity, 0);
+//			var zgroundaggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
+		}
+
 		/* start render cycle */
 		WTW.startRender();
-		
+
 		/* set moveAvatar function to execute on every frame */
 		var zcondition1 = new BABYLON.PredicateCondition(scene.actionManager, function () {
 			var ztest = true;
 			return ztest;
 		});
 		scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnEveryFrameTrigger, WTW.moveAvatar, zcondition1));
-
+		
 		/* set initial menubar names for community and building */
 		if (dGet('wtw_showcommunityname') != null) {
 			dGet('wtw_showcommunityname').innerHTML = 'HTTP3D Inc.';

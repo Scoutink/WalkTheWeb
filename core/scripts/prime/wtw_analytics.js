@@ -81,7 +81,7 @@ WTWJS.prototype.trackPageView = async function(zactionzoneind, zdistancename) {
 		}
 		if (zanalyticsid != '' && zanalyticsid != undefined) {
 			var zsrc = '';
-			switch (zitem) {
+/*			switch (zitem) {
 				case 'community':
 					if (zdistancename == 'extreme') {
 						zsrc = '/core/handlers/community-loaded-extreme.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
@@ -113,7 +113,7 @@ WTWJS.prototype.trackPageView = async function(zactionzoneind, zdistancename) {
 			if (zsrc != '') {
 				WTW.getAsycnWebpage(zsrc, null);
 			}
-		} 
+*/		} 
 		
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_analytics.js-trackPageView=' + ex.message);

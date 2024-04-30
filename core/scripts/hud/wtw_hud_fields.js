@@ -317,7 +317,7 @@ WTWJS.prototype.hudAddSaveClose = function(zid, zpositionx, zpositiony, zpositio
 			zsavetext.id = 'hud-save-' + zid + '-text';
 			zsavetext.name = 'hud-save-' + zid + '-text';
 			zsavetext.parent = zmold;
-			zsavewriter.renderingGroupId = 3;
+			zsavetext.renderingGroupId = 3;
 			zsavetext.isPickable = false;
 
 			var zcancelwriter = new Writer('Cancel', zstyle);
