@@ -173,7 +173,7 @@ WTWJS.prototype.setCookie = function(zname, zvalue, zdays) {
 			document.cookie = zname + 'non=' + zvalue + zexpires + '; path=/';
 		}
     } catch (ex) {
-        WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-setCookie=' +ex.message);
+		WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-setCookie=' +ex.message);
     }
 }
 
@@ -201,7 +201,7 @@ WTWJS.prototype.getCookie = function(zname) {
 			zvalue = zvalue.replace('=','');
 		}
     } catch (ex) {
-        WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-getCookie=' +ex.message);
+		WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-getCookie=' +ex.message);
     }
 	return zvalue;
 }
@@ -323,7 +323,7 @@ WTWJS.prototype.showIDs = function(zdisplayname) {
 		znamemold.position.y = 16;
 		znamemold.billboardMode = 2;
     } catch (ex) {
-        WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-showIDs=' +ex.message);
+		WTW.log('plugins-wtw-avatars-scripts-wtwavatars_common.js-showIDs=' +ex.message);
     }
 }
 

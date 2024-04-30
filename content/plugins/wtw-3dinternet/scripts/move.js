@@ -974,7 +974,7 @@ WTW_3DINTERNET.prototype.toggleAvatarIDs = function() {
 			}
 		}
     } catch (ex) {
-        WTW.log('plugins:wtw-3dinternet:scripts-move.js-toggleAvatarIDs=' +ex.message);
+		WTW.log('plugins:wtw-3dinternet:scripts-move.js-toggleAvatarIDs=' +ex.message);
     }
 }
 
@@ -1029,7 +1029,7 @@ WTW_3DINTERNET.prototype.showAvatarIDs = function(zavatarname) {
 			}
 		}
     } catch (ex) {
-        WTW.log('plugins:wtw-3dinternet:scripts-move.js-showAvatarIDs=' +ex.message);
+		WTW.log('plugins:wtw-3dinternet:scripts-move.js-showAvatarIDs=' +ex.message);
     }
 }
 
@@ -1044,7 +1044,7 @@ WTW_3DINTERNET.prototype.activateMultiplayer = function() {
 			}
 		}
     } catch (ex) {
-        WTW.log('plugins:wtw-3dinternet:scripts-move.js-activateMultiplayer=' +ex.message);
+		WTW.log('plugins:wtw-3dinternet:scripts-move.js-activateMultiplayer=' +ex.message);
     }
 }
 
