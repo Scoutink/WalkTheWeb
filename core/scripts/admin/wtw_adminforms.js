@@ -599,6 +599,7 @@ WTWJS.prototype.openDashboardForm = async function(zshow) {
 				}
 				if (zshow) {
 					window.setTimeout(function() {
+						dGet('wtw_dashboard').style.height = (WTW.sizeY-100)+'px';
 						WTW.hide('wtw_loadingdashboard');
 						WTW.show('wtw_dashboard');
 					},500);

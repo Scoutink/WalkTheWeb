@@ -961,12 +961,12 @@ WTWJS.prototype.toggleDashboardBox = function(zelementname) {
 		var zdivarrow = dGet(zelementname + 'arrow');
 		if (zdiv != null) {
 			zdiv.style.transition = 'max-height 0.3s ease';
-			if (zdiv.style.maxHeight == '0px') {
-				zdiv.style.maxHeight = '300px';
+			if (zdiv.style.maxHeight == undefined || zdiv.style.maxHeight == '0px') {
 				zdiv.style.overflowY = 'auto';
 				if (zdivarrow != null) {
 					zdivarrow.innerHTML = '⯅';
 				}
+				zdiv.style.maxHeight = '400px';
 				WTW.show(zelementname);
 			} else {
 				zdiv.style.maxHeight = '0px';
