@@ -1598,6 +1598,20 @@ hr.wtw-menuhr {
 	margin:1%;
 	padding:0px;
 }
+.wtw-dashboard30 {
+	float:left;
+	min-width:340px;
+	width:29%;
+	margin:1%;
+	border:1px solid #c0c0c0;
+}
+.wtw-dashboard60 {
+	float:left;
+	min-width:530px;
+	width:58%;
+	margin:1%;
+	border:1px solid #c0c0c0;
+}
 .wtw-indent {
 	font-weight:normal;
 	margin-left:20px;

@@ -529,8 +529,6 @@ class wtwmenus {
 			$zmenu .= "	<div class='wtw-menuheading'>".$this->__('Movement Controls')."</div>\r\n";
 			$zmenu .= "	<div id='wtw_menucontrolsscroll' class='wtw-mainmenuscroll'>\r\n";
 			$zmenu .= "		<ul class='wtw-menuli'>\r\n";
-			$zmenu .= "			<li id='wtw_helpglassesdiv' class='wtw-submenublockli'>\r\n";
-			$zmenu .= "				<a href='https://www.walktheweb.com/shop/walktheweb-3d-glasses/' target='_blank'><img src='/content/system/images/3DGlassesFor5.png' alt='3D Glasses for $5' title='3D Glasses for $5' class='wtw-image95p' /></a /></li>\r\n";
 			$zmenu .= "			<li class='wtw-menuli' onclick=\"WTW.hide('wtw_helpkeyboarddiv');WTW.hide('wtw_helptouchdiv');WTW.hide('wtw_helpcameradiv');WTW.toggle('wtw_helpmousediv');WTW.showSettingsMenu('wtw_menucontrols');\"><img src='/content/system/images/menumouse.png' alt=\"".$this->__("Mouse Controls")."\" title=\"".$this->__('Movement Controls')."\" class='wtw-menulefticon' />".$this->__("Mouse Controls")."</li>\r\n";
 			$zmenu .= "			<li id='wtw_helpmousediv' class='wtw-submenublockli wtw-hide'>\r\n";
 			$zmenu .= "				<div class='wtw-smallcentered'>".$this->__('Mouse must be over 3D Scene to move.')."</div>\r\n";

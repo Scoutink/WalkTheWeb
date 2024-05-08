@@ -1,9 +1,15 @@
 <?php
-//header('Set-Cookie: cross-site-cookie=name; SameSite=Lax;');
+	$zanalyticsid = '';
+	if (isset($_GET['analyticsid']) && !empty($_GET['analyticsid'])) {
+		$zanalyticsid = $_GET['analyticsid'];
+	}
 ?>
 <html>
 <head>
 <title>Analytics - 3D Building Loaded at Near Distance</title>
+<?php if (!empty($_GET['analyticsid'])) { ?>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $zanalyticsid; ?>"></script>
 <script type="text/javascript">
 	function getQuerystring(zkey, zdefault) {
 		var zquery = "";
@@ -24,15 +30,14 @@
 	}
 	var zanalyticsid = getQuerystring('analyticsid', '');
 	if (zanalyticsid != '') {
-/*		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-		ga('create', zanalyticsid, 'auto');
-		ga('send', 'pageview');
-*/	}
+		gtag('config', zanalyticsid);
+	}
 </script>
+<?php } ?>
 </head>
 <body>
 Analytics - 3D Building Loaded at Near Distance
