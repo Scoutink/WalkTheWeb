@@ -201,8 +201,8 @@ WTW_3DINTERNET.prototype.openDashboardForm = async function(zshow) {
 					for (var i=0;i<zresponse.length;i++) {
 						if (zresponse[i] != null) {
 							if (i == 0) {
-								dGet('wtw_latestvideotitle').innerHTML = atob(zresponse[i].videotitle);
-								dGet('wtw_latestvideodetails').innerHTML = 'Presented by: ' + zresponse[i].presenter + ' on ' + WTW.formatDate(zresponse[i].updatedate) + '<br /><br />' + atob(zresponse[i].description);
+								dGet('wtw_latestvideotitle').innerHTML = zresponse[i].videotitle;
+								dGet('wtw_latestvideodetails').innerHTML = 'Presented by: ' + zresponse[i].presenter + ' on ' + WTW.formatDate(zresponse[i].updatedate) + '<br /><br />' + zresponse[i].description;
 								if (zresponse[i].videourl.indexOf('?v=') > -1) {
 									var zyoutubeid = zresponse[i].videourl.split('?v=')[1];
 									dGet('wtw_latestvideo').innerHTML = "<iframe width='100%' height='auto' src='https://www.youtube.com/embed/" + zyoutubeid + "?list=PLnMgA5ebbr8KXw9z5vp4E202e-RTKa9X-' frameborder='0' allowfullscreen style='min-height:350px;' title='WalkTheWeb Video' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'></iframe>";
