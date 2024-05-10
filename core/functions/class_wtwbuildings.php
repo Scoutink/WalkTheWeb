@@ -20,6 +20,25 @@ class wtwbuildings {
 		}
 	}
 	
+	public function getBuildingName($zbuildingid) {
+		/* get building name by id */
+		global $wtwhandlers;
+		$zbuildingname = '';
+		try {
+			$zresults = array();
+			$zresults = $wtwhandlers->query("
+				select buildingname 
+				from ".wtw_tableprefix."buildings 
+				where buildingid='".$zbuildingid."' limit 1");
+			foreach ($zresults as $zrow) {
+				$zbuildingname = $zrow['buildingname'];
+			}
+		} catch (Exception $e) {
+			$wtwhandlers->serror("core-functions-class_wtwbuildings.php-getBuildingName=".$e->getMessage());
+		}
+		return $zbuildingname;
+	}
+
 	public function buildingExist($zbuildingid) {
 		/* validate if a building id is found in the database */
 		global $wtwhandlers;

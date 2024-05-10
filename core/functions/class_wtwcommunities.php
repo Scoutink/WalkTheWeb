@@ -20,6 +20,25 @@ class wtwcommunities {
 		}
 	}
 	
+	public function getCommunityName($zcommunityid) {
+		/* get community name by id */
+		global $wtwhandlers;
+		$zcommunityname = '';
+		try {
+			$zresults = array();
+			$zresults = $wtwhandlers->query("
+				select communityname 
+				from ".wtw_tableprefix."communities 
+				where communityid='".$zcommunityid."' limit 1");
+			foreach ($zresults as $zrow) {
+				$zcommunityname = $zrow['communityname'];
+			}
+		} catch (Exception $e) {
+			$wtwhandlers->serror("core-functions-class_wtwcommunities.php-getCommunityName=".$e->getMessage());
+		}
+		return $zcommunityname;
+	}
+
 	public function communityExist($zcommunityid) {
 		/* check if a community id exists in the database */
 		global $wtwhandlers;

@@ -20,6 +20,25 @@ class wtwthings {
 		}
 	}
 	
+	public function getThingName($zthingid) {
+		/* get thing name by id */
+		global $wtwhandlers;
+		$zthingname = '';
+		try {
+			$zresults = array();
+			$zresults = $wtwhandlers->query("
+				select thingname 
+				from ".wtw_tableprefix."things 
+				where thingid='".$zthingid."' limit 1");
+			foreach ($zresults as $zrow) {
+				$zthingname = $zrow['thingname'];
+			}
+		} catch (Exception $e) {
+			$wtwhandlers->serror("core-functions-class_wtwthings.php-getThingName=".$e->getMessage());
+		}
+		return $zthingname;
+	}
+
 	public function thingExist($zthingid) {
 		/* validate if a thing id is found in the database */
 		global $wtwhandlers;
