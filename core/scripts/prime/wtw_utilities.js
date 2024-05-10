@@ -628,7 +628,7 @@ WTWJS.prototype.getWebpage = function(zurl, zcallback) {
 	}
 }
 
-WTWJS.prototype.getAsycnWebpage = function(zurl, zcallback) {
+WTWJS.prototype.getAsycnWebpage = function(zurl, zactionzoneind, zcallback) {
 	/* retrieves a full webpage content */
 	try {
 		return new Promise(function () {
@@ -810,6 +810,37 @@ WTWJS.prototype.closeIFrame = function() {
 		dGet('wtw_ibrowseframe').src = '/core/pages/loading.php';
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_utilities.js-closeIFrame=' + ex.message);
+	}
+}
+
+WTWJS.prototype.createIFrame = function(zurl, ziframeid) {
+	/* creates an iframe and opens a url in it */
+	try {
+		var iframe = null;
+		if (dGet(ziframeid) != null) {
+			iframe = dGet(ziframeid);
+		} else {
+			iframe = document.createElement('iframe');
+			iframe.id = ziframeid;
+			document.body.appendChild(iframe);
+		}
+		iframe.src = zurl;
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_utilities.js-createIFrame=' + ex.message);
+	}
+}
+
+WTWJS.prototype.removeIFrame = function(ziframeid) {
+	/* closes the iframe window frame */
+	try {
+		if (dGet(ziframeid) != null) {
+			var ziframe = dGet(ziframeid);
+			ziframe.src = '';
+			document.body.removeChild(ziframe);
+		}
+		
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_utilities.js-removeIFrame=' + ex.message);
 	}
 }
 

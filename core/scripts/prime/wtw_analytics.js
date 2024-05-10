@@ -22,7 +22,7 @@ WTWJS.prototype.checkAnalytics = function(zactionzoneind) {
 				} else if (zactionzonename == 'Normal - Load when near') {
 					WTW.trackPageView(zactionzoneind, 'near');
 				}
-				/* alternative is to add to que then process */
+				/* alternative is to add to queue then process */
 				/* WTW.queueAnalytics(zactionzoneind, 'extreme'); */
 			}
 		}
@@ -81,39 +81,39 @@ WTWJS.prototype.trackPageView = async function(zactionzoneind, zdistancename) {
 		}
 		if (zanalyticsid != '' && zanalyticsid != undefined) {
 			var zsrc = '';
-/*			switch (zitem) {
+			switch (zitem) {
 				case 'community':
 					if (zdistancename == 'extreme') {
-						zsrc = '/core/handlers/community-loaded-extreme.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/community-loaded-extreme.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else if (zdistancename == 'high') {
-						zsrc = '/core/handlers/community-loaded-high.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/community-loaded-high.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else {
-						zsrc = '/core/handlers/community-loaded-near.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/community-loaded-near.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					}
 					break;
 				case 'building':
 					if (zdistancename == 'extreme') {
-						zsrc = '/core/handlers/building-loaded-extreme.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/building-loaded-extreme.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else if (zdistancename == 'high') {
-						zsrc = '/core/handlers/building-loaded-high.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/building-loaded-high.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else {
-						zsrc = '/core/handlers/building-loaded-near.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/building-loaded-near.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					}
 					break;
 				case 'thing':
 					if (zdistancename == 'extreme') {
-						zsrc = '/core/handlers/thing-loaded-extreme.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/thing-loaded-extreme.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else if (zdistancename == 'high') {
-						zsrc = '/core/handlers/thing-loaded-high.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/thing-loaded-high.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					} else {
-						zsrc = '/core/handlers/thing-loaded-near.php?analyticsid=' + zanalyticsid + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
+						zsrc = '/core/handlers/thing-loaded-near.php?analyticsid=' + zanalyticsid + '&actionzoneind=' + zactionzoneind + '&communityid=' + zcommunityid + '&buildingid=' + zbuildingid + '&thingid=' + zthingid;
 					}
 					break;
 			} 
 			if (zsrc != '') {
-				WTW.getAsycnWebpage(zsrc, null);
+				WTW.createIFrame(zsrc, 'analyticsframe'+zactionzoneind);
 			}
-*/		} 
+		} 
 		
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_analytics.js-trackPageView=' + ex.message);
