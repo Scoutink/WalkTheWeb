@@ -1,7 +1,7 @@
 # WalkTheWeb (WTW)
 Demo 3D Website: https://3d.walktheweb.com
 
-Find me on Discord: https://discord.com/invite/MW7MG2t
+Find me on Discord: https://discord.gg/cvAwkXyeJY
 
 Open-Source 3D Internet Metaverse - 3D CMS (Content Management System) to Build Games and 3D Shopping Websites
 Invented and created by Aaron Dishno Ed.D. CIO and Founder of HTTP3D Inc. - WalkTheWeb
@@ -57,7 +57,7 @@ There are videos at: https://www.youtube.com/c/WalkTheWeb3d
 
 or watch me on http://walktheweb.tv     (WalkTheWeb on Twitch)
 
-or ask me a question or provide feedback on Discord: https://discord.com/invite/MW7MG2t
+or ask me a question or provide feedback on Discord: https://discord.gg/cvAwkXyeJY
 
 We welcome your participation - Want to help code WalkTheWeb (WTW)?? Build a Plugin for WTW?? Create 3D Models?? Quickly create custom 3D Stores for your customers?? Make Money??? Connect with me on Discord.
 
