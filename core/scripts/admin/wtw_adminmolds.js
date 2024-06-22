@@ -307,8 +307,36 @@ WTWJS.prototype.openMoldForm = async function(zmoldind, zshape, zwebtype, zsavep
 			} else if (zshape == 'image') {
 				dGet('wtw_tmoldimageind').value = '0';
 			} else if (zshape == 'tube') {
+				if (zmolds[zmoldind].paths.path1.length == 0) {
+					zmolds[zmoldind].paths.path1[0] = {
+						'x':0,
+						'y':0,
+						'z':0,
+						'sorder':0
+					};
+					zmolds[zmoldind].paths.path1[1] = {
+						'x':0,
+						'y':10,
+						'z':0,
+						'sorder':1
+					};
+				}
 				WTW.loadPointList(zmolds[zmoldind].paths.path1, 1);
 			} else if (zshape == 'line') {
+				if (zmolds[zmoldind].paths.path1.length == 0) {
+					zmolds[zmoldind].paths.path1[0] = {
+						'x':0,
+						'y':0,
+						'z':0,
+						'sorder':0
+					};
+					zmolds[zmoldind].paths.path1[1] = {
+						'x':0,
+						'y':10,
+						'z':0,
+						'sorder':1
+					};
+				}
 				WTW.loadPointList(zmolds[zmoldind].paths.path1, 1);
 			}
 			dGet('wtw_tmoldpositionz').focus();
@@ -355,15 +383,15 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		dGet('wtw_tmoldpath1points').value = '';
 		dGet('wtw_tmoldpath2points').value = '';
 		dGet('wtw_tmoldcoveringold').value = zmolddef.covering;
-		dGet('wtw_tmoldpositionx').value = zmolddef.position.x;
-		dGet('wtw_tmoldpositiony').value = zmolddef.position.y;
-		dGet('wtw_tmoldpositionz').value = zmolddef.position.z;
-		dGet('wtw_tmoldscalingx').value = zmolddef.scaling.x;
-		dGet('wtw_tmoldscalingy').value = zmolddef.scaling.y;
-		dGet('wtw_tmoldscalingz').value = zmolddef.scaling.z;
-		dGet('wtw_tmoldrotationx').value = zmolddef.rotation.x;
-		dGet('wtw_tmoldrotationy').value = zmolddef.rotation.y;
-		dGet('wtw_tmoldrotationz').value = zmolddef.rotation.z;
+		dGet('wtw_tmoldpositionx').value = WTW.formatNumber(zmolddef.position.x,2);
+		dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zmolddef.position.y,2);
+		dGet('wtw_tmoldpositionz').value = WTW.formatNumber(zmolddef.position.z,2);
+		dGet('wtw_tmoldscalingx').value = WTW.formatNumber(zmolddef.scaling.x,2);
+		dGet('wtw_tmoldscalingy').value = WTW.formatNumber(zmolddef.scaling.y,2);
+		dGet('wtw_tmoldscalingz').value = WTW.formatNumber(zmolddef.scaling.z,2);
+		dGet('wtw_tmoldrotationx').value = WTW.formatNumber(zmolddef.rotation.x,2);
+		dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zmolddef.rotation.y,2);
+		dGet('wtw_tmoldrotationz').value = WTW.formatNumber(zmolddef.rotation.z,2);
 		dGet('wtw_tmoldspecial1').value = zmolddef.scaling.special1;
 		dGet('wtw_tmoldspecial2').value = zmolddef.scaling.special2;
 		dGet('wtw_tmolduploadobjectid').value = zmolddef.objects.uploadobjectid;
@@ -417,18 +445,18 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 			dGet('wtw_tmoldsoundloop').checked = false;
 			dGet('wtw_tmoldvideoloop').checked = false;
 		}
-		dGet('wtw_tmoldsoundmaxdistance').value = zmolddef.sound.maxdistance;
-		dGet('wtw_tmoldvideomaxdistance').value = zmolddef.sound.maxdistance;
-		dGet('wtw_tmoldsoundrollofffactor').value = zmolddef.sound.rollofffactor;
-		dGet('wtw_tmoldsoundrefdistance').value = zmolddef.sound.refdistance;
+		dGet('wtw_tmoldsoundmaxdistance').value = WTW.formatNumber(zmolddef.sound.maxdistance,2);
+		dGet('wtw_tmoldvideomaxdistance').value = WTW.formatNumber(zmolddef.sound.maxdistance,2);
+		dGet('wtw_tmoldsoundrollofffactor').value = WTW.formatNumber(zmolddef.sound.rollofffactor,2);
+		dGet('wtw_tmoldsoundrefdistance').value = WTW.formatNumber(zmolddef.sound.refdistance,2);
 		dGet('wtw_tmoldsoundconeinnerangle').value = zmolddef.sound.coneinnerangle;
 		dGet('wtw_tmoldsoundconeouterangle').value = zmolddef.sound.coneouterangle;
 		dGet('wtw_tmoldsoundconeoutergain').value = zmolddef.sound.coneoutergain;
 		dGet('wtw_tmoldmaxheight').value = zmolddef.graphics.heightmap.maxheight;
-		dGet('wtw_tmolduoffset').value = zmolddef.graphics.uoffset;
-		dGet('wtw_tmoldvoffset').value = zmolddef.graphics.voffset;
-		dGet('wtw_tmolduscale').value = zmolddef.graphics.uscale;
-		dGet('wtw_tmoldvscale').value = zmolddef.graphics.vscale;
+		dGet('wtw_tmolduoffset').value = WTW.formatNumber(zmolddef.graphics.uoffset,2);
+		dGet('wtw_tmoldvoffset').value = WTW.formatNumber(zmolddef.graphics.voffset,2);
+		dGet('wtw_tmolduscale').value = WTW.formatNumber(zmolddef.graphics.uscale,2);
+		dGet('wtw_tmoldvscale').value = WTW.formatNumber(zmolddef.graphics.vscale,2);
 		dGet('wtw_tmoldopacity').value = zmolddef.opacity;
 		dGet('wtw_tmoldsubdivisions').value = zmolddef.subdivisions;
 		dGet('wtw_tmoldactionzoneid').value = zmolddef.actionzoneid;
@@ -476,281 +504,6 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		WTW.pluginsLoadMoldForm(zwebtype, dGet('wtw_tmoldshape').value, dGet('wtw_tmoldname').value);
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_adminmolds.js-loadMoldForm=' + ex.message);
-	}
-}
-
-WTWJS.prototype.loadPointList = function(zpatharray, zpathnumber) {
-	/* some molds use points (like lines, ribons, and tubes) */
-	/* this functions loads the points for a given mold form for editing */
-	try {
-		var zpointlist = 'wtw_pointlist1';
-		var zpathpoints = 'wtw_tmoldpath1points';
-		var zpathname = 'Path 1';
-		var zpointind = -1;
-		if (WTW.isNumeric(dGet('wtw_teditpointindex').value)) {
-			zpointind = Number(dGet('wtw_teditpointindex').value);
-		}
-		if (zpathnumber == 2) {
-			zpointlist = 'wtw_pointlist2';
-			zpathpoints = 'wtw_tmoldpath2points';
-			zpathname = 'Path 2';
-		}
-		dGet(zpointlist).innerHTML = "<hr /><h4>" + zpathname + " Points (x,y,z)</h4><div id='wtw_bpointadd-' class='wtw-menulevel00 wtw-center' onmousedown='WTW.addPoint(this);' >Add Point</div>";
-		if (zpatharray != null) {
-			if (zpatharray.length > 0) {
-				for (var i=0; i < zpatharray.length;i++) {
-					if (zpatharray[i] != null) {
-						if (zpointind == i) {
-							dGet(zpointlist).innerHTML += "<div id='wtw_bpointedit-" + i + "' class='wtw-menulevel0selected wtw-center' onmousedown='WTW.editPoint(this);'><span style='font-size:.8em;color:#c0c0c0;'>(" + zpatharray[i].x + ", " + zpatharray[i].y + ", " + zpatharray[i].z + ")</span> Edit</div>";
-						} else {
-							dGet(zpointlist).innerHTML += "<div id='wtw_bpointedit-" + i + "' class='wtw-menulevel0 wtw-center' onmousedown='WTW.editPoint(this);'><span style='font-size:.8em;color:#c0c0c0;'>(" + zpatharray[i].x + ", " + zpatharray[i].y + ", " + zpatharray[i].z + ")</span> Edit</div>";
-						}
-						dGet(zpointlist).innerHTML += "<div id='wtw_bpointadd-" + i + "' class='wtw-menulevel00 wtw-center' onmousedown='WTW.addPoint(this);'>Add Point</div>";
-					}
-				}
-			}
-			dGet(zpathpoints).value = JSON.stringify(zpatharray);
-		} else {
-			dGet(zpathpoints).value = '';
-		}
-		dGet(zpointlist).innerHTML += '<hr /><br />';
-	} catch (ex) {
-		WTW.log('core-scripts-admin-wtw_adminmolds.js-loadPointList=' + ex.message);
-	}
-}
-
-WTWJS.prototype.deletePoint = function() {
-	/* delete a point from a mold (lines, ribbons, and tubes) */
-	try {
-		var zpointind = -1;
-		var zmoldind = -1;
-		var zmolds = null;
-		switch (dGet('wtw_tmoldwebtype').value) {
-			case 'community':
-				zmolds = WTW.communitiesMolds;
-				break;
-			case 'building':
-				zmolds = WTW.buildingMolds;
-				break;
-			case 'thing':
-				zmolds = WTW.thingMolds;
-				break;
-		}
-		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
-			zmoldind = Number(dGet('wtw_tmoldind').value);
-		}
-		if (WTW.isNumeric(dGet('wtw_teditpointindex').value)) {
-			zpointind = Number(dGet('wtw_teditpointindex').value);
-		}
-		if (zmolds[zmoldind] != null && zpointind > -1) {
-			if (zmolds[zmoldind].paths.path1 != null) {
-				if (zmolds[zmoldind].paths.path1[zpointind] != null) {
-					zmolds[zmoldind].paths.path1.splice(zpointind, 1);
-				}
-				for (var i=0; i < zmolds[zmoldind].paths.path1.length;i++) {
-					if (zmolds[zmoldind].paths.path1[i] != null) {
-						zmolds[zmoldind].paths.path1[i].sorder = i;
-					}
-				}
-			}
-		}
-		dGet('wtw_teditpointindex').value = '';
-		WTW.setNewMold();
-	} catch (ex) {
-		WTW.log('core-scripts-admin-wtw_adminmolds.js-deletePoint=' + ex.message);
-	}
-}
-
-WTWJS.prototype.editPoint = function(zobj) {
-	/* edit an existing point for a mold (lines, ribbons, and tubes) */
-	try {
-		dGet('wtw_tpointpositionx').value = '';
-		dGet('wtw_tpointpositiony').value = '';
-		dGet('wtw_tpointpositionz').value = '';
-		var zmoldind = -1;
-		var zmolds = null;
-		switch (dGet('wtw_tmoldwebtype').value) {
-			case 'community':
-				zmolds = WTW.communitiesMolds;
-				break;
-			case 'building':
-				zmolds = WTW.buildingMolds;
-				break;
-			case 'thing':
-				zmolds = WTW.thingMolds;
-				break;
-		}
-		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
-			zmoldind = Number(dGet('wtw_tmoldind').value);
-		}
-		if (zobj != null && zmolds != null) {
-			if (zobj.id.indexOf('-') > -1 && zmolds[zmoldind] != null) {
-				var znamepart = zobj.id.split('-');
-				if (znamepart[2] != null) {
-					dGet('wtw_teditpointindex').value = znamepart[2];
-					var zpointind = -1;
-					if (WTW.isNumeric(znamepart[2])) {
-						zpointind = Number(znamepart[2]);
-					}
-					if (zmolds[zmoldind].paths.path1[zpointind] != null) {
-						dGet('wtw_tpointpositionx').value = zmolds[zmoldind].paths.path1[zpointind].x;
-						dGet('wtw_tpointpositiony').value = zmolds[zmoldind].paths.path1[zpointind].y;
-						dGet('wtw_tpointpositionz').value = zmolds[zmoldind].paths.path1[zpointind].z;
-						
-						WTW.show('wtw_pointeditdiv');
-					}
-				}
-			}
-		} 
-	} catch (ex) {
-		WTW.log('core-scripts-admin-wtw_adminmolds.js-editPoint=' + ex.message);
-	}
-}
-
-WTWJS.prototype.addPoint = function(zobj) {
-	/* add a new point for a mold (lines, ribbons, and tubes) */
-	try {
-		var zmoldind = -1;
-		var zmolds = null;
-		switch (dGet('wtw_tmoldwebtype').value) {
-			case 'community':
-				zmolds = WTW.communitiesMolds;
-				break;
-			case 'building':
-				zmolds = WTW.buildingMolds;
-				break;
-			case 'thing':
-				zmolds = WTW.thingMolds;
-				break;
-		}
-		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
-			zmoldind = Number(dGet('wtw_tmoldind').value);
-		}
-		if (zobj != null && zmolds != null) {
-			if (zobj.id.indexOf('-') > -1 && zmolds[zmoldind] != null) {
-				var zpointind = -1;
-				var znamepart = zobj.id.split('-');
-				if (znamepart[2] != null) {
-					if (WTW.isNumeric(znamepart[2])) {
-						zpointind = Number(znamepart[2]);
-					}
-				}
-				if (zmolds[zmoldind].paths.path1 != null) {
-					var zx = null;
-					var zy = null;
-					var zz = null;
-					var zx1 = null;
-					var zy1 = null;
-					var zz1 = null;
-					var zminx = null;
-					var zminy = null;
-					var zminz = null;
-					var zmaxx = null;
-					var zmaxy = null;
-					var zmaxz = null;
-					var znewx = null;
-					var znewy = null;
-					var znewz = null;
-					var zmaxind = zmolds[zmoldind].paths.path1.length - 1;
-					for (var i = zmolds[zmoldind].paths.path1.length - 1 ; i > -1 ; i--) {
-						if (zmolds[zmoldind].paths.path1[i] != null) {
-							if (i == 0 && zminx == null) {
-								zminx = Number(zmolds[zmoldind].paths.path1[i].x);
-								zminy = Number(zmolds[zmoldind].paths.path1[i].y);
-								zminz = Number(zmolds[zmoldind].paths.path1[i].z);
-							}
-							if (i == zmolds[zmoldind].paths.path1.length - 1 && zmaxx == null) {
-								zmaxx = Number(zmolds[zmoldind].paths.path1[i].x);
-								zmaxy = Number(zmolds[zmoldind].paths.path1[i].y);
-								zmaxz = Number(zmolds[zmoldind].paths.path1[i].z);
-							}
-							if (i == zpointind) {
-								zx = Number(zmolds[zmoldind].paths.path1[i].x);
-								zy = Number(zmolds[zmoldind].paths.path1[i].y);
-								zz = Number(zmolds[zmoldind].paths.path1[i].z);
-								zmolds[zmoldind].paths.path1[i + 1] = JSON.parse(JSON.stringify(zmolds[zmoldind].paths.path1[i]));
-								zmolds[zmoldind].paths.path1[i + 1].sorder = i + 1;
-							} else if (i > zpointind) {
-								if (i == zpointind + 1) {
-									zx1 = Number(zmolds[zmoldind].paths.path1[i].x);
-									zy1 = Number(zmolds[zmoldind].paths.path1[i].y);
-									zz1 = Number(zmolds[zmoldind].paths.path1[i].z);
-								}
-								zmolds[zmoldind].paths.path1[i + 1] = JSON.parse(JSON.stringify(zmolds[zmoldind].paths.path1[i]));
-								zmolds[zmoldind].paths.path1[i + 1].sorder = i + 1;
-							}
-						}
-					}
-					if (zpointind == -1) {
-						znewx = zminx;
-						znewy = zminy;
-						znewz = zminz;
-					} else if (zpointind == zmaxind) {
-						znewx = zmaxx;
-						znewy = zmaxy;
-						znewz = zmaxz;
-					} else {
-						if (zx != null && zx1 != null) {
-							znewx = (zx + zx1) / 2;
-							znewy = (zy + zy1) / 2;
-							znewz = (zz + zz1) / 2;
-						} else if (zx != null) {
-							znewx = zx;
-							znewy = zy;
-							znewz = zz;
-						} else if (zx1 != null) {
-							znewx = zx1;
-							znewy = zy1;
-							znewz = zz1;
-						} else {
-							var zcoords = WTW.getNewCoordinates(50);
-							znewx = zcoords.positionX;
-							znewy = zcoords.positionY;
-							znewz = zcoords.positionZ;
-						}
-					}
-					zpointind += 1;
-					zmolds[zmoldind].paths.path1[zpointind].x = znewx;
-					zmolds[zmoldind].paths.path1[zpointind].y = znewy;
-					zmolds[zmoldind].paths.path1[zpointind].z = znewz;
-					zmolds[zmoldind].paths.path1[zpointind].sorder = zpointind;
-				} else {
-					zpointind = 0;
-					var zcoords = WTW.getNewCoordinates(50);
-					znewx = zcoords.positionX;
-					znewy = zcoords.positionY;
-					znewz = zcoords.positionZ;
-					zmolds[zmoldind].paths.path1[0] = WTW.newPathPoint();
-					zmolds[zmoldind].paths.path1[0].x = znewx;
-					zmolds[zmoldind].paths.path1[0].y = znewy;
-					zmolds[zmoldind].paths.path1[0].z = znewz;
-					zmolds[zmoldind].paths.path1[0].sorder = 0;
-				}
-				dGet('wtw_teditpointindex').value = zpointind;
-				if (zmolds[zmoldind].paths.path1[zpointind] != null) {
-					dGet('wtw_tpointpositionx').value = zmolds[zmoldind].paths.path1[zpointind].x;
-					dGet('wtw_tpointpositiony').value = zmolds[zmoldind].paths.path1[zpointind].y;
-					dGet('wtw_tpointpositionz').value = zmolds[zmoldind].paths.path1[zpointind].z;
-					WTW.show('wtw_pointeditdiv');
-				}
-				
-			}
-		} 
-	} catch (ex) {
-		WTW.log('core-scripts-admin-wtw_adminmolds.js-addPoint=' + ex.message);
-	}
-}
-
-WTWJS.prototype.editEndPoint = function() {
-	/* edit end point for a mold (lines, ribbons, and tubes) */
-	try {
-		dGet('wtw_teditpointindex').value = '';
-		WTW.hide('wtw_pointeditdiv');
-		dGet('wtw_tpointpositionx').value = '';
-		dGet('wtw_tpointpositiony').value = '';
-		dGet('wtw_tpointpositionz').value = '';
-	} catch (ex) {
-		WTW.log('core-scripts-admin-wtw_adminmolds.js-editEndPoint=' + ex.message);
 	}
 }
 
@@ -926,45 +679,315 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 		WTW.setCoveringFormFields(zcoveringname);
 		switch (zshape.toLowerCase()) {
 			case 'tube':
-				var zcoords = WTW.getNewCoordinates(50);
-				var zpositionx = zcoords.positionX;
-				var zpositiony = zcoords.positionY;
-				var zpositionz = zcoords.positionZ;
 				zmolds[zmoldind].paths.path1[0] = WTW.newPathPoint();
-				zmolds[zmoldind].paths.path1[0].x = zpositionx;
-				zmolds[zmoldind].paths.path1[0].y = zpositiony;
-				zmolds[zmoldind].paths.path1[0].z = zpositionz;
+				zmolds[zmoldind].paths.path1[0].x = dGet('wtw_tmoldpositionx').value;
+				zmolds[zmoldind].paths.path1[0].y = dGet('wtw_tmoldpositiony').value;
+				zmolds[zmoldind].paths.path1[0].z = dGet('wtw_tmoldpositionz').value;
 				zmolds[zmoldind].paths.path1[1] = WTW.newPathPoint();
-				zmolds[zmoldind].paths.path1[1].x = zpositionx;
-				zmolds[zmoldind].paths.path1[1].y = (Number(zpositiony) + 10);
-				zmolds[zmoldind].paths.path1[1].z = zpositionz;
+				zmolds[zmoldind].paths.path1[1].x = dGet('wtw_tmoldpositionx').value;
+				zmolds[zmoldind].paths.path1[1].y = (Number(dGet('wtw_tmoldpositiony').value) + 10);
+				zmolds[zmoldind].paths.path1[1].z = dGet('wtw_tmoldpositionz').value;
 				zmolds[zmoldind].paths.path1[1].sorder = 1;
+				WTW.loadPointList(zmolds[zmoldind].paths.path1, 1);
 				break;
 			case 'line':
-				var zcoords = WTW.getNewCoordinates(50);
-				var zpositionx = zcoords.positionX;
-				var zpositiony = zcoords.positionY;
-				var zpositionz = zcoords.positionZ;
 				zmolds[zmoldind].paths.path1[0] = WTW.newPathPoint();
-				zmolds[zmoldind].paths.path1[0].x = zpositionx;
-				zmolds[zmoldind].paths.path1[0].y = zpositiony;
-				zmolds[zmoldind].paths.path1[0].z = zpositionz;
+				zmolds[zmoldind].paths.path1[0].x = dGet('wtw_tmoldpositionx').value;
+				zmolds[zmoldind].paths.path1[0].y = dGet('wtw_tmoldpositiony').value;
+				zmolds[zmoldind].paths.path1[0].z = dGet('wtw_tmoldpositionz').value;
 				zmolds[zmoldind].paths.path1[1] = WTW.newPathPoint();
-				zmolds[zmoldind].paths.path1[1].x = zpositionx;
-				zmolds[zmoldind].paths.path1[1].y = (Number(zpositiony) + 10);
-				zmolds[zmoldind].paths.path1[1].z = zpositionz;
+				zmolds[zmoldind].paths.path1[1].x = dGet('wtw_tmoldpositionx').value;
+				zmolds[zmoldind].paths.path1[1].y = (Number(dGet('wtw_tmoldpositiony').value) + 10);
+				zmolds[zmoldind].paths.path1[1].z = dGet('wtw_tmoldpositionz').value;
 				zmolds[zmoldind].paths.path1[1].sorder = 1;
+				WTW.loadPointList(zmolds[zmoldind].paths.path1, 1);
 				break;
 			default:
-				WTW.openEditPoles(zmold);
 				break;
 		}
+		WTW.openEditPoles(zmold);
 		WTW.pluginsOpenAddNewMold(zwebtype, zshape, zmolds[zmoldind].moldname);
 		WTW.hideAdminMenu();
 		WTW.show('wtw_adminmenu11');
 		WTW.show('wtw_adminmenu11b');
+		WTW.setNewMold();
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_adminmolds.js-openAddNewMold=' + ex.message);
+	}
+}
+
+WTWJS.prototype.loadPointList = function(zpatharray, zpathnumber) {
+	/* some molds use points (like lines, ribons, and tubes) */
+	/* this functions loads the points for a given mold form for editing */
+	try {
+		var zpointlist = 'wtw_pointlist1';
+		var zpathpoints = 'wtw_tmoldpath1points';
+		var zpathname = 'Path 1';
+		var zpointind = -1;
+		if (WTW.isNumeric(dGet('wtw_teditpointindex').value)) {
+			zpointind = Number(dGet('wtw_teditpointindex').value);
+		}
+		if (zpathnumber == 2) {
+			zpointlist = 'wtw_pointlist2';
+			zpathpoints = 'wtw_tmoldpath2points';
+			zpathname = 'Path 2';
+		}
+		dGet(zpointlist).innerHTML = "<hr /><h4>" + zpathname + " Points (x,y,z)</h4><div id='wtw_bpointadd-' class='wtw-menulevel00 wtw-center' onclick='WTW.addPoint(this);' >Add Point</div>";
+		if (zpatharray != null) {
+			if (zpatharray.length > 0) {
+				for (var i=0; i < zpatharray.length;i++) {
+					if (zpatharray[i] != null) {
+						if (zpointind == i) {
+							dGet(zpointlist).innerHTML += "<div id='wtw_bpointedit-" + i + "' class='wtw-menulevel0selected wtw-center' onclick='WTW.editPoint(this);'><span style='font-size:.8em;color:#c0c0c0;'>(" + zpatharray[i].x + ", " + zpatharray[i].y + ", " + zpatharray[i].z + ")</span> Edit</div>";
+						} else {
+							dGet(zpointlist).innerHTML += "<div id='wtw_bpointedit-" + i + "' class='wtw-menulevel0 wtw-center' onclick='WTW.editPoint(this);'><span style='font-size:.8em;color:#c0c0c0;'>(" + zpatharray[i].x + ", " + zpatharray[i].y + ", " + zpatharray[i].z + ")</span> Edit</div>";
+						}
+						dGet(zpointlist).innerHTML += "<div id='wtw_bpointadd-" + i + "' class='wtw-menulevel00 wtw-center' onclick='WTW.addPoint(this);'>Add Point</div>";
+					}
+				}
+			}
+			dGet(zpathpoints).value = JSON.stringify(zpatharray);
+		} else {
+			dGet(zpathpoints).value = '';
+		}
+		dGet(zpointlist).innerHTML += '<hr /><br />';
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-loadPointList=' + ex.message);
+	}
+}
+
+WTWJS.prototype.deletePoint = function() {
+	/* delete a point from a mold (lines, ribbons, and tubes) */
+	try {
+		var zpointind = -1;
+		var zmoldind = -1;
+		var zmolds = null;
+		switch (dGet('wtw_tmoldwebtype').value) {
+			case 'community':
+				zmolds = WTW.communitiesMolds;
+				break;
+			case 'building':
+				zmolds = WTW.buildingMolds;
+				break;
+			case 'thing':
+				zmolds = WTW.thingMolds;
+				break;
+		}
+		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
+			zmoldind = Number(dGet('wtw_tmoldind').value);
+		}
+		if (WTW.isNumeric(dGet('wtw_teditpointindex').value)) {
+			zpointind = Number(dGet('wtw_teditpointindex').value);
+		}
+		if (zmolds[zmoldind] != null && zpointind > -1) {
+			if (zmolds[zmoldind].paths.path1 != null) {
+				if (zmolds[zmoldind].paths.path1[zpointind] != null) {
+					zmolds[zmoldind].paths.path1.splice(zpointind, 1);
+				}
+				for (var i=0; i < zmolds[zmoldind].paths.path1.length;i++) {
+					if (zmolds[zmoldind].paths.path1[i] != null) {
+						zmolds[zmoldind].paths.path1[i].sorder = i;
+					}
+				}
+			}
+		}
+		dGet('wtw_teditpointindex').value = '';
+		WTW.setNewMold();
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-deletePoint=' + ex.message);
+	}
+}
+
+WTWJS.prototype.editPoint = function(zobj) {
+	/* edit an existing point for a mold (lines, ribbons, and tubes) */
+	try {
+		dGet('wtw_tpointpositionx').value = '';
+		dGet('wtw_tpointpositiony').value = '';
+		dGet('wtw_tpointpositionz').value = '';
+		var zmoldind = -1;
+		var zmolds = null;
+		switch (dGet('wtw_tmoldwebtype').value) {
+			case 'community':
+				zmolds = WTW.communitiesMolds;
+				break;
+			case 'building':
+				zmolds = WTW.buildingMolds;
+				break;
+			case 'thing':
+				zmolds = WTW.thingMolds;
+				break;
+		}
+		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
+			zmoldind = Number(dGet('wtw_tmoldind').value);
+		}
+		if (zobj != null && zmolds != null) {
+			if (zobj.id.indexOf('-') > -1 && zmolds[zmoldind] != null) {
+				var znamepart = zobj.id.split('-');
+				if (znamepart[1] != null) {
+					dGet('wtw_teditpointindex').value = znamepart[1];
+					var zpointind = -1;
+					if (WTW.isNumeric(znamepart[1])) {
+						zpointind = Number(znamepart[1]);
+					}
+					if (zmolds[zmoldind].paths.path1[zpointind] != null) {
+						dGet('wtw_tpointpositionx').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].x,2);
+						dGet('wtw_tpointpositiony').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].y,2);
+						dGet('wtw_tpointpositionz').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].z,2);
+						
+						WTW.show('wtw_pointeditdiv');
+					}
+				}
+			}
+		} 
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-editPoint=' + ex.message);
+	}
+}
+
+WTWJS.prototype.addPoint = function(zobj) {
+	/* add a new point for a mold (lines, ribbons, and tubes) */
+	try {
+		var zmoldind = -1;
+		var zmolds = null;
+		switch (dGet('wtw_tmoldwebtype').value) {
+			case 'community':
+				zmolds = WTW.communitiesMolds;
+				break;
+			case 'building':
+				zmolds = WTW.buildingMolds;
+				break;
+			case 'thing':
+				zmolds = WTW.thingMolds;
+				break;
+		}
+		if (WTW.isNumeric(dGet('wtw_tmoldind').value)) {
+			zmoldind = Number(dGet('wtw_tmoldind').value);
+		}
+		if (zobj != null && zmolds != null) {
+			if (zobj.id.indexOf('-') > -1 && zmolds[zmoldind] != null) {
+				var zpointind = -1;
+				var znamepart = zobj.id.split('-');
+				if (znamepart[1] != null) {
+					if (WTW.isNumeric(znamepart[1])) {
+						zpointind = Number(znamepart[1]);
+					}
+				}
+				if (zmolds[zmoldind].paths.path1 != null) {
+					var zx = null;
+					var zy = null;
+					var zz = null;
+					var zx1 = null;
+					var zy1 = null;
+					var zz1 = null;
+					var zminx = null;
+					var zminy = null;
+					var zminz = null;
+					var zmaxx = null;
+					var zmaxy = null;
+					var zmaxz = null;
+					var znewx = null;
+					var znewy = null;
+					var znewz = null;
+					var zmaxind = zmolds[zmoldind].paths.path1.length - 1;
+					for (var i = zmolds[zmoldind].paths.path1.length - 1 ; i > -1 ; i--) {
+						if (zmolds[zmoldind].paths.path1[i] != null) {
+							if (i == 0 && zminx == null) {
+								zminx = Number(zmolds[zmoldind].paths.path1[i].x);
+								zminy = Number(zmolds[zmoldind].paths.path1[i].y);
+								zminz = Number(zmolds[zmoldind].paths.path1[i].z);
+							}
+							if (i == zmolds[zmoldind].paths.path1.length - 1 && zmaxx == null) {
+								zmaxx = Number(zmolds[zmoldind].paths.path1[i].x);
+								zmaxy = Number(zmolds[zmoldind].paths.path1[i].y);
+								zmaxz = Number(zmolds[zmoldind].paths.path1[i].z);
+							}
+							if (i == zpointind) {
+								zx = Number(zmolds[zmoldind].paths.path1[i].x);
+								zy = Number(zmolds[zmoldind].paths.path1[i].y);
+								zz = Number(zmolds[zmoldind].paths.path1[i].z);
+								zmolds[zmoldind].paths.path1[i + 1] = JSON.parse(JSON.stringify(zmolds[zmoldind].paths.path1[i]));
+								zmolds[zmoldind].paths.path1[i + 1].sorder = i + 1;
+							} else if (i > zpointind) {
+								if (i == zpointind + 1) {
+									zx1 = Number(zmolds[zmoldind].paths.path1[i].x);
+									zy1 = Number(zmolds[zmoldind].paths.path1[i].y);
+									zz1 = Number(zmolds[zmoldind].paths.path1[i].z);
+								}
+								zmolds[zmoldind].paths.path1[i + 1] = JSON.parse(JSON.stringify(zmolds[zmoldind].paths.path1[i]));
+								zmolds[zmoldind].paths.path1[i + 1].sorder = i + 1;
+							}
+						}
+					}
+					if (zpointind == -1) {
+						znewx = zminx;
+						znewy = zminy;
+						znewz = zminz;
+					} else if (zpointind == zmaxind) {
+						znewx = zmaxx;
+						znewy = zmaxy;
+						znewz = zmaxz;
+					} else {
+						if (zx != null && zx1 != null) {
+							znewx = (zx + zx1) / 2;
+							znewy = (zy + zy1) / 2;
+							znewz = (zz + zz1) / 2;
+						} else if (zx != null) {
+							znewx = zx;
+							znewy = zy;
+							znewz = zz;
+						} else if (zx1 != null) {
+							znewx = zx1;
+							znewy = zy1;
+							znewz = zz1;
+						} else {
+							var zcoords = WTW.getNewCoordinates(50);
+							znewx = zcoords.positionX;
+							znewy = zcoords.positionY;
+							znewz = zcoords.positionZ;
+						}
+					}
+					zpointind += 1;
+					zmolds[zmoldind].paths.path1[zpointind].x = znewx;
+					zmolds[zmoldind].paths.path1[zpointind].y = znewy;
+					zmolds[zmoldind].paths.path1[zpointind].z = znewz;
+					zmolds[zmoldind].paths.path1[zpointind].sorder = zpointind;
+				} else {
+					zpointind = 0;
+					var zcoords = WTW.getNewCoordinates(50);
+					znewx = zcoords.positionX;
+					znewy = zcoords.positionY;
+					znewz = zcoords.positionZ;
+					zmolds[zmoldind].paths.path1[0] = WTW.newPathPoint();
+					zmolds[zmoldind].paths.path1[0].x = znewx;
+					zmolds[zmoldind].paths.path1[0].y = znewy;
+					zmolds[zmoldind].paths.path1[0].z = znewz;
+					zmolds[zmoldind].paths.path1[0].sorder = 0;
+				}
+				dGet('wtw_teditpointindex').value = zpointind;
+				if (zmolds[zmoldind].paths.path1[zpointind] != null) {
+					dGet('wtw_tpointpositionx').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].x,2);
+					dGet('wtw_tpointpositiony').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].y,2);
+					dGet('wtw_tpointpositionz').value = WTW.formatNumber(zmolds[zmoldind].paths.path1[zpointind].z,2);
+					WTW.show('wtw_pointeditdiv');
+				}
+				
+			}
+		} 
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-addPoint=' + ex.message);
+	}
+}
+
+WTWJS.prototype.editEndPoint = function() {
+	/* edit end point for a mold (lines, ribbons, and tubes) */
+	try {
+		dGet('wtw_teditpointindex').value = '';
+		WTW.hide('wtw_pointeditdiv');
+		dGet('wtw_tpointpositionx').value = '';
+		dGet('wtw_tpointpositiony').value = '';
+		dGet('wtw_tpointpositionz').value = '';
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-editEndPoint=' + ex.message);
 	}
 }
 

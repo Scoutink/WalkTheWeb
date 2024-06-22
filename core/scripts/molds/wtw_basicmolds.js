@@ -176,16 +176,15 @@ WTWJS.prototype.addMoldTube = function(zmoldname, zlenx, zleny, zlenz, zsubdivis
 			zsubdivisions = 16;
 		}
 		if (zpath1 == null || zpath1[0] == null) {
-			zpatha.push(new BABYLON.Vector3(0, 0, 5));
-			zpatha.push(new BABYLON.Vector3(0, 0, -5));
-			zpatha.push(new BABYLON.Vector3(5, 0, -5)); 
-		} else {
-			for (var i=0;i < zpath1.length;i++) {
-				if (zpath1[i] != null) {
-					zpatha.push(new BABYLON.Vector3(Number(zpath1[i].x), Number(zpath1[i].y), Number(zpath1[i].z)));
-				}
+			zpath1[0] = new BABYLON.Vector3(0, 0, 0);
+			zpath1[1] = new BABYLON.Vector3(0, 5, 0);
+		}
+		for (var i=0;i < zpath1.length;i++) {
+			if (zpath1[i] != null) {
+				zpatha.push(new BABYLON.Vector3(Number(zpath1[i].x), Number(zpath1[i].y), Number(zpath1[i].z)));
 			}
 		}
+		
 		zmold = BABYLON.Mesh.CreateTube(zmoldname, zpatha, zspecial1, zsubdivisions, null, BABYLON.Mesh.NO_CAP, scene, false, BABYLON.Mesh.DOUBLESIDE);
 		/* cap : BABYLON.Mesh.NO_CAP, BABYLON.Mesh.CAP_START, BABYLON.Mesh.CAP_END, BABYLON.Mesh.CAP_ALL, */
 		zmold.scaling = new BABYLON.Vector3(zlenx, zleny, zlenz);

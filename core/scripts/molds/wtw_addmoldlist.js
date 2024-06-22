@@ -424,6 +424,14 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 					/* correction for molds that cannot use directional covering */
 					zcoveringname = 'texture';
 				}
+				if (zcoveringname == "wire") {
+					zcoveringname = "none";
+					if (zmold.material == null) {
+						zmold.material = new BABYLON.StandardMaterial('mat'+zmoldname, scene);
+						zmold.material.emissiveColor = BABYLON.Color3.White();
+					}
+					zmold.material.wireframe = true;
+				}
 				if (zcoveringname != 'none' && zcoveringname != 'done') {
 					/* molds that require coverings to be added */
 					if (zcoveringname == 'directional texture') {
@@ -556,6 +564,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 		}
 		if (thingid != '') {
 			zpositionx = 0;
+			zpositiony = 0;
 			zpositionz = 0;
 		}
 		dGet('wtw_moldaddimagepreview').src = '';
@@ -625,14 +634,14 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 		dGet('wtw_tmoldemissivecolor').value = '#000000';
 		dGet('wtw_tmoldspecularcolor').value = '#686868';
 		dGet('wtw_tmoldambientcolor').value = '#575757';
-		dGet('wtw_tmoldpositionx').value = zpositionx;
-		dGet('wtw_tmoldpositiony').value = zpositiony + 5;
-		dGet('wtw_tmoldpositionz').value = zpositionz;
+		dGet('wtw_tmoldpositionx').value = WTW.formatNumber(zpositionx,2);
+		dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 5,2);
+		dGet('wtw_tmoldpositionz').value = WTW.formatNumber(zpositionz,2);
 		dGet('wtw_tmoldscalingx').value = '10.00';
 		dGet('wtw_tmoldscalingy').value = '10.00';
 		dGet('wtw_tmoldscalingz').value = '10.00';
 		dGet('wtw_tmoldrotationx').value = '0.00';
-		dGet('wtw_tmoldrotationy').value = zrotationy;
+		dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy,2);
 		dGet('wtw_tmoldrotationz').value = '0.00';
 		dGet('wtw_tmoldspecial1').value = '0.00';
 		dGet('wtw_tmoldspecial2').value = '0.00';
@@ -648,7 +657,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				break;
 			case 'halfpipe':
 				dGet('wtw_tmoldrotationx').value = '90.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy,2);
 				dGet('wtw_tmoldrotationz').value = '90.00';
 				dGet('wtw_tmoldspecial1').value = '1.00';
 				dGet('wtw_tmoldsubdivisions').value = '20';
@@ -686,7 +695,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldsubdivisions').value = '2';
 				break;
 			case 'lightbulb':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 1;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 1,2);
 				dGet('wtw_tmoldscalingx').value = '0.80';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '0.80';
@@ -694,7 +703,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldsubdivisions').value = '10';
 				break;
 			case 'spotlight':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 1;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 1,2);
 				dGet('wtw_tmoldscalingx').value = '2.00';
 				dGet('wtw_tmoldscalingy').value = '2.00';
 				dGet('wtw_tmoldscalingz').value = '2.00';
@@ -703,10 +712,10 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldsubdivisions').value = '20';
 				break;
 			case 'candleflame':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 3;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 3,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '5.00';
-				dGet('wtw_tmoldscalingz').value = '.1';
+				dGet('wtw_tmoldscalingz').value = '.10';
 				dGet('wtw_tmoldrotationy').value = '0.00';
 				dGet('wtw_tmoldsubdivisions').value = '2';
 				dGet('wtw_tmoldcoveringold').value = 'none';
@@ -715,7 +724,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'tree':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -726,7 +735,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'flag':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -738,7 +747,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'smoke':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -749,7 +758,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'waterfountain':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -760,7 +769,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'particlesphere':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '2.00';
 				dGet('wtw_tmoldscalingy').value = '2.00';
 				dGet('wtw_tmoldscalingz').value = '2.00';
@@ -771,7 +780,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'particleshower':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '2.00';
 				dGet('wtw_tmoldscalingy').value = '6.00';
 				dGet('wtw_tmoldscalingz').value = '2.00';
@@ -782,7 +791,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'babylonfile':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -793,7 +802,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'waterplane':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingy').value = '.1';
 				dGet('wtw_tmoldsubdivisions').value = '2';
 				dGet('wtw_tmoldcoveringold').value = '2d texture';
@@ -813,7 +822,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 			case 'disc':
 				dGet('wtw_tmoldscalingx').value = '20.00';
 				dGet('wtw_tmoldscalingz').value = '0.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy + 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy + 90,2);
 				dGet('wtw_tmoldsubdivisions').value = '16';
 				break;
 			case 'line':
@@ -825,11 +834,11 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldcoveringold').value = 'color';
 				break;
 			case 'wall':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 10;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 10,2);
 				dGet('wtw_tmoldscalingx').value = '20.00';
 				dGet('wtw_tmoldscalingy').value = '20.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy + 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy + 90,2);
 				dGet('wtw_tmoldcoveringold').value = 'texture';
 				dGet('wtw_tmoldtextureid').value = zimageid;
 				dGet('wtw_tmoldtexturepath').value = zimagepath;
@@ -848,11 +857,11 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 			case 'roundedbox':
 				break;
 			case '3dtext':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy + 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy + 90,2);
 				dGet('wtw_tmoldwebtext').value = 'Text';
 				dGet('wtw_tmoldwebtextheight').value = '6.00';
 				dGet('wtw_tmoldwebtextthick').value = '1.00';
@@ -868,18 +877,18 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				break;
 			case 'image':
 				dGet('wtw_tmoldscalingx').value = '.25';
-				dGet('wtw_tmoldrotationy').value = zrotationy + 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy + 90,2);
 				break;
 			case 'raisedimage':
 				dGet('wtw_tmoldscalingx').value = '.25';
 				dGet('wtw_tmoldmaxheight').value = '2.00';
 				break;
 			case 'video':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 10;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 10,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy - 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy - 90,2);
 				dGet('wtw_tmoldvideoid').value = '';
 				dGet('wtw_tmoldvideopath').value = '';
 				dGet('wtw_tmoldvideoposterid').value = '';
@@ -891,18 +900,18 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldvideoloop').checked = false;
 				break;
 			case 'videostream':
-				dGet('wtw_tmoldpositiony').value = zpositiony + 10;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony + 10,2);
 				dGet('wtw_tmoldscalingy').value = '8.00';
 				dGet('wtw_tmoldscalingz').value = '0.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy + 180;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy + 180,2);
 				dGet('wtw_tmoldsubdivisions').value = '2';
 				break;
 			case 'createscenekiosk':
-				dGet('wtw_tmoldpositiony').value = zpositiony - .5;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony - .5,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
-				dGet('wtw_tmoldrotationy').value = zrotationy - 90;
+				dGet('wtw_tmoldrotationy').value = WTW.formatNumber(zrotationy - 90,2);
 				break;
 			case 'simpletextbox':
 				dGet('wtw_tmoldscalingx').value = '.25';
@@ -912,7 +921,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				if (zrotationy > 360) {
 					zrotationy -= 360;
 				}
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '15.00';
 				dGet('wtw_tmoldscalingz').value = '15.00';
@@ -926,7 +935,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				if (zrotationy > 360) {
 					zrotationy -= 360;
 				}
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '15.00';
 				dGet('wtw_tmoldscalingz').value = '15.00';
@@ -936,7 +945,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldtexturepreview', 'wtw_tmoldtexturepath', 'wtw_tmoldtextureid');
 				break;
 			case 'sharktank':
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '100.00';
 				dGet('wtw_tmoldscalingy').value = '50.00';
 				dGet('wtw_tmoldscalingz').value = '100.00';
@@ -945,13 +954,13 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				dGet('wtw_tmoldcoveringold').value = 'glass';
 				break;
 			case 'custom': 
-				dGet('wtw_tmoldpositiony').value = zpositiony;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
 				break;	
 			case 'terrain': 
-				dGet('wtw_tmoldpositiony').value = -1;
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(-1,2);
 				dGet('wtw_tmoldscalingx').value = '1000.00';
 				dGet('wtw_tmoldscalingy').value = '1000.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';
@@ -966,6 +975,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 				WTW.setPreviewImage('wtw_moldheightmappreview', 'wtw_tmoldheightmappath', 'wtw_tmoldheightmapid');
 				break;	
 			case 'tube':
+				dGet('wtw_tmoldpositiony').value = WTW.formatNumber(zpositiony,2);
 				dGet('wtw_tmoldscalingx').value = '1.00';
 				dGet('wtw_tmoldscalingy').value = '1.00';
 				dGet('wtw_tmoldscalingz').value = '1.00';

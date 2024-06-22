@@ -13,7 +13,11 @@ WTWJS.prototype.addCoveringWire = function(zmoldname, zmolddef) {
 		zcovering = 'none';
 		var zmold = WTW.getMeshOrNodeByID(zmoldname);
 		if (zmold != null) {
-			zmold.wireframe = true;
+			if (zmold.material == null) {
+				zmold.material = new BABYLON.StandardMaterial('mat'+zmoldname, scene);
+				zmold.material.emissiveColor = BABYLON.Color3.White();
+			}
+			zmold.material.wireframe = true;
 		}
 	} catch (ex) {
 		WTW.log('core-scripts-coverings-basiccoverings\r\n addCoveringWire=' + ex.message);
