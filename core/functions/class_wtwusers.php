@@ -155,8 +155,6 @@ class wtwusers {
 			'serror'=>'Invalid Global Account'
 		);
 		try {
-
-
 			$zresults = array();
 			$zuserid = '';
 			$zdisplayname = $wtwdb->decode64($zdisplayname);
@@ -185,6 +183,7 @@ class wtwusers {
 						$_SESSION["wtw_globaluserid"] = $zglobaluserid;
 						$_SESSION["wtw_usertoken"] = $zusertoken;
 						$_SESSION["wtw_uploadpathid"] = $zrow["uploadpathid"];
+
 						if ($wtwdb->hasValue($zusertoken)) {
 							$wtwdb->query("
 								update ".wtw_tableprefix."users

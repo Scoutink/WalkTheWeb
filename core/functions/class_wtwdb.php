@@ -2041,7 +2041,7 @@ class wtwdb {
 					select * 
 					from ".wtw_tableprefix."moldpoints
 					where moldid='".$zmoldid."'
-						and pathnumber=".$this->checkNumber($pathnumber,1)."
+						and pathnumber=".$this->checkNumber($zpathnumber,1)."
 						and deleted=0
 					order by sorder,createdate;");
 

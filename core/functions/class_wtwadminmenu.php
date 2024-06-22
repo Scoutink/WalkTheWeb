@@ -1691,13 +1691,6 @@ class wtwadminmenu {
 			$zmenu .= "			<div id='wtw_pointeditdiv' style='background: rgba(256,200,200,0.6);border:2px solid red;'>\r\n";
 			$zmenu .= "				<div style='float:right;cursor:pointer;font-size:.8em;' onclick='WTW.editEndPoint();'>close [x]</div>\r\n";
 			$zmenu .= "				<h2 class='wtw-marginbottom'>Point Position</h2>\r\n";
-			$zmenu .= "				<div class='wtw-onecol' style='white-space:nowrap;'>Position Z (left,-right)<br />\r\n";
-			$zmenu .= "					<input type='text' id='wtw_tpointpositionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
-			$zmenu .= "					<input type='button' id='wtw_beditpointzp4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "					<input type='button' id='wtw_beditpointzp3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "					<input type='button' id='wtw_beditpointzp2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "					<input type='button' id='wtw_beditpointzp1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
-			$zmenu .= "				</div><br />\r\n";
 			$zmenu .= "				<div class='wtw-onecol'>Position X (front,-back)<br />\r\n";
 			$zmenu .= "					<input type='text' id='wtw_tpointpositionx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
 			$zmenu .= "					<input type='button' id='wtw_beditpointxp4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
@@ -1711,6 +1704,13 @@ class wtwadminmenu {
 			$zmenu .= "					<input type='button' id='wtw_beditpointyp3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositiony', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "					<input type='button' id='wtw_beditpointyp2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositiony', .01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "					<input type='button' id='wtw_beditpointyp1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositiony', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "				</div><br />\r\n";
+			$zmenu .= "				<div class='wtw-onecol' style='white-space:nowrap;'>Position Z (left,-right)<br />\r\n";
+			$zmenu .= "					<input type='text' id='wtw_tpointpositionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "					<input type='button' id='wtw_beditpointzp4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					<input type='button' id='wtw_beditpointzp3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					<input type='button' id='wtw_beditpointzp2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					<input type='button' id='wtw_beditpointzp1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tpointpositionz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
 			$zmenu .= "				</div><br />\r\n";
 			$zmenu .= "				<div class='wtw-menulevel00 wtw-center' onmousedown='WTW.deletePoint();WTW.editEndPoint();' >Delete Point</div>\r\n";
 			$zmenu .= "				<div class='wtw-menulevel00 wtw-center' onmousedown='WTW.editEndPoint();' >Close</div>\r\n";

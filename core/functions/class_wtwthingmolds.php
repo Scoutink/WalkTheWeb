@@ -243,7 +243,7 @@ class wtwthingmolds {
 				$wtwmoldscommon->savePathPoints('', '', $zthingid, $zthingmoldid, 2, $zmoldpath2points);
 			}
 		} catch (Exception $e) {
-			serror("core-functions-class_wtwthingmolds.php-saveThingMold=".$e->getMessage());
+			$wtwhandlers->serror("core-functions-class_wtwthingmolds.php-saveThingMold=".$e->getMessage());
 		}
 		return $zthingmoldid;
 	}
@@ -284,7 +284,7 @@ class wtwthingmolds {
 				}
 			}			
 		} catch (Exception $e) {
-			serror("core-functions-class_wtwthingmolds.php-deleteThingMold=".$e->getMessage());
+			$wtwhandlers->serror("core-functions-class_wtwthingmolds.php-deleteThingMold=".$e->getMessage());
 		}
 		return $zsuccess;
 	}

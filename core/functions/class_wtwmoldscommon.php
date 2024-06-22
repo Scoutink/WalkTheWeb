@@ -73,6 +73,7 @@ class wtwmoldscommon {
 								and moldid='".$zmoldid."'
 								and pathnumber=".$wtwhandlers->checkNumber($zpathnumber,1).";");
 					} else {
+						$zmoldpointid = $wtwhandlers->getRandomString(16,1);
 						$wtwhandlers->query("
 							insert into ".wtw_tableprefix."moldpoints
 								(moldpointid,
@@ -103,7 +104,7 @@ class wtwmoldscommon {
 				}	
 			}
 		} catch (Exception $e) {
-			serror("core-functions-class_wtwmoldscommon.php-savePathPoints=".$e->getMessage());
+			$wtwhandlers->serror("core-functions-class_wtwmoldscommon.php-savePathPoints=".$e->getMessage());
 		}
 		return $zsuccess;
 	}
@@ -180,7 +181,7 @@ class wtwmoldscommon {
 			}
 			$zsuccess = true;
 		} catch (Exception $e) {
-			serror("core-functions-class_wtwmoldscommon.php-saveWebImage=".$e->getMessage());
+			$wtwhandlers->serror("core-functions-class_wtwmoldscommon.php-saveWebImage=".$e->getMessage());
 		}
 		return $zsuccess;
 	}
