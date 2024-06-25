@@ -948,6 +948,18 @@ class wtwcommunities {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -991,9 +1003,9 @@ class wtwcommunities {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -1042,6 +1054,18 @@ class wtwcommunities {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -1085,9 +1109,9 @@ class wtwcommunities {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -1355,6 +1379,10 @@ class wtwcommunities {
 						and t3.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zcommunitymoldid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."communitymolds
 						   (communitymoldid,
@@ -1435,7 +1463,7 @@ class wtwcommunities {
 							'".$zrow["pastcommunitymoldid"]."',
 							'".$zrow["communityid"]."',
 							'".$zrow["loadactionzoneid"]."',
-							'".$zrow["unloadactionzoneid"]."',
+							'".$zunloadactionzoneid."',
 							'".$zrow["shape"]."',
 							'".$zrow["covering"]."',
 							".$wtwhandlers->checkNumber($zrow["positionx"],0).",

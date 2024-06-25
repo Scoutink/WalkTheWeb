@@ -625,6 +625,18 @@ class wtwthings {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -668,9 +680,9 @@ class wtwthings {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -719,6 +731,18 @@ class wtwthings {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -762,9 +786,9 @@ class wtwthings {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -1041,6 +1065,10 @@ class wtwthings {
 						and t3.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zthingmoldid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."thingmolds
 						   (thingmoldid,
@@ -1120,7 +1148,7 @@ class wtwthings {
 						   ('".$zthingmoldid."',
 							'".$zrow["pastthingmoldid"]."',
 							'".$zrow["loadactionzoneid"]."',
-							'".$zrow["unloadactionzoneid"]."',
+							'".$zunloadactionzoneid."',
 							'".$zrow["thingid"]."',
 							'".$zrow["shape"]."',
 							'".$zrow["covering"]."',
@@ -1146,10 +1174,10 @@ class wtwthings {
 							'".$zrow["texturehoverid"]."',
 							'".$zrow["videoid"]."',
 							'".$zrow["videoposterid"]."',
-							'".$zdiffusecolor."',
-							'".$zspecularcolor."',
-							'".$zemissivecolor."',
-							'".$zambientcolor."',
+							'".$zrow["diffusecolor"]."',
+							'".$zrow["specularcolor"]."',
+							'".$zrow["emissivecolor"]."',
+							'".$zrow["ambientcolor"]."',
 							'".$zrow["heightmapid"]."',
 							'".$zrow["mixmapid"]."',
 							'".$zrow["texturerid"]."',
@@ -1259,7 +1287,7 @@ class wtwthings {
 							 '".$wtwhandlers->userid."');");
 				}
 				$zresults = $wtwhandlers->query("
-					select t6.thingmoldid as thingmoldid,
+					select t6.thingmoldid as moldid,
 						 t4.pathnumber,
 						 t4.sorder,
 						 t4.positionx,

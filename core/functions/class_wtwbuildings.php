@@ -592,6 +592,18 @@ class wtwbuildings {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -635,9 +647,9 @@ class wtwbuildings {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -686,6 +698,18 @@ class wtwbuildings {
 						and t2.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zconnectinggridid = $wtwhandlers->getRandomString(16,1);
+					$zunloadactionzoneid = '';
+					$zattachactionzoneid = '';
+					$zaltloadactionzoneid = '';
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
+					if (isset($zrow["attachactionzoneid"]) && !empty($zrow["attachactionzoneid"])) {
+						$zattachactionzoneid = $zrow["attachactionzoneid"];
+					}
+					if (isset($zrow["altloadactionzoneid"]) && !empty($zrow["altloadactionzoneid"])) {
+						$zaltloadactionzoneid = $zrow["altloadactionzoneid"];
+					}
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."connectinggrids
 							(connectinggridid,
@@ -729,9 +753,9 @@ class wtwbuildings {
 							 ".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
 							 ".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
 							 '".$zrow["loadactionzoneid"]."',
-							 '".$zrow["unloadactionzoneid"]."',
-							 '".$zrow["attachactionzoneid"]."',
-							 '".$zrow["altloadactionzoneid"]."',
+							 '".$zunloadactionzoneid."',
+							 '".$zattachactionzoneid."',
+							 '".$zaltloadactionzoneid."',
 							 '".$zrow["alttag"]."',
 							 now(),
 							 '".$wtwhandlers->userid."',
@@ -1022,7 +1046,7 @@ class wtwbuildings {
 					$zbuildingmoldid = $wtwhandlers->getRandomString(16,1);
 					$zpastbuildingmoldid = $zrow["pastbuildingmoldid"];
 					$zloadactionzoneid = $zrow["loadactionzoneid"];
-					$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					$zunloadactionzoneid = '';
 					$zshape = $zrow["shape"];
 					$zcovering = $zrow["covering"];
 					$zpositionx = $zrow["positionx"];
@@ -1087,6 +1111,9 @@ class wtwbuildings {
 					$zalttag = $zrow["alttag"];
 					$zjsfunction = $zrow["jsfunction"];
 					$zjsparameters = $zrow["jsparameters"];
+					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
+						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					}
 
 					$wtwhandlers->query("
 						INSERT INTO ".wtw_tableprefix."buildingmolds
