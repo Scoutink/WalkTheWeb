@@ -312,7 +312,7 @@ WTWJS.prototype.setCameraDistance = function() {
 				var zhits = scene.multiPickWithRay(zray);
 				for (var i=0; i<zhits.length; i++){
 					if (zhits[i].pickedMesh.name.indexOf('molds-') > -1) {
-						if (zhits[i].pickedMesh.checkCollisions && zhits[i].pickedMesh.opacity < 1) {
+						if (zhits[i].pickedMesh.checkCollisions) {
 							if (zhits[i].distance < zdist) {
 								/* distance of closest mold */
 								zdist = zhits[i].distance;

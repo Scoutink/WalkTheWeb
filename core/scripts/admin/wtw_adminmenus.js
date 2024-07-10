@@ -154,9 +154,7 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 						break;
 				/* Community Admin Items */
 					case 'wtw_adminselectcommunity':
-						WTW.hideAdminMenu();
-						WTW.getSelectCommunitiesList();
-						WTW.show('wtw_adminmenu22');
+						WTW.getSelectMyWebsList('community', 4);
 						break;
 					case 'wtw_adminaddcommunity':
 						WTW.openFullPageForm('importpage','communities');
@@ -403,9 +401,7 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 						break;
 				/* Building Menu Items */
 					case 'wtw_adminselectbuilding':
-						WTW.hideAdminMenu();
-						WTW.getSelectBuildingsList();
-						WTW.show('wtw_adminmenu2');
+						WTW.getSelectMyWebsList('building', 4);
 						break;
 					case 'wtw_adminaddbuilding':
 						WTW.openFullPageForm('importpage','buildings');
@@ -463,9 +459,7 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 						break;
 				/* Thing Admin Items */
 					case 'wtw_adminselectthing':
-						WTW.hideAdminMenu();
-						WTW.getSelectThingsList();
-						WTW.show('wtw_adminmenu32');
+						WTW.getSelectMyWebsList('thing', 4);
 						break;
 					case 'wtw_adminaddthing':
 						WTW.openFullPageForm('importpage','things');
@@ -668,9 +662,7 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 						break;
 				/* Avatar Admin Items */
 					case 'wtw_selectavatar':
-						WTW.hideAdminMenu();
-						WTW.openSelectAvatar();
-						WTW.show('wtw_adminSelectAvatarDiv');
+						WTW.getSelectMyWebsList('avatar', 4);
 						break;
 					case 'wtw_addnewavatar':
 						WTW.openFullPageForm('importpage','avatars');

@@ -1535,7 +1535,10 @@ WTWJS.prototype.loadUploadedObjectsDiv = async function(showloading) {
 			function(zresponse) {
 				zresponse = JSON.parse(zresponse);
 				var zitem = dGet('wtw_tfileitem').value;
-				var zuploadedobjectsdiv = "<div class='wtw-roundedbox'><b>3D Models</b> can be downloaded off the Internet or created from scratch using software like <a href='https://www.blender.org/' target='_blank'>Blender.org</a>. <b>3D Models</b> can be added to any 3D Community Scene, 3D Building, or 3D Thing. Recommended formats are .blender, .obj, .glb, or .gltf.<br /></div><div class='wtw-clear'></div>";
+				var zuploadedobjectsdiv = "<div class='wtw-roundedbox'><b>3D Models</b> can be downloaded off the Internet or created from scratch using software like <a href='https://www.blender.org/' target='_blank'>Blender.org</a>. <b>3D Models</b> can be added to any 3D Community Scene, 3D Building, or 3D Thing. Recommended formats are .babylon, .obj, .glb, or .gltf.<br /></div><div class='wtw-clear'></div>";
+				if (zresponse.length > 0) {
+					zuploadedobjectsdiv += " <div style='margin-left:20px;'>(" + zresponse.length + " Total)</div>";
+				}
 				for (var i=0;i<zresponse.length;i++) {
 					var zfilecount = 0;
 					var zfoldersize = 0;
@@ -4717,4 +4720,188 @@ WTWJS.prototype.saveServerSettings = async function(zreload) {
 	}
 }
 
+WTWJS.prototype.getSelectMyWebsList = async function(zwebtype, zcolumns, zfilter) {
+	/* populates the admin menu for My 3D WEBS to load and edit */
+	try {
+		if (zfilter == undefined) {
+			zfilter = 'mine';
+		}
+		var zwebtypes = 'plugins';
+		var zcolor = '';
+		var zloadedid = '';
+		switch (zwebtype) {
+			case 'community':
+				zwebtypes = 'communities';
+				zcolor = 'green';
+				dGet('wtw_mywebstitle').innerHTML = 'Select a 3D Community Scene to Edit';
+				dGet('wtw_mywebsdesc').innerHTML = 'These are my 3D Community Scenes.';
+				zloadedid = communityid;
+				break;
+			case 'building':
+				zwebtypes = 'buildings';
+				zcolor = 'blue';
+				dGet('wtw_mywebstitle').innerHTML = 'Select a 3D Building to Edit';
+				dGet('wtw_mywebsdesc').innerHTML = 'These are my 3D Buildings.';
+				zloadedid = buildingid;
+				break;
+			case 'thing':
+				zwebtypes = 'things';
+				zcolor = 'yellow';
+				dGet('wtw_mywebstitle').innerHTML = 'Select a 3D Thing to Edit';
+				dGet('wtw_mywebsdesc').innerHTML = 'These are my 3D Things.';
+				zloadedid = thingid;
+				break;
+			case 'avatar':
+				zwebtypes = 'avatars';
+				zcolor = 'red';
+				dGet('wtw_mywebstitle').innerHTML = 'Select a 3D Avatar to Edit';
+				dGet('wtw_mywebsdesc').innerHTML = 'These are my 3D Avatars.';
+				zloadedid = avatarid;
+				break;
+		}
+		
+		WTW.hide('wtw_mywebs');
+		WTW.show('wtw_loadingmywebs');
+		var zlistwebs = '';
+/*		if (WTW.isUserInRole('admin') || WTW.isUserInRole('developer')) {
+			zlistwebs = "<div class='wtw-localbuttonleftpad'></div><div id='wtw_webbuttonmine' class='wtw-localbutton";
+			if (zfilter == 'mine') {
+				zlistwebs += "selected";
+			}
+			zlistwebs += " wtw-leftradius' onclick=\"WTW.setWebsListTab('mine');\">Mine</div><div class='wtw-localbuttonmiddlepad'> or </div><div id='wtw_webbuttonall' class='wtw-localbutton";
+			if (zfilter == 'all') {
+				zlistwebs += "selected";
+			}
+			zlistwebs += " wtw-rightradius' onclick=\"WTW.setWebsListTab('all');\">All</div><div class='wtw-localbuttonrightpad'></div><div class='wtw-clear'></div><div class='wtw-mainmenuvalue'>Admins and Developer Roles can edit <b>All</b> 3D Webs on this server.</div><hr /><div class='wtw-clear'></div>\r\n";
+		} else {
+			zlistwebs = '<br /><br />';
+		}
+*/
+		dGet('wtw_mywebslist').innerHTML = zlistwebs;
+		WTW.getAsyncJSON('/connect/webs.php?filter=' + zfilter + '&webtype=' + zwebtype, 
+			function(zresponse) {
+				zresponse = JSON.parse(zresponse);
 
+				var zmywebslist = '';
+
+				for (var i=0; i < zresponse.length; i++) {
+					var zbuttonstyle = '';
+					var zwebid = zresponse[i].webid;
+					var zupdatedate  = WTW.formatDate(zresponse[i].updatedate);
+					var zdirsize = WTW.formatNumber(Math.round(Number(zresponse[i].dirsize)/1000000),0);
+					if (zcolumns > 1) {
+						var zcols = '';
+						switch (zcolumns) {
+							case 2:
+								zcols = 'wtw-largecol' + zcolor;
+								break;
+							case 3:
+								zcols = 'wtw-medcol' + zcolor;
+								break;
+							case 4:
+								zcols = 'wtw-smallcol' + zcolor;
+								break;
+						}
+						if (zloadedid == zwebid) {
+							zmywebslist += "<div class='" + zcols + "' style='border:3px solid " + zcolor + ";'>";
+						} else {
+							zmywebslist += "<div class='" + zcols + "'>";
+						}
+						zbuttonstyle = "style='margin:2px 2px 5px 5px;'";
+					}
+					zmywebslist += "<h3 class=\"wtw-" + zcolor + "\">" + zresponse[i].webname + "</h3>";
+					if (zresponse[i].imageurl != "") {
+						zmywebslist += "<div style=\"clear:both;\"></div><img id='wtw_webselect" + zwebid + "' src='" + zresponse[i].imageurl + "' onmouseover=\"this.style.border='1px solid yellow';\" onmouseout=\"this.style.border='1px solid gray';\" onclick=\"window.location.href='admin.php?" + zwebtype + "id=" + zwebid + "';\" style=\"margin:2%;border:1px solid gray;cursor:pointer;width:96%;height:auto;\" alt='" + zresponse[i].webname + "' title='" + zresponse[i].webname + "' />";
+					}
+					zmywebslist += "<div style='white-space:normal;font-weight:normal;color:#000000;'>" + zresponse[i].description + "</div><br />";
+					zmywebslist += "<div style='white-space:normal; font-weight:normal; color:#000000;' >Created By: <b>" + zresponse[i].displayname + "</b> (<b>" + zupdatedate + "</b>)</div><br />";
+					zmywebslist += "<div style='white-space:normal; font-weight:normal; color:#000000;' >Version: <b>[" + zresponse[i].version + "]</b> " + zresponse[i].versiondesc + ".</div><br />";
+					zmywebslist += "<div class='wtw-black' style='min-width:150px;'>Folder Size: <b>" + zdirsize + " MB</b></div><br />";
+					zmywebslist += "<div class='wtw-black' style='min-width:150px;'>File Count: <b>" + zresponse[i].filecount + "</b></div><br />";
+					if (zloadedid == zwebid) {
+						zmywebslist += "<input type='button' id='wtw_bwebselect" + i + "' class='wtw-openbutton' value='Loaded in Editor' " + zbuttonstyle + " />";
+					} else {
+						zmywebslist += "<input type='button' id='wtw_bwebselect" + i + "' class='wtw-openbutton' value='Open to Edit' onclick=\"window.location.href='admin.php?" + zwebtype + "id=" + zwebid + "';\" " + zbuttonstyle + " />";
+					}
+					if (zcolumns > 1) {
+						zmywebslist += "</div>";
+					} else {
+						zmywebslist += "<br /><hr style=\"width:96%;\" />";
+					}
+				}
+				dGet('wtw_mywebslist').innerHTML = zmywebslist;
+				if (zresponse.length > 0) {
+					dGet('wtw_mywebsdesc').innerHTML += ' (' + zresponse.length + ' Total)';
+				}
+
+				dGet('wtw_downloadscol1').onclick = function() { WTW.updateCols(zwebtype, dGet('wtw_downloadscol1'), 1); };
+				dGet('wtw_downloadscol2').onclick = function() { WTW.updateCols(zwebtype, dGet('wtw_downloadscol2'), 2); };
+				dGet('wtw_downloadscol3').onclick = function() { WTW.updateCols(zwebtype, dGet('wtw_downloadscol3'), 3); };
+				dGet('wtw_downloadscol4').onclick = function() { WTW.updateCols(zwebtype, dGet('wtw_downloadscol4'), 4); };
+
+
+
+/*				if (WTW.communities != null) {
+					if (WTW.communities.length > 0) {
+						var zversioncheck = [];
+						for (var i = 0; i < WTW.communities.length; i++) {
+							if (WTW.communities[i] != null) {
+								var zversion = '';
+								zversioncheck[zversioncheck.length] = {
+									'webtype': 'community',
+									'webname': btoa(WTW.communities[i].communityinfo.webname),
+									'webdesc': btoa(WTW.communities[i].communityinfo.communitydescription),
+									'webimage': WTW.communities[i].communityinfo.snapshotpath,
+									'webid': WTW.communities[i].communityinfo.communityid,
+									'versionid': WTW.communities[i].communityinfo.versionid,
+									'version': WTW.communities[i].communityinfo.version
+								};
+								if (WTW.communities[i].communityinfo.version != undefined) {
+									if (WTW.communities[i].communityinfo.version != '') {
+										zversion = ' (v' + WTW.communities[i].communityinfo.version + ')';
+									}
+								}
+								if (WTW.communities[i].communityinfo.communityid == communityid) {
+									dGet('wtw_mycommunitieslist').innerHTML += "<div id='wtw_beditweb-" + WTW.communities[i].communityinfo.communityid + "' class='wtw-menulevel2' style='background-color:#2C2CAB;'><div style='float:right;color:#afafaf;'>" + zversion + "</div>" + WTW.decode(WTW.communities[i].communityinfo.webname) + "</div>\r\n";
+								} else {
+									dGet('wtw_mycommunitieslist').innerHTML += "<div id='wtw_beditweb-" + WTW.communities[i].communityinfo.communityid + "' onclick=\"window.location.href='admin.php?communityid=" + WTW.communities[i].communityinfo.communityid + "';\" class='wtw-menulevel2'><div style='float:right;color:#afafaf;'>" + zversion + "</div>" + WTW.decode(WTW.communities[i].communityinfo.webname) + "</div>\r\n";
+								}
+							}
+						}
+						dGet('wtw_mycommunitieslist').innerHTML += "<div class='wtw-normalgray'>Total: <b>" + WTW.communities.length + "</b> Communities</div>";
+						WTW.pluginsShowListVersionCheck('community', zversioncheck);
+					} else {
+						dGet('wtw_mycommunitieslist').innerHTML = "<div class='wtw-yellow'>No 3D Community Scenes Found</div><br />";
+						dGet("wtw_mycommunitieslist").innerHTML += "<div id='wtw_adminaddcommunity2' class='wtw-adminsubmenu' onclick=\"WTW.adminMenuItemSelected(dGet('wtw_adminaddcommunity'));\">Add New 3D Community Scene</div>";
+					}
+				}
+*/
+				window.setTimeout(function() {
+					WTW.hide('wtw_loadingmywebs');
+					WTW.show('wtw_mywebs');
+					
+				},500);
+			}
+		);
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminforms.js-getSelectMyWebsList=' + ex.message);
+	}		
+}
+
+WTWJS.prototype.updateCols = function(zwebtype, zobj, zcolumns) {
+	try {
+		dGet('wtw_downloadscol1').className = 'wtw-tinyimg';
+		dGet('wtw_downloadscol2').className = 'wtw-tinyimg';
+		dGet('wtw_downloadscol3').className = 'wtw-tinyimg';
+		dGet('wtw_downloadscol4').className = 'wtw-tinyimg';
+		dGet('wtw_downloadscol1').src = dGet('wtw_downloadscol1').src.replace('set','');
+		dGet('wtw_downloadscol2').src = dGet('wtw_downloadscol2').src.replace('set','');
+		dGet('wtw_downloadscol3').src = dGet('wtw_downloadscol3').src.replace('set','');
+		dGet('wtw_downloadscol4').src = dGet('wtw_downloadscol4').src.replace('set','');
+		var znewicon = zobj.src.replace(zobj.id.replace('wtw_downloads','') + '.png', zobj.id.replace('wtw_downloads','') + 'set.png');
+		dGet(zobj.id).src = znewicon;
+		WTW.getSelectMyWebsList(zwebtype, zcolumns);
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminforms.js-updateCols=' + ex.message);
+	}
+}
