@@ -74,17 +74,17 @@ class wtw3dinternet {
 			/* Admin only hooks */
 			if ($wtwplugins->pagename == "admin.php") {
 				/* add admin menu items */
-				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function) */
+				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function, color) */
 				
-				$wtwplugins->addAdminMenuItem('wtw_adminmenuupdates', $wtwplugins->__('Updates'), -100, 'wtw_dashboard', 2, 'wtw_updates', '', array('admin','developer'), "WTW.openFullPageForm('updates','Check for Updates','');");
-				$wtwplugins->addAdminMenuItem('wtw_adminmediawtwdownloads', $wtwplugins->__('WalkTheWeb Downloads'), -95, 'wtw_medialibrary', 3, 'wtw_viewwtwdownloads', '', array('admin','developer','architect','host'), "WTW.openFullPageForm('importpage','".$wtwplugins->__('communities')."');");
-				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetmenu', $wtwplugins->__('3D Internet'), -70, 'wtw_3dinternetmenu', 0, '', '/content/plugins/wtw-3dinternet/assets/images/menuworld.png', array('admin','developer'), "WTW.adminMenuItemSelected(this);WTW.toggleAdminSubMenu(this);");
+				$wtwplugins->addAdminMenuItem('wtw_adminmenuupdates', $wtwplugins->__('Updates'), -100, 'wtw_dashboard', 2, 'wtw_updates', '', array('admin','developer'), "WTW.openFullPageForm('updates','Check for Updates','');", '');
+				$wtwplugins->addAdminMenuItem('wtw_adminmediawtwdownloads', $wtwplugins->__('WalkTheWeb Downloads'), -55, 'wtw_mediawtwdownloads', 0, '', '/content/system/images/menuwtw.png', array('admin','developer','architect','host'), "WTW.openFullPageForm('importpage','".$wtwplugins->__('communities')."');", '');
+				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetmenu', $wtwplugins->__('3D Internet'), 100, 'wtw_3dinternetmenu', 0, '', '/content/plugins/wtw-3dinternet/assets/images/menuworld.png', array('admin','developer'), "WTW.adminMenuItemSelected(this);WTW.toggleAdminSubMenu(this);", '');
 				
-				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetavatars', $wtwplugins->__('WalkTheWeb Logins and Avatars'), -70, 'wtw_3dinternetmenu', 1, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetloginspage');");
-				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetmultiplayer', $wtwplugins->__('Multiplayer and Chat'), -70, 'wtw_3dinternetmenu', 2, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetmultiplayerpage');wtw3dinternet.serviceCheck('multiplayer');");
-				$wtwplugins->addAdminMenuItem('wtw_admin3dinternettemplates', $wtwplugins->__('Templates and Sharing'), -70, 'wtw_3dinternetmenu', 3, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternettemplatespage');");
-				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetfranchising', $wtwplugins->__('Franchising to the Internet'), -70, 'wtw_3dinternetmenu', 4, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetfranchisingpage');");
-				$wtwplugins->addAdminMenuItem('wtw_adminaddplugins', $wtwplugins->__('Add 3D Plugin'), 50, 'wtw_plugins', 4, 'wtw_allplugins', '', array('admin','developer'), "WTW.openFullPageForm('importpage','plugins');");
+				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetavatars', $wtwplugins->__('WalkTheWeb Logins and Avatars'), 100, 'wtw_3dinternetmenu', 1, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetloginspage');", '');
+				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetmultiplayer', $wtwplugins->__('Multiplayer and Chat'), 100, 'wtw_3dinternetmenu', 2, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetmultiplayerpage');wtw3dinternet.serviceCheck('multiplayer');", '');
+				$wtwplugins->addAdminMenuItem('wtw_admin3dinternettemplates', $wtwplugins->__('Templates and Sharing'), 100, 'wtw_3dinternetmenu', 3, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternettemplatespage');", '');
+				$wtwplugins->addAdminMenuItem('wtw_admin3dinternetfranchising', $wtwplugins->__('Franchising to the Internet'), 100, 'wtw_3dinternetmenu', 4, 'wtw_3dinternetsettings', '', array('admin','developer'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('3D Internet')."','wtw_3dinternetfranchisingpage');", '');
+				$wtwplugins->addAdminMenuItem('wtw_adminaddplugins', $wtwplugins->__('Add 3D Plugin'), -40, 'wtw_plugins', 4, 'wtw_allplugins', '', array('admin','developer'), "WTW.openFullPageForm('importpage','plugins');", '');
 
 				/* admin full page settings forms */
 				/* wtwplugins class -> addFullPageForm function (form id, allowed roles array - null for all, form html string) */

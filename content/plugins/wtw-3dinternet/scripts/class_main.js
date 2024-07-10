@@ -274,6 +274,8 @@ WTW_3DINTERNET.prototype.adminMenuItemSelected = function(zobj) {
 			if (zobj.id != undefined) {
 				switch (zobj.id) {
 					case 'wtw_admin3dinternetmenu':
+						
+						break;
 					case 'wtw_admincommunityaddbuilding':
 						WTW.hideAdminMenu();
 						wtw3dinternet.showFranchise(dGet('wtw_buildingbuttonlocal'),'building');

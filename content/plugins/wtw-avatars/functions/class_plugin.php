@@ -90,22 +90,22 @@ class wtwavatars {
 					}
 				}
 				/* add admin menu items */
-				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function) */
+				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function, color) */
 				
-				$wtwplugins->addAdminMenuItem('wtw_adminavatars', $wtwplugins->__('3D Avatars'), -75, 'wtw_adminavatars', 0, '', '/content/system/images/menuavatars.png', $zupdateroles, null);
-				$wtwplugins->addAdminMenuItem('wtw_selectavatar', $wtwplugins->__('Select 3D Avatar'), -75, 'wtw_adminavatars', 1, 'wtw_selectavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
-				$wtwplugins->addAdminMenuItem('wtw_addnewavatar', $wtwplugins->__('Add New 3D Avatar (Download)'), -75, 'wtw_adminavatars', 2, 'wtw_addnewavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
-				$wtwplugins->addAdminMenuItem('wtw_createavatar', $wtwplugins->__('Create 3D Avatar (from Scratch)'), -75, 'wtw_adminavatars', 3, 'wtw_createavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
+				$wtwplugins->addAdminMenuItem('wtw_adminavatars', $wtwplugins->__('3D Avatars'), -75, 'wtw_adminavatars', 0, '', '/content/system/images/menuavatars.png', $zupdateroles, null, 'red');
+				$wtwplugins->addAdminMenuItem('wtw_selectavatar', $wtwplugins->__('Select 3D Avatar'), -75, 'wtw_adminavatars', 1, 'wtw_selectavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);WTW.openFullPageForm('fullpage','Select 3D Avatar','wtw_mywebspage');", 'red');
+				$wtwplugins->addAdminMenuItem('wtw_addnewavatar', $wtwplugins->__('Add New 3D Avatar (Download)'), -75, 'wtw_adminavatars', 2, 'wtw_addnewavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);", 'red');
+				$wtwplugins->addAdminMenuItem('wtw_createavatar', $wtwplugins->__('Create 3D Avatar (from Scratch)'), -75, 'wtw_adminavatars', 3, 'wtw_createavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);", 'red');
 				
 				if ((($zhostid == $wtwplugins->userid && isset($zhostid) && !empty($zhostid)) || (empty($zhostuserid) && ($wtwplugins->isUserInRole("Admin") || $wtwplugins->isUserInRole("Developer")))) && isset($wtwplugins->avatarid) && !empty($wtwplugins->avatarid)) {
-					$wtwplugins->addAdminMenuItem('wtw_adminsettingsavatar', $wtwplugins->__('Options and Settings'), -75, 'wtw_adminavatars', 5, 'wtw_adminsettingsavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
-					$wtwplugins->addAdminMenuItem('wtw_admineditavatar', $wtwplugins->__('Edit 3D Avatar'), -75, 'wtw_adminavatars', 6, 'wtw_admineditavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
+					$wtwplugins->addAdminMenuItem('wtw_adminsettingsavatar', $wtwplugins->__('Options and Settings'), -75, 'wtw_adminavatars', 5, 'wtw_adminsettingsavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);", 'red');
+					$wtwplugins->addAdminMenuItem('wtw_admineditavatar', $wtwplugins->__('Edit 3D Avatar'), -75, 'wtw_adminavatars', 6, 'wtw_admineditavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);", 'red');
 				} else if ($wtwplugins->hasValue($wtwplugins->avatarid)) {
-					$wtwplugins->addAdminMenuItem('wtw_admincustomcopyavatar', $wtwplugins->__('Copy as Custom 3D Avatar'), -75, 'wtw_adminavatars', 7, 'wtw_admincustomcopyavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);");
+					$wtwplugins->addAdminMenuItem('wtw_admincustomcopyavatar', $wtwplugins->__('Copy as Custom 3D Avatar'), -75, 'wtw_adminavatars', 7, 'wtw_admincustomcopyavatar', '', $zupdateroles, "WTW.adminMenuItemSelected(this);", 'red');
 				}
 				
-				$wtwplugins->addAdminMenuItem('wtw_adminavatargroups', $wtwplugins->__('Avatar Groups'), -75, 'wtw_adminavatars', 8, 'wtw_adminavatargroups', '', $zupdateroles, "WTW.openFullPageForm('fullpage','".$wtwplugins->__('Avatar Groups')."','wtw_avatargroupspage');");
-				$wtwplugins->addAdminMenuItem('wtw_adminavataranimationevents', $wtwplugins->__('Avatar Animation Events'), -75, 'wtw_adminavatars', 9, 'wtw_adminavataranimationevents', '', $zdeveloperroles, "WTW.openFullPageForm('fullpage','".$wtwplugins->__('Avatar Animation Events')."','wtw_avataranimationeventspage');");
+				$wtwplugins->addAdminMenuItem('wtw_adminavatargroups', $wtwplugins->__('Avatar Groups'), -75, 'wtw_adminavatars', 8, 'wtw_adminavatargroups', '', $zupdateroles, "WTW.openFullPageForm('fullpage','".$wtwplugins->__('Avatar Groups')."','wtw_avatargroupspage');", 'red');
+				$wtwplugins->addAdminMenuItem('wtw_adminavataranimationevents', $wtwplugins->__('Avatar Animation Events'), -75, 'wtw_adminavatars', 9, 'wtw_adminavataranimationevents', '', $zdeveloperroles, "WTW.openFullPageForm('fullpage','".$wtwplugins->__('Avatar Animation Events')."','wtw_avataranimationeventspage');", 'red');
 
 
 				$wtwplugins->addAdminSubMenuItem('settingsavatar', 'wtw_adminavatarratings', '<div class="wtw-altkey">ctrl+r</div>'.$wtwplugins->__('Ratings and Requirements'), 5, $zupdateroles, "WTW.openFullPageForm('fullpage','Ratings and Requirements', 'wtw_requirementspage');WTW.openRequirements();");
