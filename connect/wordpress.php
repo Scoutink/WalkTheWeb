@@ -108,7 +108,6 @@ try {
 				'buildingid'=>'',
 				'communityid'=>''
 			);
-
 			if ($wtwconnect->hasValue($zwtwusertoken)) {
 				/* check is the user with the access token has admin or host access */
 				$zresults = $wtwconnect->query("

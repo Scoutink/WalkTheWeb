@@ -4,8 +4,10 @@
 /* this connect file provides connecting grid information */
 require_once('../core/functions/class_wtwconnect.php');
 global $wtwconnect;
+$zresponse = array(
+	'webitems' => array()
+);
 try {
-	//zresponse
 	/* google analytics tracking (if defined in wtw_config.php) */
 	$wtwconnect->trackPageView($wtwconnect->domainurl."/connect/connectinggrids.php");
 	
@@ -513,7 +515,6 @@ try {
 		$i = 0;
 		$zconnectinggridid = "";
 		$zsubconnectinggridid = "";
-		$zresponse = array();
 		$zwebitems = array();
 		/* format json return dataset */
 		foreach ($zresults as $zrow) {
