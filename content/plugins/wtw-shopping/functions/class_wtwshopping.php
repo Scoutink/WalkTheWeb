@@ -70,10 +70,10 @@ class wtwshopping {
 			/* Admin only hooks */
 			if ($wtwplugins->pagename == "admin.php") {
 				/* admin menu items */
-				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function) */
-				$wtwplugins->addAdminMenuItem('wtw_adminshopping', $wtwplugins->__('3D Stores'), 25, 'wtw_shopping', 0, '', WTWSHOPPING_URL.'/assets/images/menustore.png', array('admin','developer','architect','host'), "WTW.adminMenuItemSelected(this);WTW.toggleAdminSubMenu(this);");
-				$wtwplugins->addAdminMenuItem('wtw_adminliststores', $wtwplugins->__('All 3D Stores'), 25, 'wtw_shopping', 1, 'wtw_liststores', '', array('admin','developer','architect','host'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('All 3D Stores')."','wtw_liststorespage');WTWShopping.getStores();");
-				$wtwplugins->addAdminMenuItem('wtw_adminaddstore', $wtwplugins->__('Add Store'), 25, 'wtw_shopping', 2, 'wtw_addstore', '', array('admin','developer','architect','host'), "WTWShopping.openAddStoreForm();");
+				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function, color) */
+				$wtwplugins->addAdminMenuItem('wtw_adminshopping', $wtwplugins->__('3D Stores'), 180, 'wtw_shopping', 0, '', WTWSHOPPING_URL.'/assets/images/menustore.png', array('admin','developer','architect','host'), "WTW.adminMenuItemSelected(this);WTW.toggleAdminSubMenu(this);", '');
+				$wtwplugins->addAdminMenuItem('wtw_adminliststores', $wtwplugins->__('All 3D Stores'), 180, 'wtw_shopping', 1, 'wtw_liststores', '', array('admin','developer','architect','host'), "WTW.openFullPageForm('fullpage','".$wtwplugins->__('All 3D Stores')."','wtw_liststorespage');WTWShopping.getStores();", '');
+				$wtwplugins->addAdminMenuItem('wtw_adminaddstore', $wtwplugins->__('Add Store'), 180, 'wtw_shopping', 2, 'wtw_addstore', '', array('admin','developer','architect','host'), "WTWShopping.openAddStoreForm();", '');
 
 				/* admin full page settings forms */
 				/* wtwplugins class -> addFullPageForm function (form id, allowed roles array - null for all, form html string) */
