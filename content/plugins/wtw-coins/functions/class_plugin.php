@@ -73,7 +73,7 @@ class wtwcoins {
 				$zdeveloperroles = array("admin","developer");
 
 				/* add admin menu items */
-				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function) */
+				/* wtwplugins class -> addAdminMenuItem function (menu item id, menu text, level 1 sort, level 1 id, level 2 sort, level 2 id, level 1 icon, allowed roles array - null for all, onclick JavaScript function, color) */
 
 
 				/* add admin div section form */
