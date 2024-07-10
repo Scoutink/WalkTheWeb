@@ -349,6 +349,27 @@ h3.wtw-blue {
 	background-color:transparent;
 	margin-bottom:2px;
 }
+h3.wtw-green {
+	font-size:1.2em;
+	font-weight:bold;
+	color:green;
+	background-color:transparent;
+	margin-bottom:2px;
+}
+h3.wtw-red {
+	font-size:1.2em;
+	font-weight:bold;
+	color:red;
+	background-color:transparent;
+	margin-bottom:2px;
+}
+h3.wtw-yellow {
+	font-size:1.2em;
+	font-weight:bold;
+	color:black;
+	background-color:transparent;
+	margin-bottom:2px;
+}
 h4 {
 	font-size:1.1em;
 	font-weight:bold;
@@ -1634,18 +1655,55 @@ hr.wtw-menuhr {
 	display:inline-block;
 	margin-left:40px;
 }
-.wtw-mincol {
-	cursor:default;
-	display:inline-block;
-	text-align:left;
-	width:28%;
-	min-height:20px;
-}
 .wtw-smallcol {
 	display:inline-block;
 	width: 21%;
 	min-height:200px;
 	border:1px solid #afafaf;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-smallcolgreen {
+	display:inline-block;
+	width: 20%;
+	min-height:200px;
+	background-color:#F6FFF2;
+	border:1px solid #5EFD48;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-smallcolblue {
+	display:inline-block;
+	width: 20%;
+	min-height:200px;
+	background-color:#F2FBFF;
+	border:1px solid #48DAFD;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-smallcolred {
+	display:inline-block;
+	width: 20%;
+	min-height:200px;
+	background-color:#FFF2F2;
+	border:1px solid #FD4848;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-smallcolyellow {
+	display:inline-block;
+	width: 20%;
+	min-height:200px;
+	background-color:#FFFFF2;
+	border:1px solid #FDFD48;
 	border-radius:10px;
 	margin:5px 1% auto 1%;
 	padding:10px;
@@ -1661,6 +1719,50 @@ hr.wtw-menuhr {
 	padding:10px;
 	vertical-align:top; 
 }
+.wtw-medcolgreen {
+	display:inline-block;
+	width: 28%;
+	min-height:200px;
+	background-color:#F6FFF2;
+	border:1px solid #5EFD48;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-medcolblue {
+	display:inline-block;
+	width: 28%;
+	min-height:200px;
+	background-color:#F2FBFF;
+	border:1px solid #48DAFD;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-medcolred {
+	display:inline-block;
+	width: 28%;
+	min-height:200px;
+	background-color:#FFF2F2;
+	border:1px solid #FD4848;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-medcolyellow {
+	display:inline-block;
+	width: 28%;
+	min-height:200px;
+	background-color:#FFFFF2;
+	border:1px solid #FDFD48;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
 .wtw-largecol {
 	display:inline-block;
 	width: 45%;
@@ -1670,6 +1772,58 @@ hr.wtw-menuhr {
 	margin:5px 1% auto 1%;
 	padding:10px;
 	vertical-align:top; 
+}
+.wtw-largecolgreen {
+	display:inline-block;
+	width: 45%;
+	min-height:200px;
+	background-color:#F6FFF2;
+	border:1px solid #5EFD48;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-largecolblue {
+	display:inline-block;
+	width: 45%;
+	min-height:200px;
+	background-color:#F2FBFF;
+	border:1px solid #48DAFD;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-largecolred {
+	display:inline-block;
+	width: 45%;
+	min-height:200px;
+	background-color:#FFF2F2;
+	border:1px solid #FD4848;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+.wtw-largecolyellow {
+	display:inline-block;
+	width: 45%;
+	min-height:200px;
+	background-color:#FFFFF2;
+	border:1px solid #FDFD48;
+	border-radius:10px;
+	margin:5px 1% auto 1%;
+	padding:10px;
+	vertical-align:top; 
+}
+
+.wtw-mincol {
+	cursor:default;
+	display:inline-block;
+	text-align:left;
+	width:28%;
+	min-height:20px;
 }
 .wtw-onecol {
 	cursor:default;

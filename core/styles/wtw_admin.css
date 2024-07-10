@@ -355,6 +355,82 @@ td.wtw-tdactiveoptional {
 	border-bottom:#454545 solid 1px;
 	background-color: #282828;
 }
+.wtw-adminmenugreen {
+	margin:0px;
+	padding:7px 0px 7px 10px;
+	font-weight:normal;
+	font-size:1em;
+	color:#5EFD48;
+	border-top:transparent solid 1px;
+	border-bottom:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+	vertical-align:middle;
+}
+.wtw-adminmenugreen:hover {
+	cursor:pointer;
+	color:#D7FFC2;
+	border-top:#454545 solid 1px;
+	border-bottom:#454545 solid 1px;
+	background-color: #282828;
+}
+.wtw-adminmenublue {
+	margin:0px;
+	padding:7px 0px 7px 10px;
+	font-weight:normal;
+	font-size:1em;
+	color:#48DAFD;
+	border-top:transparent solid 1px;
+	border-bottom:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+	vertical-align:middle;
+}
+.wtw-adminmenublue:hover {
+	cursor:pointer;
+	color:#C2F3FF;
+	border-top:#454545 solid 1px;
+	border-bottom:#454545 solid 1px;
+	background-color: #282828;
+}
+.wtw-adminmenuyellow {
+	margin:0px;
+	padding:7px 0px 7px 10px;
+	font-weight:normal;
+	font-size:1em;
+	color:#FDFD48;
+	border-top:transparent solid 1px;
+	border-bottom:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+	vertical-align:middle;
+}
+.wtw-adminmenuyellow:hover {
+	cursor:pointer;
+	color:#FEFFC2;
+	border-top:#454545 solid 1px;
+	border-bottom:#454545 solid 1px;
+	background-color: #282828;
+}
+.wtw-adminmenured {
+	margin:0px;
+	padding:7px 0px 7px 10px;
+	font-weight:normal;
+	font-size:1em;
+	color:#FD4848;
+	border-top:transparent solid 1px;
+	border-bottom:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+	vertical-align:middle;
+}
+.wtw-adminmenured:hover {
+	cursor:pointer;
+	color:#FFC2C2;
+	border-top:#454545 solid 1px;
+	border-bottom:#454545 solid 1px;
+	background-color: #282828;
+}
 .wtw-adminsubmenu {
 	margin-top:5px;
 	margin-bottom:5px;
@@ -371,6 +447,82 @@ td.wtw-tdactiveoptional {
 .wtw-adminsubmenu:hover {
 	cursor:pointer;
 	color:#FFF7DA;
+	border:#454545 solid 1px;
+	background-color:#282828;
+}
+.wtw-adminsubmenugreen {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:35px;
+	margin-right:5px;
+	padding:3px;
+	font-weight:normal;
+	font-size:1em;
+	color:#5EFD48;
+	border:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+}
+.wtw-adminsubmenugreen:hover {
+	cursor:pointer;
+	color:#D7FFC2;
+	border:#454545 solid 1px;
+	background-color:#282828;
+}
+.wtw-adminsubmenublue {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:35px;
+	margin-right:5px;
+	padding:3px;
+	font-weight:normal;
+	font-size:1em;
+	color:#48DAFD;
+	border:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+}
+.wtw-adminsubmenublue:hover {
+	cursor:pointer;
+	color:#C2F3FF;
+	border:#454545 solid 1px;
+	background-color:#282828;
+}
+.wtw-adminsubmenuyellow {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:35px;
+	margin-right:5px;
+	padding:3px;
+	font-weight:normal;
+	font-size:1em;
+	color:#FDFD48;
+	border:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+}
+.wtw-adminsubmenuyellow:hover {
+	cursor:pointer;
+	color:#FEFFC2;
+	border:#454545 solid 1px;
+	background-color:#282828;
+}
+.wtw-adminsubmenured {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:35px;
+	margin-right:5px;
+	padding:3px;
+	font-weight:normal;
+	font-size:1em;
+	color:#FD4848;
+	border:transparent solid 1px;
+	background: rgba(33,33,33,0.2);
+	text-align:left;
+}
+.wtw-adminsubmenured:hover {
+	cursor:pointer;
+	color:#FFC2C2;
 	border:#454545 solid 1px;
 	background-color:#282828;
 }
@@ -410,6 +562,24 @@ td.wtw-tdactiveoptional {
 	cursor:default;
 }
 .wtw-searchresultbuttonyellow:hover {
+	border:2px solid green;
+	color:green;
+	background-color:#FCFFBD;
+	cursor:pointer;
+}
+.wtw-openbutton {
+	border:2px solid gray;
+	border-radius:10px;
+	color:#000000;
+	font-weight:bold;
+	padding:20px;
+	text-align:center;
+	vertical-align:top;
+	font-size:1em;
+	margin:15px 5px 5px 5px;
+	background-color:#ffffff;
+}
+.wtw-openbutton:hover {
 	border:2px solid green;
 	color:green;
 	background-color:#FCFFBD;

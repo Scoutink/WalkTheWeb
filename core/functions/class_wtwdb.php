@@ -1635,6 +1635,35 @@ class wtwdb {
 		return $zfilecount;
 	} 
 
+	public function getFileList($zdirectory) {
+		$zfilelist = array();
+		try {
+			$zcontentpath = '';
+			if (defined('wtw_contentpath')) {
+				$zcontentpath = wtw_contentpath;
+			}
+			$zdirectory = rtrim($zdirectory, "/");
+			if (file_exists($zdirectory)) {
+				$zfileind = 0;
+				foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($zdirectory)) as $zfile){
+					$zfilename = $zfile->getFileName();
+					if ($zfilename != '..' && $zfilename != '.' && !is_dir($zfilename)) {
+						$zfilelist[$zfileind] = array(
+							'filename' => $zfilename,
+							'filepath' => str_replace($zcontentpath,'/content',$zfile->getPathname()),
+							'filesize' => $zfile->getSize(),
+							'downloaded' => '0'
+						);
+						$zfileind += 1;
+					}
+				}
+			}
+		} catch (Exception $e) {
+			$this->serror("core-functions-class_wtwdb.php-getFileList=".$e->getMessage());
+		}
+		return $zfilelist;
+	} 
+
 	public function getobjectanimations($zuploadobjectid) {
 		$zobjectanimations = array();
 		try {

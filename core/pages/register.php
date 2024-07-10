@@ -20,7 +20,6 @@
 						zresponse = JSON.parse(zresponse);
 						if (zresponse.success != null) {
 							if (zresponse.success.token != null) {
-//console.log("token=" + zresponse.success.token);
 								zaccesstoken = zresponse.success.token;
 							}
 						}
@@ -42,7 +41,6 @@
 						zresponse = JSON.parse(zresponse);
 						if (zresponse.success != null) {
 							if (zresponse.success.token != null) {
-//console.log("token=" + zresponse.success.token);
 								zaccesstoken = zresponse.success.token;
 							}
 						}
@@ -58,7 +56,6 @@
 				var zrequest = {};
 				postJSON("https://secure.walktheweb.com/api/details", zrequest, true,
 					function(zresponse) {
-//console.log(zresponse);
 					}
 				);
 			} catch (ex) {
@@ -71,7 +68,6 @@
 				var zrequest = {};
 				postJSON("https://secure.walktheweb.com/api/logout", zrequest, true,
 					function(zresponse) {
-//console.log(zresponse);
 					}
 				);
 			} catch (ex) {

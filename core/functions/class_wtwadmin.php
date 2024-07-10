@@ -531,7 +531,7 @@ class wtwadmin {
 			$zpagedata .= "			<div id='wtw_menuuploadedobjectsdiv' class='wtw-subdiv'>\r\n";
 			$zpagedata .= "				<div id='wtw_uploadedmodelsdiv' class='wtw-fullpage' style='display:none;'></div>\r\n";
 			$zpagedata .= "				<div id='wtw_uploadedmodeldetailsdiv' class='wtw-fullpage' style='display:none;'>\r\n";
-			$zpagedata .= "					<div class='wtw-roundedbox'><b>3D Models</b> can be downloaded off the Internet or created from scratch using software like <a href='https://www.blender.org/' target='_blank'>Blender.org</a>. <b>3D Models</b> can be added to any 3D Community Scene, 3D Building, or 3D Thing. Recommended formats are .blender, .obj, .glb, or .gltf.<br /></div>\r\n";
+			$zpagedata .= "					<div class='wtw-roundedbox'><b>3D Models</b> can be downloaded off the Internet or created from scratch using software like <a href='https://www.blender.org/' target='_blank'>Blender.org</a>. <b>3D Models</b> can be added to any 3D Community Scene, 3D Building, or 3D Thing. Recommended formats are .babylon, .obj, .glb, or .gltf.<br /></div>\r\n";
 			$zpagedata .= "					<div class='wtw-clear'></div>\r\n";
 			$zpagedata .= "					<div class='wtw-dashboardboxlefthalf'>\r\n";
 			$zpagedata .= "						<div id='wtw_uploadedmodelsnamediv'></div>\r\n";
@@ -694,6 +694,31 @@ class wtwadmin {
 			$zpagedata .= "		</div>\r\n";
 			$zpagedata .= "	</div>\r\n";
 			
+			/* Select 3D Webs Page */
+			$zpagedata .= "	<div id='wtw_mywebspage' class='wtw-dashboardpage wtw-hide' style='display:none;'>\r\n";
+			$zpagedata .= "		<div id='wtw_loadingmywebs' class='wtw-loadingnotice'>Loading...</div>\r\n";
+			$zpagedata .= "		<div id='wtw_mywebs' class='wtw-fullpage'>\r\n";
+			$zpagedata .= "			<div class='wtw-dashboardboxleftfull'>\r\n";
+			$zpagedata .= "				<div id='wtw_mywebstitle' class='wtw-dashboardboxtitle'></div>\r\n";
+			$zpagedata .= "				<div class='wtw-dashboardbox'>\r\n";
+
+			$zpagedata .= "					<div class='wtw-searchdiv'>\r\n";
+			$zpagedata .= "						<div class='wtw-colicons'>\r\n";
+			$zpagedata .= "							<img id='wtw_downloadscol1' src='/content/system/images/col1.png' alt='1 Column' title='1 Column' class='wtw-tinyimg' onclick='WTW.updateCols('community', this, 1);' />\r\n";
+			$zpagedata .= "							<img id='wtw_downloadscol2' src='/content/system/images/col2.png' alt='2 Columns' title='2 Columns' class='wtw-tinyimg' onclick='WTW.updateCols('community', this, 2);' />\r\n";
+			$zpagedata .= "							<img id='wtw_downloadscol3' src='/content/system/images/col3.png' alt='3 Columns' title='3 Columns' class='wtw-tinyimg' onclick='WTW.updateCols('community', this, 3);' />\r\n";
+			$zpagedata .= "							<img id='wtw_downloadscol4' src='/content/system/images/col4set.png' alt='4 Columns' title='4 Columns' class='wtw-tinyimgselected' onclick='WTW.updateCols('community', this, 4);' />\r\n";
+			$zpagedata .= "						</div>\r\n";
+			$zpagedata .= "					</div>\r\n";
+			$zpagedata .= " 				<div id='wtw_mywebsdesc'>These are my 3D Webs.</div><br /><br />\r\n";
+			$zpagedata .= "					<div class='wtw-clear'></div><hr />\r\n";
+
+			$zpagedata .= "					<div id='wtw_mywebslist'></div>\r\n";
+			$zpagedata .= "				</div>\r\n";
+			$zpagedata .= "			</div>\r\n";
+			$zpagedata .= "		</div>\r\n";
+			$zpagedata .= "	</div>\r\n";
+
 			/* users roles and functions */
 			$zpagedata .= "	<div id='wtw_userspage' class='wtw-dashboardpage wtw-hide' style='display:none;'>\r\n";
 			$zpagedata .= "		<div id='wtw_loadingusers' class='wtw-loadingnotice'>Loading...</div>\r\n";

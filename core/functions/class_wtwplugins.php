@@ -68,10 +68,10 @@ class wtwplugins {
 	}
 	
 	/* expose functions to this class from other functions so that the original function is only updated in one place */
-	public function addAdminMenuItem($zid, $ztitle, $zmenusort, $zmenu, $zsubmenusort, $zsubmenu, $ziconurl, $zaccessrequired, $zjsfunction) {
+	public function addAdminMenuItem($zid, $ztitle, $zmenusort, $zmenu, $zsubmenusort, $zsubmenu, $ziconurl, $zaccessrequired, $zjsfunction, $zcolor) {
 		global $wtwadminmenu;
 		if (isset($wtwadminmenu)) {
-			return $wtwadminmenu->addAdminMenuItem($zid, $ztitle, $zmenusort, $zmenu, $zsubmenusort, $zsubmenu, $ziconurl, $zaccessrequired, $zjsfunction);
+			return $wtwadminmenu->addAdminMenuItem($zid, $ztitle, $zmenusort, $zmenu, $zsubmenusort, $zsubmenu, $ziconurl, $zaccessrequired, $zjsfunction, $zcolor);
 		} else {
 			return false;
 		}
@@ -361,6 +361,11 @@ class wtwplugins {
 	public function getFileCount($zdirectory) {
 		global $wtwdb;
 		return $wtwdb->getFileCount($zdirectory);
+	} 
+
+	public function getFileList($zdirectory) {
+		global $wtwdb;
+		return $wtwdb->getFileList($zdirectory);
 	} 
 
 	public function endsWith($zhaystack, $zneedle) {

@@ -466,6 +466,11 @@ class wtwconnect {
 		return $wtwdb->getFileCount($zdirectory);
 	} 
 
+	public function getFileList($zdirectory) {
+		global $wtwdb;
+		return $wtwdb->getFileList($zdirectory);
+	} 
+
 	public function __($zlabel) {
 		/* Language translation based on language file */
 		global $wtwdb;
