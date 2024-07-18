@@ -869,9 +869,9 @@ WTWJS.prototype.refresh = function() {
 
 /* get text, text cleanup, encode, decode, and html string scrubbers */
 
-String.prototype.toProperCase = function () {
+WTWJS.prototype.toProperCase = function(zstring) {
 	/* reformat text as proper case */
-    return this.replace(/\w\S*/g, function(ztext){return ztext.charAt(0).toUpperCase() + ztext.substr(1).toLowerCase();});
+    return zstring.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase());
 }
 
 WTWJS.prototype.cleanHTMLText = function(zhtmltext) {
@@ -2266,55 +2266,66 @@ WTWJS.prototype.setMoldLoaded = function(zmoldname, zloaded) {
 WTWJS.prototype.transformPosition = function(zmolddef, zposx, zposy, zposz) {
 	/* transform position when a mold is added that uses an action zone as a parent (like swinging doors) */
 	try {
-		if (zmolddef.actionzoneid != '') {
-			for (var j = 0; j < WTW.actionZones.length; j++) {
-				if (WTW.actionZones[j] != null) {
-					var zactionzonetype = WTW.actionZones[j].actionzonetype;
-					if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickactivatedslidingdoor' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverturningwheel' || zactionzonetype == 'driverwheel')) {
-						var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
-						if (zactionzoneaxlebase != null) {
-							zposx -= zactionzoneaxlebase.position.x;
-							zposy -= zactionzoneaxlebase.position.y;
-							zposz -= zactionzoneaxlebase.position.z;
-							//rotx -= WTW.getDegrees(zactionzoneaxlebase.rotation.x);
-							//roty -= WTW.getDegrees(zactionzoneaxlebase.rotation.y);
-							//rotz -= WTW.getDegrees(zactionzoneaxlebase.rotation.z);
-						}
-						if (WTW.actionZones[j].parentactionzoneid != '') {
-							var zparentactionzoneind = WTW.getActionZoneInd(WTW.actionZones[j].parentactionzoneid, WTW.actionZones[j].connectinggridind);
-							var zparentactionzoneaxlebasename = WTW.actionZones[zparentactionzoneind].moldname.replace('-actionzone-','-actionzoneaxlebase-');
-							var zparentactionzoneaxlebase = WTW.getMeshOrNodeByID(zparentactionzoneaxlebasename);
-							if (zparentactionzoneaxlebase == null) {
-								WTW.addActionZone(zparentactionzoneaxlebasename.replace('-actionzoneaxlebase-','-actionzone-'), WTW.actionZones[zparentactionzoneind]);
-								zparentactionzoneaxlebase = WTW.getMeshOrNodeByID(zparentactionzoneaxlebasename);
-							}
-							if (zparentactionzoneaxlebase != null) {
-								zposx -= zparentactionzoneaxlebase.position.x;
-								zposy -= zparentactionzoneaxlebase.position.y;
-								zposz -= zparentactionzoneaxlebase.position.z;
-								//rotx -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.x);
-								//roty -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.y);
-								//rotz -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.z);
-							}
-						}
-					} else if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && zactionzonetype == 'peoplemover') {
-						var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
-						if (zactionzoneaxlebase != null) {
-							zposx -= zactionzoneaxlebase.position.x;
-							zposy -= zactionzoneaxlebase.position.y;
-							zposz -= zactionzoneaxlebase.position.z;
-						}
-					} else if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && zactionzonetype.indexOf('seat') > -1) {
-						var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
-						if (zactionzoneaxlebase != null) {
-							zposx -= zactionzoneaxlebase.position.x;
-							zposy -= zactionzoneaxlebase.position.y;
-							zposz -= zactionzoneaxlebase.position.z;
-						}
+		if (zmolddef.parentname.indexOf('-actionzone') > -1) {
+			if (zmolddef.actionzoneid != '') {
+				var zactionzoneind = -1;
+				var znameparts = zmolddef.parentname.split('-');
+				if (znameparts[2] != undefined) {
+					if (WTW.isNumeric(znameparts[2])) {
+						zactionzoneind = Number(znameparts[2]);
 					}
 				}
-			}	
-		}					
+				for (var j = 0; j < WTW.actionZones.length; j++) {
+					if (zactionzoneind == j) {
+						if (WTW.actionZones[j] != null) {
+							var zactionzonetype = WTW.actionZones[j].actionzonetype;
+							if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickactivatedslidingdoor' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverturningwheel' || zactionzonetype == 'driverwheel')) {
+								var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
+								if (zactionzoneaxlebase != null) {
+									zposx -= zactionzoneaxlebase.position.x;
+									zposy -= zactionzoneaxlebase.position.y;
+									zposz -= zactionzoneaxlebase.position.z;
+									//rotx -= WTW.getDegrees(zactionzoneaxlebase.rotation.x);
+									//roty -= WTW.getDegrees(zactionzoneaxlebase.rotation.y);
+									//rotz -= WTW.getDegrees(zactionzoneaxlebase.rotation.z);
+								}
+								if (WTW.actionZones[j].parentactionzoneid != '') {
+									var zparentactionzoneind = WTW.getActionZoneInd(WTW.actionZones[j].parentactionzoneid, WTW.actionZones[j].connectinggridind);
+									var zparentactionzoneaxlebasename = WTW.actionZones[zparentactionzoneind].moldname.replace('-actionzone-','-actionzoneaxlebase-');
+									var zparentactionzoneaxlebase = WTW.getMeshOrNodeByID(zparentactionzoneaxlebasename);
+									if (zparentactionzoneaxlebase == null) {
+										WTW.addActionZone(zparentactionzoneaxlebasename.replace('-actionzoneaxlebase-','-actionzone-'), WTW.actionZones[zparentactionzoneind]);
+										zparentactionzoneaxlebase = WTW.getMeshOrNodeByID(zparentactionzoneaxlebasename);
+									}
+									if (zparentactionzoneaxlebase != null) {
+										zposx -= zparentactionzoneaxlebase.position.x;
+										zposy -= zparentactionzoneaxlebase.position.y;
+										zposz -= zparentactionzoneaxlebase.position.z;
+										//rotx -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.x);
+										//roty -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.y);
+										//rotz -= WTW.getDegrees(zparentactionzoneaxlebase.rotation.z);
+									}
+								}
+							} else if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && zactionzonetype == 'peoplemover') {
+								var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
+								if (zactionzoneaxlebase != null) {
+									zposx -= zactionzoneaxlebase.position.x;
+									zposy -= zactionzoneaxlebase.position.y;
+									zposz -= zactionzoneaxlebase.position.z;
+								}
+							} else if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && zactionzonetype.indexOf('seat') > -1) {
+								var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
+								if (zactionzoneaxlebase != null) {
+									zposx -= zactionzoneaxlebase.position.x;
+									zposy -= zactionzoneaxlebase.position.y;
+									zposz -= zactionzoneaxlebase.position.z;
+								}
+							}
+						}
+					}
+				}	
+			}
+		}
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_utilities.js-transformPosition=' + ex.message);
 	} 

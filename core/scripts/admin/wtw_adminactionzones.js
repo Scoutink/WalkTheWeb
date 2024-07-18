@@ -1622,16 +1622,16 @@ WTWJS.prototype.setNewActionZone = function() {
 							var zmoldind = -1;
 							if (zdoorparts[zdoorpartsind].name.indexOf('-') > -1) {
 								var zobjparts = zdoorparts[zdoorpartsind].name.split('-');
-								if (zobjparts[0] != null) {
-									if (zobjparts[0].indexOf('community') > -1) {
+								if (zobjparts[1] != null) {
+									if (zobjparts[1].indexOf('community') > -1) {
 										molds = WTW.communitiesMolds;
-									} else if (zobjparts[0].indexOf('thing') > -1) {
+									} else if (zobjparts[1].indexOf('thing') > -1) {
 										molds = WTW.thingMolds;
 									}
 								}
-								if (zobjparts[1] != null) {
-									if (WTW.isNumeric(zobjparts[1])) {
-										zmoldind = Number(zobjparts[1]);
+								if (zobjparts[2] != null) {
+									if (WTW.isNumeric(zobjparts[2])) {
+										zmoldind = Number(zobjparts[2]);
 									}
 								}
 							}

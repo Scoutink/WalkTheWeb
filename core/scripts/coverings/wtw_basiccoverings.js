@@ -222,6 +222,9 @@ WTWJS.prototype.addCoveringTexture = function(zmoldname, zmolddef, zlenx, zleny,
 			zcovering.diffuseTexture = new BABYLON.Texture.CreateFromBase64String(zimageinfo.image.src, 'mattexture' + zimageid, scene);
 		} else {
 			zcovering.diffuseTexture = new BABYLON.Texture(ztexturepath, scene);
+			if (zmoldname.indexOf('-mainimage') > -1) {
+				zcovering.emissiveTexture = new BABYLON.Texture(ztexturepath, scene);
+			}
 			zimageextension = ztexturepath.substr(ztexturepath.length - 3).toLowerCase();
 		}
 		zcovering.diffuseTexture.uScale = zuscale;

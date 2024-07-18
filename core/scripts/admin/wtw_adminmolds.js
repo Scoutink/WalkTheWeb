@@ -2170,6 +2170,92 @@ WTWJS.prototype.closeEditPoles = function() {
 }
 
 
+/* List All Items */
+
+WTWJS.prototype.openListItems = async function() {
+	/* open recover items form will search for any molds with the delete flag set; provides a list to view and select for recovery */
+	try {
+		var zwebid = '';
+		var zwebtype = '';
+		var zmolds = [];
+		if (buildingid != '') {
+			zwebid = buildingid;
+			zwebtype = 'building';
+			zmolds = WTW.buildingMolds;
+		} else if (communityid != '') {
+			zwebid = communityid;
+			zwebtype = 'community';
+			zmolds = WTW.communitiesMolds;
+		} else if (thingid != '') {
+			zwebid = thingid;
+			zwebtype = 'thing';
+			zmolds = WTW.thingMolds;
+		}
+		dGet('wtw_allitemslist').innerHTML = '';
+		var zallitemslist = "<div class='wtw-menulevel0text'>Click item below to Edit<br />Item must be shown to load for Edit.<br />Hint: Load All in the Quick Editor Settings.</div>";
+		if (zwebid != '') {
+			WTW.getAsyncJSON('/connect/websitems.php?webtype=' + zwebtype + '&webid=' + zwebid, 
+				function(zresponse) {
+					var zitemslist = JSON.parse(zresponse);
+					if (zitemslist != null) {
+						var zcategory = '';
+						for (var i=0;i < zitemslist.length;i++) {
+							if (zitemslist[i].itemid != null) {
+								if (zcategory != zitemslist[i].category) {
+									zallitemslist += "<h2>" + zitemslist[i].category + "</h2>";
+									zcategory = zitemslist[i].category;
+								}
+								zallitemslist += "<div id='wtw_bitem" + zitemslist[i].itemid + "' name='wtw_bitem" + zitemslist[i].itemid + "' ";
+								
+								switch (zitemslist[i].category) {
+									case 'Molds':
+										var zitemind = -1;
+										var zmoldname = '';
+										for (var j=0; j<zmolds.length;j++) {
+											if (zmolds[j] != null) {
+												if (zmolds[j].moldid == zitemslist[i].itemid) {
+													zitemind = j;
+													zmoldname = zmolds[j].moldname;
+												}
+											}
+										}
+										zallitemslist += "onclick=\"WTW.openMoldForm('" + zitemind + "','" + zitemslist[i].itemtype + "','" + zwebtype + "');\" ";
+										zallitemslist += " onmouseover=\"WTW.hilightMold('" + zmoldname + "','yellow');\" onmouseout=\"WTW.unhilightMold('" + zmoldname + "');\" ";
+										break;
+									case 'Action Zones':
+										zallitemslist += "onclick=\"WTW.openActionZoneForm('" + zitemslist[i].itemid + "');\" ";
+										break;
+									case '3D Webs':
+										var zitemind = -1;
+										var zmoldname = '';
+										for (var j=0; j<WTW.connectingGrids.length; j++) {
+											if (WTW.connectingGrids[j] != null) {
+												if (WTW.connectingGrids[j].connectinggridid == zitemslist[i].itemid) {
+													zitemind = j;
+													zmoldname = WTW.connectingGrids[j].moldname;
+												}
+											}
+										}
+										zallitemslist += "onclick=\"WTW.openConnectingGridsForm('" + zitemind + "');\" ";
+										zallitemslist += " onmouseover=\"WTW.hilightMold('" + zmoldname + "','yellow');\" onmouseout=\"WTW.unhilightMold('" + zmoldname + "');\" ";
+										break;
+								}
+
+								zallitemslist += " class='wtw-menulevel2'>" + WTW.toProperCase(zitemslist[i].webname) + " (" + zitemslist[i].itemtype.replace('babylonfile','3D Model') + ")</div>\r\n";
+							}
+						}
+					}
+					dGet('wtw_allitemslist').innerHTML = zallitemslist;
+					WTW.setWindowSize();
+				}
+			);
+		}
+	} catch (ex) {
+		WTW.log('core-scripts-admin-wtw_adminmolds.js-openListItems=' + ex.message);
+	}
+}
+
+
 /* recover deleted molds */
 
 WTWJS.prototype.openRecoverItems = async function() {
@@ -2964,7 +3050,7 @@ WTWJS.prototype.setMoldColor = function(zmoldname, zcolorgroup, zr, zg, zb) {
 
 /* the following process is designed to update the mold appearance directly while you are editing it */
 
-WTWJS.prototype.setNewMold = function(zrebuildmold) {
+WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 	/* use the form settings to redraw the mold */
 	/* zrebuildmold as true would force the mold to be deleted and rebuilt - some changes may require this anyways (set below) */
 	try {
@@ -3312,7 +3398,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 				zmolds[zmoldind].position.z = zposz;
 				if (zparentname.indexOf('actionzone') > -1) {
 					var zactionzoneparts = zparentname.split('-');
-					var zactionzoneind = Number(zactionzoneparts[1]);
+					var zactionzoneind = Number(zactionzoneparts[2]);
 					if (WTW.actionZones[zactionzoneind].actionzonetype.indexOf('seat') > -1) {
 						var zactionzoneaxlebase2 = WTW.getMeshOrNodeByID('local-actionzoneaxlebase2-' + zactionzoneind.toString() + '-' + WTW.actionZones[zactionzoneind].actionzoneid + '-' + WTW.actionZones[zactionzoneind].connectinggridind + '-' + WTW.actionZones[zactionzoneind].connectinggridid + '-' + WTW.actionZones[zactionzoneind].actionzonetype);
 						if (zactionzoneaxlebase2 != null) {

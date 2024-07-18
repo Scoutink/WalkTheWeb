@@ -528,6 +528,13 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 						WTW.openSelectActionZoneForm();
 						WTW.show('wtw_adminmenu15');
 						break;
+					case 'wtw_admincommunitylist':
+					case 'wtw_adminbuildinglist':
+					case 'wtw_adminthinglist':
+						WTW.hideAdminMenu();
+						WTW.openListItems();
+						WTW.show('wtw_adminmenu17');
+						break;
 					case 'wtw_adminthingrecover':
 						WTW.hideAdminMenu();
 						WTW.openRecoverItems();
@@ -835,12 +842,14 @@ WTWJS.prototype.adminMenuItemSelected = function(zobj) {
 					case 'wtw_bback13':
 					case 'wtw_bback15':
 					case 'wtw_bback16':
+					case 'wtw_bback17':
 					case 'wtw_bback30':
 					case 'wtw_cancel10':
 					case 'wtw_cancel12':
 					case 'wtw_cancel13':
 					case 'wtw_cancel15':
 					case 'wtw_cancel16':
+					case 'wtw_cancel17':
 					case 'wtw_cancel30':	
 						WTW.hideAdminMenu();
 						WTW.backToEdit();

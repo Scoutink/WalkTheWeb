@@ -1878,9 +1878,13 @@ WTWJS.prototype.hilightMoldFast = function(zmoldname, zcolor) {
 			WTW.highlightLayer.innerGlow = true;
 			WTW.highlightLayer.addMesh(zmold, zcolorset);
 			window.setTimeout(function(){
-				WTW.highlightLayer.outerGlow = false;
-				WTW.highlightLayer.innerGlow = false;
-				WTW.highlightLayer.removeMesh(zmold);
+				if (WTW.highlightLayer != null) {
+					WTW.highlightLayer.outerGlow = false;
+					WTW.highlightLayer.innerGlow = false;
+					if (zmold != null) {
+						WTW.highlightLayer.removeMesh(zmold);
+					}
+				}
 			},500);
 		}
 	} catch (ex) {
@@ -1910,7 +1914,7 @@ WTWJS.prototype.hilightMold = function(zmoldname, zcolor) {
 				break;
 		}
 		var zmold = scene.getMeshByID(zmoldname);
-		if (zmold != null) {
+		if (zmold != null && zmoldname.indexOf('connectinggrid') == -1) {
 			WTW.unhilightMold(zmoldname);
 			WTW.highlightLayer.outerGlow = true;
 			WTW.highlightLayer.innerGlow = false;
@@ -1921,7 +1925,15 @@ WTWJS.prototype.hilightMold = function(zmoldname, zcolor) {
 				var zchildmolds = zmold.getChildren();
 				for (var i = 0;i<zchildmolds.length;i++) {
 					if (zchildmolds[i] != null) {
-						WTW.highlightLayer.addMesh(zchildmolds[i], zcolorset);
+						try {
+							if (zchildmolds[i] != null) {
+								if (zchildmolds[i] != undefined) {
+									WTW.highlightLayer.addMesh(zchildmolds[i], zcolorset);
+								}
+							}
+						} catch (ex) {
+							
+						}
 					}
 				}
 			}
@@ -1936,15 +1948,21 @@ WTWJS.prototype.unhilightMold = function(zmoldname) {
 	try {
 		if (WTW.highlightLayer != null) {
 			var zmold = scene.getMeshByID(zmoldname);
-			if (zmold != null) {
+			if (zmold != null && zmoldname.indexOf('connectinggrid') == -1) {
 				WTW.highlightLayer.removeMesh(zmold);
 			} else {
 				zmold = scene.getTransformNodeByID(zmoldname);
 				if (zmold != null) {
 					var zchildmolds = zmold.getChildren();
 					for (var i = 0;i<zchildmolds.length;i++) {
-						if (zchildmolds[i] != null) {
-							WTW.highlightLayer.removeMesh(zchildmolds[i]);
+						try {
+							if (zchildmolds[i] != null) {
+								if (zchildmolds[i] != undefined) {
+									WTW.highlightLayer.removeMesh(zchildmolds[i]);
+								}
+							}
+						} catch (ex) {
+							
 						}
 					}
 				}
