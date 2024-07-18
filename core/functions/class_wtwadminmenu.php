@@ -229,6 +229,8 @@ class wtwadminmenu {
 			$this->addAdminSubMenuItem('editbuilding', 'wtw_adminbuildingaddthing', '<div class="wtw-altkey">ctrl+h</div>Add 3D T<u>h</u>ing', 30, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editbuilding', 'wtw_adminbuildingactionzones', '<div class="wtw-altkey">ctrl+a</div>Add or Edit <u>A</u>ctions', 40, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editbuilding', '', '<hr class="wtw-menuhr" />', 999, $zupdateroles, "");
+
+			$this->addAdminSubMenuItem('editbuilding', 'wtw_adminbuildinglist', 'List All Items to Edit', 999, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editbuilding', 'wtw_adminbuildingrecover', '<div class="wtw-altkey">ctrl+r</div><u>R</u>ecover Deleted Items', 1000, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			
 			$this->addAdminSubMenuItem('editmold', 'wtw_createduplicatemold', '<div class="wtw-altkey">ctrl+p</div>Create a Duplicate Item', 50, $zupdateroles, "WTW.adminMenuItemSelected(this);");
@@ -253,6 +255,7 @@ class wtwadminmenu {
 			$this->addAdminSubMenuItem('editcommunity', '', '<hr class="wtw-menuhr" />', 60, $zupdateroles, "");
 			$this->addAdminSubMenuItem('editcommunity', 'wtw_admincommunityscene', '<div class="wtw-altkey">ctrl+s</div>Edit 3D <u>S</u>cene', 65, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editcommunity', '', '<hr class="wtw-menuhr" />', 100, $zupdateroles, "");
+			$this->addAdminSubMenuItem('editcommunity', 'wtw_admincommunitylist', 'List All Items to Edit', 999, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editcommunity', 'wtw_admincommunityrecover', '<div class="wtw-altkey">ctrl+r</div><u>R</u>ecover Deleted Items', 1000, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 
 			$this->addAdminSubMenuItem('editscene', 'wtw_adminscene', 'Scene, Lighting, &amp; Fog', 10, $zupdateroles, "WTW.adminMenuItemSelected(this);");
@@ -277,6 +280,7 @@ class wtwadminmenu {
 			$this->addAdminSubMenuItem('editthing', 'wtw_adminthingaddmodel', '<div class="wtw-altkey">ctrl+m</div>Add 3D <u>M</u>odel', 30, $zupdateroles, "WTW.openAddNewMold('thing','babylonfile');");
 			$this->addAdminSubMenuItem('editthing', 'wtw_adminthingactions', '<div class="wtw-altkey">ctrl+a</div>Add or Edit <u>A</u>ctions', 40, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editthing', '', '<hr class="wtw-menuhr" />', 100, $zupdateroles, "");
+			$this->addAdminSubMenuItem('editthing', 'wtw_adminthinglist', 'List All Items to Edit', 999, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 			$this->addAdminSubMenuItem('editthing', 'wtw_adminthingrecover', '<div class="wtw-altkey">ctrl+r</div><u>R</u>ecover Deleted Items', 1000, $zupdateroles, "WTW.adminMenuItemSelected(this);");
 		} catch (Exception $e) {
 			$wtwdb->serror("core-functions-class_wtwadminmenu.php-preloadAdminSubMenu=".$e->getMessage());
@@ -764,6 +768,14 @@ class wtwadminmenu {
 			$zmenu .= "					<div id='wtw_deleteditemslist'></div>\r\n";
 			$zmenu .= "					<br />\r\n";
 			$zmenu .= "					<div id='wtw_cancel16' class='wtw-yellowbutton' onclick='WTW.adminMenuItemSelected(this);'>".$this->__('Cancel')."</div>\r\n";
+			$zmenu .= "					<br /><br />\r\n";
+			$zmenu .= "				</div>\r\n";
+			$zmenu .= "				<div id='wtw_adminmenu17' class='wtw-adminmenuform wtw-hide'>\r\n";
+			$zmenu .= "					<div id='wtw_bback17' alt='Back' title='Back' class='wtw-backbutton' onclick='WTW.adminMenuItemSelected(this);'>&lt;&lt;</div>\r\n";
+			$zmenu .= "					<div class='wtw-menuheader'>".$this->__('List All Items')."</div><br />\r\n";
+			$zmenu .= "					<div id='wtw_allitemslist'></div>\r\n";
+			$zmenu .= "					<br />\r\n";
+			$zmenu .= "					<div id='wtw_cancel17' class='wtw-yellowbutton' onclick='WTW.adminMenuItemSelected(this);'>".$this->__('Cancel')."</div>\r\n";
 			$zmenu .= "					<br /><br />\r\n";
 			$zmenu .= "				</div>\r\n";
 			$zmenu .= "				<div id='wtw_adminmenu20' class='wtw-adminmenuform wtw-hide'>\r\n";
