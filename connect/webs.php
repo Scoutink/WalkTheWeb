@@ -36,7 +36,7 @@ try {
 	$zlist = '';
 	$zversionid = '';
 	$zsorder = '';
-	$zuserid = '';
+	$zpermissions = "";
 	if(isset($_GET['search']) && !empty($_GET['search'])) {
 		$zsearch = $_GET['search'];
 	}
@@ -73,6 +73,10 @@ try {
 	echo $wtwconnect->addConnectHeader($wtwconnect->domainname);
 	
 	if ($zwebtype == 'avatar') {
+		$zpermissions = " and user1.userid='".$zuserid."' ";
+		if ($zfilter == 'all' && $hasaccess) {
+			$zpermissions = '';
+		}
 		if (isset($zlist) && !empty($zlist)) {
 			switch ($zlist) {
 				case "latest":
@@ -111,6 +115,7 @@ try {
 						on t1.versionid=m1.versionid
 					where t1.deleted=0 
 						and t1.versionid='".$zversionid."'
+						".$zpermissions."
 					order by ".$zsorder.";";
 		} else if (!empty($zsearch) && isset($zsearch) && $zsearch != '*' && $zsearch != '%') {
 			$zsql = "select distinct t1.*, 
@@ -142,6 +147,7 @@ try {
 					or t1.versionid like '%".$zsearch."%'
 					or t1.description like '%".$zsearch."%')
 					and t1.deleted=0
+					".$zpermissions."
 				order by ".$zsorder.";";
 		} else {
 			$zsql = "select distinct t1.*, 
@@ -165,10 +171,15 @@ try {
 						left join (select versionid, max(versionorder) as versionmax from wtw_".$zwebtypes." group by versionid) m1
 						on t1.versionid=m1.versionid
 					where t1.deleted=0 
+						".$zpermissions."
 					order by ".$zsorder.";";
 		}
 		
 	} else if ($zwebtype == 'plugin') {
+		$zpermissions = " and user1.userid='".$zuserid."' ";
+		if ($zfilter == 'all' && $hasaccess) {
+			$zpermissions = '';
+		}
 		if (isset($zlist) && !empty($zlist)) {
 			switch ($zlist) {
 				case "latest":
@@ -195,6 +206,7 @@ try {
 					left join wtw_users user2
 					on t1.createuserid = user2.userid
 				where t1.deleted=0 
+					".$zpermissions."
 				order by ".$zsorder.";";
 
 		if (!empty($zsearch) && isset($zsearch) && $zsearch != '*' && $zsearch != '%') {
@@ -216,9 +228,14 @@ try {
 						or t1.pluginname like '%".$zsearch."%'
 						or t1.pluginid like '%".$zsearch."%'
 						or t1.description like '%".$zsearch."%')
+						".$zpermissions."
 					order by ".$zsorder.";";
 		}		
 	} else {
+		$zpermissions = " and t1.userid='".$zuserid."' ";
+		if ($zfilter == 'all' && $hasaccess) {
+			$zpermissions = '';
+		}
 		if (isset($zlist) && !empty($zlist)) {
 			switch ($zlist) {
 				case "latest":
@@ -257,6 +274,7 @@ try {
 						on t1.versionid=m1.versionid
 					where t1.deleted=0 
 						and t1.versionid='".$zversionid."'
+						".$zpermissions."
 					order by ".$zsorder.";";
 		
 		} else if (!empty($zsearch) && isset($zsearch) && $zsearch != '*' && $zsearch != '%') {
@@ -297,8 +315,8 @@ try {
 					or t1.versiondesc like '%".$zsearch."%'
 					or t1.versionid like '%".$zsearch."%'
 					or t1.description like '%".$zsearch."%')
-					and t1.versionorder = m1.versionmax
 					and t1.deleted=0
+					".$zpermissions."
 				order by ".$zsorder.";";
 		} else {
 			$zsql = "select distinct t1.*, 
@@ -319,8 +337,8 @@ try {
 						on t1.createuserid = user2.userid
 						left join (select versionid, max(versionorder) as versionmax from wtw_".$zwebtypes." group by versionid) m1
 						on t1.versionid=m1.versionid
-					where t1.deleted=0 
-						and t1.versionorder = m1.versionmax
+					where t1.deleted=0
+						".$zpermissions."
 					order by ".$zsorder.";";
 		}
 	}
