@@ -61,7 +61,7 @@ WTW_AVATARS.prototype.setNewActionZoneDefaults = function(zactionzonetype) {
 		/* zactionzonetype is name of 'My Custom Zone' - all lowercase and no spaces */
 		switch (zactionzonetype) {
 			case 'mycustomzone':
-				dGet('wtw_tactionzonename').value = 'New My Custom Zone';
+//				dGet('wtw_tactionzonename').value = 'New My Custom Zone';
 				break;
 		}
 	} catch (ex) {
@@ -76,15 +76,15 @@ WTW_AVATARS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 		switch (zactionzonetype) {
 			case 'mycustomzone':
 				/* define the labels and button names used on the form */
-				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add My Custom Zone';
-				dGet('wtw_tcopyaxletoactionzone').disabled = true;
+//				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add My Custom Zone';
+//				dGet('wtw_tcopyaxletoactionzone').disabled = true;
 				/* show or hide the section divs on the form (/core/forms/actionzone.php) */
-				WTW.hide('wtw_actionzoneaxisdiv');
-				WTW.hide('wtw_copyaxletoactionzonediv');
-				WTW.hide('wtw_actionzoneadvancedoptslink');
-				WTW.hide('wtw_actionzonepartsdiv');
-				dGet('wtw_actionzoneadvancedoptslink').innerHTML = '-- Hide Advanced Options --';
-				WTW.show('wtw_actionzoneadvancedopts');
+//				WTW.hide('wtw_actionzoneaxisdiv');
+//				WTW.hide('wtw_copyaxletoactionzonediv');
+//				WTW.hide('wtw_actionzoneadvancedoptslink');
+//				WTW.hide('wtw_actionzonepartsdiv');
+//				dGet('wtw_actionzoneadvancedoptslink').innerHTML = '-- Hide Advanced Options --';
+//				WTW.show('wtw_actionzoneadvancedopts');
 				break;
 		}
 	} catch (ex) {
