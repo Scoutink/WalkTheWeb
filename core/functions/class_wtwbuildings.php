@@ -1030,6 +1030,7 @@ class wtwbuildings {
 						t3.checkcollisions,
 						t3.ispickable,
 						t3.actionzoneid,
+						t3.actionzone2id,
 						t3.csgmoldid,
 						t3.csgaction,
 						t3.alttag,
@@ -1106,6 +1107,7 @@ class wtwbuildings {
 					$zcheckcollisions = $zrow["checkcollisions"];
 					$zispickable = $zrow["ispickable"];
 					$zactionzoneid = $zrow["actionzoneid"];
+					$zactionzone2id = $zrow["actionzone2id"];
 					$zcsgmoldid = $zrow["csgmoldid"];
 					$zcsgaction = $zrow["csgaction"];
 					$zalttag = $zrow["alttag"];
@@ -1181,6 +1183,7 @@ class wtwbuildings {
 							checkcollisions,
 							ispickable,
 							actionzoneid,
+							actionzone2id,
 							csgmoldid,
 							csgaction,
 							alttag,
@@ -1255,6 +1258,7 @@ class wtwbuildings {
 							".$wtwhandlers->checkNumber($zcheckcollisions,1).",
 							".$wtwhandlers->checkNumber($zispickable,1).",
 							'".$zactionzoneid."',
+							'".$zactionzone2id."',
 							'".$zcsgmoldid."',
 							'".$zcsgaction."',
 							'".$wtwhandlers->escapeHTML($zalttag)."',
@@ -1440,6 +1444,14 @@ class wtwbuildings {
 					set t1.actionzoneid = t2.actionzoneid
 					where t1.buildingid='".$zbuildingid."'
 						and (not t1.actionzoneid='')
+						and (not t2.actionzoneid is null);");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."buildingmolds t1 
+						left join (select * from ".wtw_tableprefix."actionzones where buildingid='".$zbuildingid."' and deleted=0) t2
+						on t1.actionzone2id = t2.pastactionzoneid
+					set t1.actionzone2id = t2.actionzoneid
+					where t1.buildingid='".$zbuildingid."'
+						and (not t1.actionzone2id='')
 						and (not t2.actionzoneid is null);");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."actionzones t1

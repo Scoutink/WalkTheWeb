@@ -237,6 +237,7 @@ class wtwadmin {
 			$zhiddenfields .= "<input type='hidden' id='wtw_tmoldaddimageclickid' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tmoldaddimageclickpath' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tmoldactionzoneid' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tmoldactionzone2id' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id=\"wtw_tmoldjsfunction\" />\r\n";
 			$zhiddenfields .= "<input type='hidden' id=\"wtw_tmoldjsparameters\" />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tmoldpath1points' />\r\n";
@@ -829,8 +830,9 @@ class wtwadmin {
 			$zpagedata .= "					<div class='wtw-dashboardlabel'>Select Babylon Version</div>\r\n";
 			$zpagedata .= "					<div class='wtw-dashboardvalue'>\r\n";
 			$zpagedata .= "						<select id='wtw_babylonversion'>\r\n";
-			$zpagedata .= "							<option value='v5.x.x'>v5.x.x</option>\r\n";
+			$zpagedata .= "							<option value='v7.x.x'>v7.x.x</option>\r\n";
 			$zpagedata .= "							<option value='v6.x.x'>v6.x.x</option>\r\n";
+			$zpagedata .= "							<option value='v5.x.x'>v5.x.x</option>\r\n";
 			$zpagedata .= "						</select></div>\r\n";
 			$zpagedata .= "					<div class='wtw-clear'></div><br />\r\n";
 			$zpagedata .= "					<div class='wtw-clear'></div>\r\n";

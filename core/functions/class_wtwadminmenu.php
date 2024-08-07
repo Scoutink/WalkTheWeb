@@ -1247,7 +1247,7 @@ class wtwadminmenu {
 			$zmenu .= "		<h4>Action Zone Friendly Name</h4>\r\n";
 			$zmenu .= "		<div class='wtw-onecol'>\r\n";
 			$zmenu .= "			<input type='text' id='wtw_tactionzonename' maxlength='255' class='wtw-secondcolcontent wtw-smallprintinput' style='width:250px;min-width:250px;' onclick=\"WTW.checkKey(this, 'displayname', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'displayname', 0, 0);\" onblur=\"WTW.checkKey(this, 'displayname', 0, 1);\" />\r\n";
-			$zmenu .= "		</div><br /><br />\r\n";
+			$zmenu .= "		</div><br /><br /><div id='wtw_actionzonenote' class='wtw-menulevel0text'></div>\r\n";
 			$zmenu .= "		<div id='wtw_actionzoneswingdoordiv'>\r\n";
 			$zmenu .= "			<div id='wtw_rotatedirectiondiv'>\r\n";
 			$zmenu .= "				<h4>Swing Direction</h4>\r\n";
@@ -1464,7 +1464,7 @@ class wtwadminmenu {
 			$zmenu .= "		<div id='wtw_objectdiv'>\r\n";
 			$zmenu .= "			<h2 class='wtw-marginbottom'>3D Model</h2>\r\n";
 			$zmenu .= "			<div class='wtw-onecol'>3D Model File</div>\r\n";
-			$zmenu .= "			<input type='text' id='wtw_tmoldobjectfile' maxlength='255' class='wtw-smallprintinput' /><br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldobjectfile' maxlength='255' class='wtw-smallprintinput' style='min-width:260px;' /><br />\r\n";
 			$zmenu .= "			<div class='wtw-rightbutton' onclick=\"WTW.openFullPageForm('medialibrary','object','3dobject');\">Select 3D Model</div><br />\r\n";
 			$zmenu .= "		</div>\r\n";
 			$zmenu .= "		<h2 id='wtw_moldpositiontitle' class='wtw-marginbottom'>Mold Position</h2>\r\n";

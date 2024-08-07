@@ -1369,6 +1369,7 @@ class wtwcommunities {
 						 t3.checkcollisions,
 						 t3.ispickable,
 						 t3.actionzoneid,
+						 t3.actionzone2id,
 						 t3.csgmoldid,
 						 t3.csgaction,
 						 t3.alttag,
@@ -1449,6 +1450,7 @@ class wtwcommunities {
 							checkcollisions,
 							ispickable,        
 							actionzoneid,
+							actionzone2id,
 							csgmoldid,
 							csgaction,
 							alttag,
@@ -1523,6 +1525,7 @@ class wtwcommunities {
 							".$wtwhandlers->checkNumber($zrow["checkcollisions"],1).",
 							".$wtwhandlers->checkNumber($zrow["ispickable"],1).",
 							'".$zrow["actionzoneid"]."',
+							'".$zrow["actionzone2id"]."',
 							'".$zrow["csgmoldid"]."',
 							'".$zrow["csgaction"]."',
 							'".$zrow["alttag"]."',
@@ -1681,6 +1684,16 @@ class wtwcommunities {
 					set t1.actionzoneid = t2.actionzoneid
 					where t1.communityid='".$zcommunityid."'
 						and (not t1.actionzoneid='')
+						and (not t2.actionzoneid is null);");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."communitymolds t1 
+					left join (select * from ".wtw_tableprefix."actionzones 
+							where communityid='".$zcommunityid."' 
+								and (not communityid='')) t2
+						on t1.actionzone2id = t2.pastactionzoneid
+					set t1.actionzone2id = t2.actionzoneid
+					where t1.communityid='".$zcommunityid."'
+						and (not t1.actionzone2id='')
 						and (not t2.actionzoneid is null);");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."communitymolds t1 

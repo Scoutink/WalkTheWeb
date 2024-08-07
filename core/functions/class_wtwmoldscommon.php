@@ -277,6 +277,7 @@ class wtwmoldscommon {
 								 checkcollisions, 
 								 ispickable, 
 								 actionzoneid, 
+								 actionzone2id, 
 								 csgmoldid, 
 								 csgaction, 
 								 alttag, 
@@ -350,6 +351,7 @@ class wtwmoldscommon {
 								 ".$wtwhandlers->checkNumber($zrow->checkcollisions,1).", 
 								 ".$wtwhandlers->checkNumber($zrow->ispickable,1).", 
 								 '".$zrow->actionzoneid."', 
+								 '".$zrow->actionzone2id."', 
 								 '".$zrow->csgmoldid."', 
 								 '".$zrow->csgaction."', 
 								 '".$zrow->alttag."', 
@@ -392,6 +394,17 @@ class wtwmoldscommon {
 							on t1.actionzoneid = t2.pastactionzoneid
 						set t1.actionzoneid = t2.actionzoneid
 						where not t1.actionzoneid=''
+							and t1.".$zwebtype."id='".$zwebid."'
+							and not t2.actionzoneid is null;"); 
+					$wtwhandlers->query("
+						update ".wtw_tableprefix.$zwebtype."molds t1 
+							inner join (select * 
+								from ".wtw_tableprefix."actionzones 
+								where ".$zwebtype."id='".$zwebid."'
+									and (not ".$zwebtype."id='')) t2
+							on t1.actionzone2id = t2.pastactionzoneid
+						set t1.actionzone2id = t2.actionzoneid
+						where not t1.actionzone2id=''
 							and t1.".$zwebtype."id='".$zwebid."'
 							and not t2.actionzoneid is null;"); 
 					$wtwhandlers->query("

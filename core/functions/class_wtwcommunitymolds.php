@@ -20,7 +20,7 @@ class wtwcommunitymolds {
 		}
 	}
 	
-	function saveCommunityMold($zcommunitymoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zmoldpath1points, $zmoldpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain) {
+	function saveCommunityMold($zcommunitymoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zmoldpath1points, $zmoldpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain) {
 		/* save a community mold settings */
 		global $wtwhandlers;
 		try {
@@ -70,6 +70,7 @@ class wtwcommunitymolds {
 							opacity=".$wtwhandlers->checkNumber($zopacity,100).",
 							waterreflection=".$wtwhandlers->checkNumber($zwaterreflection,0).",
 							actionzoneid='".$zactionzoneid."',
+							actionzone2id='".$zactionzone2id."',
 							csgmoldid='".$zcsgmoldid."',
 							csgaction='".$zcsgaction."',
 							alttag='".$zalttag."',
@@ -141,6 +142,7 @@ class wtwcommunitymolds {
 							opacity,
 							waterreflection,
 							actionzoneid,
+							actionzone2id,
 							csgmoldid,
 							csgaction,
 							alttag,
@@ -207,6 +209,7 @@ class wtwcommunitymolds {
 							".$wtwhandlers->checkNumber($zopacity,100).",
 							".$wtwhandlers->checkNumber($zwaterreflection,0).",
 							'".$zactionzoneid."',
+							'".$zactionzone2id."',
 							'".$zcsgmoldid."',
 							'".$zcsgaction."',
 							'".$zalttag."',
