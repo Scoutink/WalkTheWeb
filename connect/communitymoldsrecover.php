@@ -393,12 +393,12 @@ try {
 			'jsfunction'=> '',
 			'jsparameters'=> '',
 			'actionzoneid'=> $zrow["actionzoneid"],
+			'actionzone2id'=> $zrow["actionzone2id"],
 			'loadactionzoneid'=> $zrow["loadactionzoneid"],
 			'unloadactionzoneid'=> $zrow["unloadactionzoneid"],
 			'connectinggridid'=> $zconnectinggridid,
 			'connectinggridind'=> $zconnectinggridind,
 			'attachmoldind'=> '-1',
-			'mirroractionzoneid'=> '',
 			'loaded'=> '0',
 			'parentname'=>'',
 			'moldname'=>'');

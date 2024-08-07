@@ -759,6 +759,7 @@ try {
 					'checkcollisions'=>$zrowmolds["checkcollisions"],
 					'ispickable'=>$zrowmolds["ispickable"],
 					'actionzoneid'=>$zrowmolds["actionzoneid"],
+					'actionzone2id'=>$zrowmolds["actionzone2id"],
 					'csgmoldid'=>$zrowmolds["csgmoldid"],
 					'csgaction'=>$zrowmolds["csgaction"],
 					'alttag'=>$wtwconnect->escapeHTML($zrowmolds["alttag"]),
