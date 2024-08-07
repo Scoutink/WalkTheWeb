@@ -2185,6 +2185,7 @@ class wtw_3dinternet_downloads {
 						$znewloadactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->loadactionzoneid);
 						$znewunloadactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->unloadactionzoneid);
 						$znewactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->actionzoneid);
+						$znewactionzone2id = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->actionzone2id);
 						
 						$znewuploadobjectid = $wtwhandlers->getIDByPastID('uploadobjects', 'uploadobjectid', 'pastuploadobjectid', $zmold->uploadobjectid);
 						
@@ -2255,6 +2256,7 @@ class wtw_3dinternet_downloads {
 								checkcollisions=".$zmold->checkcollisions.",
 								ispickable=".$zmold->ispickable.",
 								actionzoneid='".$znewactionzoneid."',
+								actionzone2id='".$znewactionzone2id."',
 								csgmoldid='".$zmold->csgmoldid."',
 								csgaction='".$zmold->csgaction."',
 								alttag='".$zmold->alttag."',
@@ -2327,6 +2329,7 @@ class wtw_3dinternet_downloads {
 								checkcollisions,
 								ispickable,
 								actionzoneid,
+								actionzone2id,
 								csgmoldid,
 								csgaction,
 								alttag,
@@ -2400,6 +2403,7 @@ class wtw_3dinternet_downloads {
 								".$zmold->checkcollisions.",
 								".$zmold->ispickable.",
 								'".$znewactionzoneid."',
+								'".$znewactionzone2id."',
 								'".$zmold->csgmoldid."',
 								'".$zmold->csgaction."',
 								'".$zmold->alttag."',
@@ -4678,6 +4682,7 @@ class wtw_3dinternet_downloads {
 					$znewloadactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->loadactionzoneid);
 					$znewunloadactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->unloadactionzoneid);
 					$znewactionzoneid = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->actionzoneid);
+					$znewactionzone2id = $wtwhandlers->getIDByPastID('actionzones', 'actionzoneid', 'pastactionzoneid', $zmold->actionzone2id);
 					
 					$znewuploadobjectid = $wtwhandlers->getIDByPastID('uploadobjects', 'uploadobjectid', 'pastuploadobjectid', $zmold->uploadobjectid);
 					
@@ -4747,6 +4752,7 @@ class wtw_3dinternet_downloads {
 						checkcollisions,
 						ispickable,
 						actionzoneid,
+						actionzone2id,
 						csgmoldid,
 						csgaction,
 						alttag,
@@ -4820,6 +4826,7 @@ class wtw_3dinternet_downloads {
 						".$zmold->checkcollisions.",
 						".$zmold->ispickable.",
 						'".$znewactionzoneid."',
+						'".$znewactionzone2id."',
 						'".$zmold->csgmoldid."',
 						'".$zmold->csgaction."',
 						'".$zmold->alttag."',
