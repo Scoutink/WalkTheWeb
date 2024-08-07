@@ -171,6 +171,7 @@ WTWJS.prototype.adminLoadAfterScreen = function() {
 		dGet('wtw_twaterbumpid').value = WTW.init.waterBumpID;
 		dGet('wtw_twaterbumppath').value = WTW.init.waterBumpPath;
 		WTW.setMenuBarSelectText();
+		WTW.toggleBrowseMenu();
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_admininit.js-adminLoadAfterScreen=' + ex.message);
 	}

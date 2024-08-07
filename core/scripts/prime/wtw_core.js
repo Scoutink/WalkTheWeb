@@ -374,7 +374,7 @@ WTWJS.prototype.initEnvironment = async function() {
 		/* initialize physics engine if it is enabled */
 		switch (WTW.physicsEngine) {
 			case 'havok':
-				if (WTW.babylonVersion == 'v6.x.x') {
+				if (WTW.babylonVersion == 'v7.x.x' || WTW.babylonVersion == 'v6.x.x') {
 					/* initialize Havok physics engine */
 					HavokPhysics().then((havok) => {
 						/* Havok is now available */
@@ -461,7 +461,7 @@ WTWJS.prototype.initEnvironment = async function() {
 		/* create the extended ground that never ends while the avatar walks */
 		WTW.setExtendedGround();
 
-		if (WTW.physicsEngine == 'havok' && WTW.babylonVersion == 'v6.x.x') {
+		if (WTW.physicsEngine == 'havok' && (WTW.babylonVersion == 'v7.x.x' || WTW.babylonVersion == 'v6.x.x')) {
 			/* initialize Havok physics engine */
 			havokInstance = await HavokPhysics();
 			hk = new BABYLON.HavokPlugin(true, havokInstance);

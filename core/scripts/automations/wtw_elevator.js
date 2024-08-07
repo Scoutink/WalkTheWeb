@@ -96,7 +96,7 @@ WTWJS.prototype.elevatorDoors = function(zdoordirection, zfloor, zvaluey, zdirec
 	try {
 		for (var i=0; i < WTW.actionZones.length; i++) {
 			if (WTW.actionZones[i] != null) {
-				if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickactivatedslidingdoor' && Number(WTW.actionZones[i].axis.position.y) == zvaluey) {
+				if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickopenslidingdoor' && Number(WTW.actionZones[i].axis.position.y) == zvaluey) {
 					if (zdoordirection == 'open') {
 						if (WTW.actionZones[i].status != 4) {
 							WTW.actionZones[i].status = 3;
@@ -177,7 +177,7 @@ WTWJS.prototype.elevatorRequestDoor = function(zdoordirection, zmoldname) {
 		if (zestatus < 2 || zestatus == 4) {
 			for (var i=0; i < WTW.actionZones.length; i++) {
 				if (WTW.actionZones[i] != null) {
-					if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickactivatedslidingdoor' && (Number(WTW.actionZones[i].axis.position.y) == zvaluey)) {
+					if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickopenslidingdoor' && (Number(WTW.actionZones[i].axis.position.y) == zvaluey)) {
 						if (zdoordirection == 'open') {
 							if (WTW.actionZones[i].status != 4) {
 								WTW.actionZones[i].status = 3;
@@ -414,7 +414,7 @@ WTWJS.prototype.elevatorDoorStatus = function(zconnectinggridind, zconnectinggri
 	try {
 		for (var i=0; i < WTW.actionZones.length; i++) {
 			if (WTW.actionZones[i] != null) {
-				if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickactivatedslidingdoor') {
+				if (zconnectinggridind == WTW.actionZones[i].connectinggridind && WTW.actionZones[i].actionzonetype == 'clickopenslidingdoor') {
 					if (WTW.actionZones[i].status > 1) {
 						zedoorstatus = 1;
 					}

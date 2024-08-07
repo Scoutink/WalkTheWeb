@@ -37,7 +37,6 @@ WTWJS.prototype.openMoldForm = async function(zmoldind, zshape, zwebtype, zsavep
 		if (zshape == '') {
 			zshape = 'box';
 		}
-		WTW.getCoveringList(zshape);
 		WTW.hideAdminMenu();
 		WTW.show('wtw_adminmenu11');
 		WTW.show('wtw_adminmenu11b');
@@ -353,6 +352,7 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 	try {
 		var zwebtype = '';
 		var zshape = zmolddef.shape;
+		var zcoveringname = zmolddef.covering;
 		if (zmolddef.moldname.indexOf('communitymolds') > -1) {
 			zwebtype = 'community';
 		} else if (zmolddef.moldname.indexOf('buildingmolds') > -1) {
@@ -371,7 +371,9 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 				dGet('wtw_tthingind').value = zmolddef.thinginfo.thingind;
 				break;
 		}
-		WTW.getCoveringList(zshape);
+		if (zcoveringname == 'mirror') {
+			zcoveringname = 'mirror-' + zmolddef.actionzone2id;
+		}
 		WTW.getLoadActionZoneList(zmolddef.loadactionzoneid);
 		WTW.getLoadZoneList(zmolddef.loadactionzoneid);
 		dGet('wtw_tmoldid').value = zmolddef.moldid;
@@ -460,6 +462,7 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		dGet('wtw_tmoldopacity').value = zmolddef.opacity;
 		dGet('wtw_tmoldsubdivisions').value = zmolddef.subdivisions;
 		dGet('wtw_tmoldactionzoneid').value = zmolddef.actionzoneid;
+		dGet('wtw_tmoldactionzone2id').value = zmolddef.actionzone2id;
 		dGet('wtw_tmoldcsgmoldid').value = zmolddef.csg.moldid;
 		if (dGet('wtw_tmoldshape').value == '3dtext') {
 			dGet('wtw_tmoldwebtext').value = WTW.decode(zmolddef.webtext.webtext);
@@ -476,7 +479,8 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		dGet('wtw_moldaddimagehoverpreview').src = '';
 		dGet('wtw_pointlist1').innerHTML = '';
 		dGet('wtw_pointlist2').innerHTML = '';
-		WTW.setDDLValue('wtw_tmoldcovering', zmolddef.covering);
+		WTW.getCoveringList(zshape);
+		WTW.setDDLValue('wtw_tmoldcovering', zcoveringname);
 		WTW.setDDLValue('wtw_tmoldcsgaction', zmolddef.csg.action);
 		WTW.setDDLValue('wtw_tmoldloadactionzoneid', zmolddef.loadactionzoneid);
 		WTW.setDDLValue('wtw_tmoldunloadactionzoneid', zmolddef.unloadactionzoneid);
@@ -570,6 +574,7 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 		zmolds[zmoldind].graphics.waterreflection = '0';
 		var zmold = null;
 		WTW.setNewMoldDefaults(zshape);
+
 		var zcoveringname = dGet('wtw_tmoldcoveringold').value;
 		zmolds[zmoldind].shape = zshape;
 		zmolds[zmoldind].covering = zcoveringname;
@@ -673,6 +678,8 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 		zmolds[zmoldind].loadactionzoneind = WTW.getActionZoneInd(zloadactionzoneid, Number(dGet('wtw_tconnectinggridind').value));
 		zmolds[zmoldind].unloadactionzoneid = zunloadactionzoneid;
 		zmolds[zmoldind].unloadactionzoneind = WTW.getActionZoneInd(zunloadactionzoneid, Number(dGet('wtw_tconnectinggridind').value));
+		zmolds[zmoldind].actionzoneid = '';
+		zmolds[zmoldind].actionzone2id = '';
 		WTW.setDDLValue('wtw_tmoldcovering', zcoveringname);
 		zmold = WTW.addMold(zmolds[zmoldind].moldname, zmolds[zmoldind], zmolds[zmoldind].parentname, zcoveringname);
 		zmold.isPickable = true;
@@ -1030,6 +1037,11 @@ WTWJS.prototype.changeCoveringType = function() {
 		var zimageid = 'ij7fi8qv7dbgb6zc';
 		var zimagepath = '/content/system/stock/stucco-512x512.jpg';
 		var zcoveringname = WTW.getDDLValue('wtw_tmoldcovering');
+		if (zcoveringname.indexOf('mirror-') > -1) {
+			var znameparts = zcoveringname.split('-');
+			dGet('wtw_tmoldactionzone2id').value = znameparts[1];
+			zcoveringname = 'mirror';
+		}
 		WTW.setCoveringFormFields(zcoveringname);
 		switch (zcoveringname) {
 			case 'directional texture': 
@@ -1295,6 +1307,9 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 			} else {
 				zmolds[zmoldind].covering = dGet('wtw_tmoldcoveringold').value;
 			}
+			if (zmolds[zmoldind].covering.indexOf('mirror-') > -1) {
+				zmolds[zmoldind].covering = 'mirror';
+			}
 			zmolds[zmoldind].position.x = dGet('wtw_tmoldpositionx').value;
 			zmolds[zmoldind].position.y = dGet('wtw_tmoldpositiony').value;
 			zmolds[zmoldind].position.z = dGet('wtw_tmoldpositionz').value;
@@ -1398,6 +1413,7 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 			zmolds[zmoldind].sound.coneoutergain = dGet('wtw_tmoldsoundconeoutergain').value;
 			zmolds[zmoldind].actionzoneid = dGet('wtw_tmoldactionzoneid').value;
 			zmolds[zmoldind].actionzoneind = WTW.getActionZoneInd(zmolds[zmoldind].actionzoneid,0);
+			zmolds[zmoldind].actionzone2id = dGet('wtw_tmoldactionzone2id').value;
 			zmolds[zmoldind].loadactionzoneid = dGet('wtw_tmoldloadactionzoneid').options[dGet('wtw_tmoldloadactionzoneid').selectedIndex].value;
 			if (dGet('wtw_tmoldunloadactionzoneid').options.length > 0) {
 				zmolds[zmoldind].unloadactionzoneid = dGet('wtw_tmoldunloadactionzoneid').options[dGet('wtw_tmoldunloadactionzoneid').selectedIndex].value;
@@ -1479,6 +1495,7 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 				'opacity': zmolds[zmoldind].opacity,
 				'subdivisions': zmolds[zmoldind].subdivisions,
 				'actionzoneid': zmolds[zmoldind].actionzoneid,
+				'actionzone2id': zmolds[zmoldind].actionzone2id,
 				'minheight': '0',
 				'maxheight': zmolds[zmoldind].graphics.heightmap.maxheight,
 				'checkcollisions': zmolds[zmoldind].checkcollisions,
@@ -1537,6 +1554,7 @@ WTWJS.prototype.clearEditMold = function() {
 		dGet('wtw_tmoldcoveringold').value = '';
 		dGet('wtw_tmoldshape').value = '';
 		dGet('wtw_tmoldactionzoneid').value = '';
+		dGet('wtw_tmoldactionzone2id').value = '';
 		dGet('wtw_tmoldpositionx').value = '0';
 		dGet('wtw_tmoldpositiony').value = '0';
 		dGet('wtw_tmoldpositionz').value = '0';
@@ -1634,11 +1652,187 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 	/* open edit pole lines and position, rotation, and scale to mold */
 	try {
 		WTW.closeEditPoles();
-		var zmoldguide = scene.getTransformNodeByID(zmold.name + '-guide');
-		if (zmoldguide != null) {
-			zmold = zmoldguide;
+		if (zmold != null) {
+			var zmoldguide = WTW.getMeshOrNodeByID(zmold.id + '-guide');
+			if (zmoldguide != null) {
+				zmold = zmoldguide;
+			}
 		}
 		if (zmold != null && (dGet('wtw_tmoldid').value != '' || dGet('wtw_tactionzoneid').value != '' || dGet('wtw_teditconnectinggridid').value != '')) {
+			var zmoldx = zmold.scaling.x;
+			var zmoldy = zmold.scaling.y;
+			var zmoldz = zmold.scaling.z;
+			var zlenx = 100;
+			var zleny = 100;
+			var zlenz = 100;
+			var zminx = -.5;
+			var zminy = -.5;
+			var zminz = -.5;
+			var zmaxx = .5;
+			var zmaxy = .5;
+			var zmaxz = .5;
+			if (zmold.WTW == null && dGet('wtw_teditconnectinggridid').value != '') {
+				/* check for bounding box for edit guide lines positions */
+				var zlastmin = null;
+				var zlastmax = null;
+				var zchildmolds = zmold.getChildren();
+				for (var i=0; i < zchildmolds.length; i++) {
+					if (zchildmolds[i] != null) {
+						if (zchildmolds[i].id != undefined) {
+							/* children may be molds or parented to action zones (not looking to load zones) */
+							if (zchildmolds[i].id.indexOf('molds-') > -1 || (zchildmolds[i].id.indexOf('-actionzone') > -1 && zchildmolds[i].id.indexOf('loadzone') == -1)) {
+								if (zchildmolds[i].id.indexOf('molds-') > -1 && zchildmolds[i].id.indexOf('-babylonfile') > -1) {
+									if (zchildmolds[i].WTW != null) {
+										if (zchildmolds[i].WTW.bounding != null) {
+											if (zchildmolds[i].WTW.bounding.max != null && zchildmolds[i].WTW.bounding.min != null) {
+												try {
+													var zmin = zchildmolds[i].WTW.bounding.min;
+													var zmax = zchildmolds[i].WTW.bounding.max;
+													if (zlastmin == null && zlastmax == null) {
+														zlastmin = zmin;
+														zlastmax = zmax;
+													} else {
+														zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+														zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+													}
+												} catch (ex) {}
+											}
+										}
+									} else {
+										/* if bounding info is not available, check bounding box */
+										var zmoldchildren = zchildmolds[i].getChildren();
+										for (var j=0; j<zmoldchildren.length;j++) {
+											if (zmoldchildren[j] != null) {
+												try {
+													var zmin = zmoldchildren[j].getBoundingInfo().boundingBox.minimum;
+													var zmax = zmoldchildren[j].getBoundingInfo().boundingBox.maximum;
+													if (zlastmin == null && zlastmax == null) {
+														zlastmin = zmin;
+														zlastmax = zmax;
+													} else {
+														zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+														zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+													}
+												} catch (ex) {}
+											}
+										}
+									}
+								} else if (zchildmolds[i].id.indexOf('molds-') > -1) {
+									/* if mold without children */
+									try {
+										var zmin = zchildmolds[i].getBoundingInfo().boundingBox.minimum;
+										var zmax = zchildmolds[i].getBoundingInfo().boundingBox.maximum;
+										if (zlastmin == null && zlastmax == null) {
+											zlastmin = zmin;
+											zlastmax = zmax;
+										} else {
+											zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+											zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+										}
+									} catch (ex) {}
+								} else if (zchildmolds[i].id.indexOf('-actionzone') > -1) {
+									/* if action zone is the parent */
+									var zmoldchildren = zchildmolds[i].getChildren();
+									for (var j=0; j<zmoldchildren.length;j++) {
+										if (zmoldchildren[j] != null) {
+											if (zmoldchildren[j].id.indexOf('molds-') > -1) {
+												var zmin = zmoldchildren[j].getBoundingInfo().boundingBox.minimum;
+												var zmax = zmoldchildren[j].getBoundingInfo().boundingBox.maximum;
+												if (zlastmin == null && zlastmax == null) {
+													zlastmin = zmin;
+													zlastmax = zmax;
+												} else {
+													zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+													zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+												}
+											} else if (zmoldchildren[j].id.indexOf('-actionzone') > -1) {
+												/* if axle action zone is parent */
+												var zazchildren = zmoldchildren[j].getChildren();
+												for (var k=0; k<zazchildren.length;k++) {
+													if (zazchildren[k] != null) {
+														if (zazchildren[k].id.indexOf('molds-') > -1) {
+															try {
+																var zmin = zazchildren[k].getBoundingInfo().boundingBox.minimum;
+																var zmax = zazchildren[k].getBoundingInfo().boundingBox.maximum;
+																if (zlastmin == null && zlastmax == null) {
+																	zlastmin = zmin;
+																	zlastmax = zmax;
+																} else {
+																	zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+																	zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																}
+															} catch (ex) {}
+														} else if (zazchildren[k].id.indexOf('-actionzone') > -1) {
+															/* if action zone base2 or pole is the parent */
+															var zaz2children = zazchildren[k].getChildren();
+															for (var l=0; l<zaz2children.length;l++) {
+																if (zaz2children[l] != null) {
+																	if (zaz2children[l].id.indexOf('molds-') > -1 && zaz2children[l].id.indexOf('-babylonfile') > -1) {
+																		if (zaz2children[l].WTW != null) {
+																			if (zaz2children[l].WTW.bounding != null) {
+																				if (zaz2children[l].WTW.bounding.max != null && zaz2children[l].WTW.bounding.min != null) {
+																					try {
+																						var zmin = zaz2children[l].WTW.bounding.min;
+																						var zmax = zaz2children[l].WTW.bounding.max;
+																						if (zlastmin == null && zlastmax == null) {
+																							zlastmin = zmin;
+																							zlastmax = zmax;
+																						} else {
+																							zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+																							zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																						}
+																					} catch (ex) {}
+																				}
+																			}
+																		}
+																	} else if (zaz2children[l].id.indexOf('molds-') > -1) {
+																		var zmin = zaz2children[l].getBoundingInfo().boundingBox.minimum;
+																		var zmax = zaz2children[l].getBoundingInfo().boundingBox.maximum;
+																		if (zlastmin == null && zlastmax == null) {
+																			zlastmin = zmin;
+																			zlastmax = zmax;
+																		} else {
+																			zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+																			zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																		}
+																	}
+																}
+															}													
+														}
+													}
+												}													
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				zmold.WTW = [];
+				zmold.WTW = {
+					'bounding': {
+						'min':zlastmin,
+						'max':zlastmax
+					}
+				};
+			}
+			if (zmold.WTW != null) {
+				if (zmold.WTW.bounding != null) {
+					if (zmold.WTW.bounding.max != null && zmold.WTW.bounding.min != null) {
+						zlenx += zmold.WTW.bounding.max._x - zmold.WTW.bounding.min._x;
+						zleny += zmold.WTW.bounding.max._y - zmold.WTW.bounding.min._y;
+						zlenz += zmold.WTW.bounding.max._z - zmold.WTW.bounding.min._z;
+						
+						zminx = zmold.WTW.bounding.min._x;
+						zminy = zmold.WTW.bounding.min._y;
+						zminz = zmold.WTW.bounding.min._z;
+						zmaxx = zmold.WTW.bounding.max._x;
+						zmaxy = zmold.WTW.bounding.max._y;
+						zmaxz = zmold.WTW.bounding.max._z;
+					}
+				}
+			}
 			var zpx = zmold.position.x;
 			var zpy = zmold.position.y;
 			var zpz = zmold.position.z;
@@ -1649,13 +1843,11 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 					zpz += zmold.parent.position.z;
 				}
 			} 
-			var zmoldx = zmold.scaling.x;
-			var zmoldy = zmold.scaling.y;
-			var zmoldz = zmold.scaling.z;
+			
 			if (WTW.lineX == null) {
-				WTW.lineZ = BABYLON.MeshBuilder.CreateLines('linez', {points: [new BABYLON.Vector3(zpx, zpy, zpz-100),	new BABYLON.Vector3(zpx, zpy, zpz+100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX = BABYLON.MeshBuilder.CreateLines('linex', {points: [new BABYLON.Vector3(zpx-100, zpy, zpz),	new BABYLON.Vector3(zpx+100, zpy, zpz)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY = BABYLON.MeshBuilder.CreateLines('liney', {points: [new BABYLON.Vector3(zpx, zpy-100, zpz),	new BABYLON.Vector3(zpx, zpy+100, zpz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ = BABYLON.MeshBuilder.CreateLines('linez', {points: [new BABYLON.Vector3(zpx, zpy, zpz-zlenz),	new BABYLON.Vector3(zpx, zpy, zpz+zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX = BABYLON.MeshBuilder.CreateLines('linex', {points: [new BABYLON.Vector3(zpx-zlenx, zpy, zpz),	new BABYLON.Vector3(zpx+zlenx, zpy, zpz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY = BABYLON.MeshBuilder.CreateLines('liney', {points: [new BABYLON.Vector3(zpx, zpy-zleny, zpz),	new BABYLON.Vector3(zpx, zpy+zleny, zpz)], useVertexAlpha: false, updatable: false}, scene);
 				WTW.lineZ.isPickable = false;
 				WTW.lineX.isPickable = false;
 				WTW.lineY.isPickable = false;
@@ -1663,14 +1855,14 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 				WTW.lineX.renderingGroupId = 1;
 				WTW.lineY.renderingGroupId = 1;
 				
-				WTW.lineX1 = BABYLON.MeshBuilder.CreateLines('linex1', {points: [new BABYLON.Vector3(-.5, -.5, -100), new BABYLON.Vector3(-.5, -.5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX2 = BABYLON.MeshBuilder.CreateLines('linex2', {points: [new BABYLON.Vector3(-.5, .5, -100), new BABYLON.Vector3(-.5, .5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX3 = BABYLON.MeshBuilder.CreateLines('linex3', {points: [new BABYLON.Vector3(.5, -.5, -100), new BABYLON.Vector3(.5, -.5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX4 = BABYLON.MeshBuilder.CreateLines('linex4', {points: [new BABYLON.Vector3(.5, .5, -100), new BABYLON.Vector3(.5, .5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX5 = BABYLON.MeshBuilder.CreateLines('linex5', {points: [new BABYLON.Vector3(0, -.5, -100), new BABYLON.Vector3(0, -.5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX6 = BABYLON.MeshBuilder.CreateLines('linex6', {points: [new BABYLON.Vector3(0, .5, -100), new BABYLON.Vector3(0, .5, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX7 = BABYLON.MeshBuilder.CreateLines('linex5', {points: [new BABYLON.Vector3(-.5, 0, -100), new BABYLON.Vector3(-.5, 0, 100)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineX8 = BABYLON.MeshBuilder.CreateLines('linex6', {points: [new BABYLON.Vector3(.5, 0, -100), new BABYLON.Vector3(.5, 0, 100)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX1 = BABYLON.MeshBuilder.CreateLines('linex1', {points: [new BABYLON.Vector3(zminx, zminy, -zlenz), new BABYLON.Vector3(zminx, zminy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX2 = BABYLON.MeshBuilder.CreateLines('linex2', {points: [new BABYLON.Vector3(zminx, zmaxy, -zlenz), new BABYLON.Vector3(zminx, zmaxy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX3 = BABYLON.MeshBuilder.CreateLines('linex3', {points: [new BABYLON.Vector3(zmaxx, zminy, -zlenz), new BABYLON.Vector3(zmaxx, zminy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX4 = BABYLON.MeshBuilder.CreateLines('linex4', {points: [new BABYLON.Vector3(zmaxx, zmaxy, -zlenz), new BABYLON.Vector3(zmaxx, zmaxy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX5 = BABYLON.MeshBuilder.CreateLines('linex5', {points: [new BABYLON.Vector3(0, zminy, -zlenz), new BABYLON.Vector3(0, zminy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX6 = BABYLON.MeshBuilder.CreateLines('linex6', {points: [new BABYLON.Vector3(0, zmaxy, -zlenz), new BABYLON.Vector3(0, zmaxy, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX7 = BABYLON.MeshBuilder.CreateLines('linex5', {points: [new BABYLON.Vector3(zminx, 0, -zlenz), new BABYLON.Vector3(zminx, 0, zlenz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineX8 = BABYLON.MeshBuilder.CreateLines('linex6', {points: [new BABYLON.Vector3(zmaxx, 0, -zlenz), new BABYLON.Vector3(zmaxx, 0, zlenz)], useVertexAlpha: false, updatable: false}, scene);
 				WTW.lineX1.isPickable = false;
 				WTW.lineX2.isPickable = false;
 				WTW.lineX3.isPickable = false;
@@ -1704,14 +1896,14 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 				WTW.lineX7.renderingGroupId = 1;
 				WTW.lineX8.renderingGroupId = 1;
 
-				WTW.lineY1 = BABYLON.MeshBuilder.CreateLines('liney1', {points: [new BABYLON.Vector3(-.5, -100, -.5), new BABYLON.Vector3(-.5, 100, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY2 = BABYLON.MeshBuilder.CreateLines('liney2', {points: [new BABYLON.Vector3(-.5, -100, .5), new BABYLON.Vector3(-.5, 100, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY3 = BABYLON.MeshBuilder.CreateLines('liney3', {points: [new BABYLON.Vector3(.5, -100, -.5), new BABYLON.Vector3(.5, 100, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY4 = BABYLON.MeshBuilder.CreateLines('liney4', {points: [new BABYLON.Vector3(.5, -100, .5), new BABYLON.Vector3(.5, 100, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY5 = BABYLON.MeshBuilder.CreateLines('liney5', {points: [new BABYLON.Vector3(0, -100, -.5), new BABYLON.Vector3(0, 100, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY6 = BABYLON.MeshBuilder.CreateLines('liney6', {points: [new BABYLON.Vector3(0, -100, .5), new BABYLON.Vector3(0, 100, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY7 = BABYLON.MeshBuilder.CreateLines('liney5', {points: [new BABYLON.Vector3(-.5, -100, 0), new BABYLON.Vector3(-.5, 100, 0)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineY8 = BABYLON.MeshBuilder.CreateLines('liney6', {points: [new BABYLON.Vector3(.5, -100, 0), new BABYLON.Vector3(.5, 100, 0)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY1 = BABYLON.MeshBuilder.CreateLines('liney1', {points: [new BABYLON.Vector3(zminx, -zleny, zminz), new BABYLON.Vector3(zminx, zleny, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY2 = BABYLON.MeshBuilder.CreateLines('liney2', {points: [new BABYLON.Vector3(zminx, -zleny, zmaxz), new BABYLON.Vector3(zminx, zleny, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY3 = BABYLON.MeshBuilder.CreateLines('liney3', {points: [new BABYLON.Vector3(zmaxx, -zleny, zminz), new BABYLON.Vector3(zmaxx, zleny, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY4 = BABYLON.MeshBuilder.CreateLines('liney4', {points: [new BABYLON.Vector3(zmaxx, -zleny, zmaxz), new BABYLON.Vector3(zmaxx, zleny, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY5 = BABYLON.MeshBuilder.CreateLines('liney5', {points: [new BABYLON.Vector3(0, -zleny, zminz), new BABYLON.Vector3(0, zleny, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY6 = BABYLON.MeshBuilder.CreateLines('liney6', {points: [new BABYLON.Vector3(0, -zleny, zmaxz), new BABYLON.Vector3(0, zleny, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY7 = BABYLON.MeshBuilder.CreateLines('liney5', {points: [new BABYLON.Vector3(zminx, -zleny, 0), new BABYLON.Vector3(zminx, zleny, 0)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineY8 = BABYLON.MeshBuilder.CreateLines('liney6', {points: [new BABYLON.Vector3(zmaxx, -zleny, 0), new BABYLON.Vector3(zmaxx, zleny, 0)], useVertexAlpha: false, updatable: false}, scene);
 				WTW.lineY1.isPickable = false;
 				WTW.lineY2.isPickable = false;
 				WTW.lineY3.isPickable = false;
@@ -1745,14 +1937,14 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 				WTW.lineY7.renderingGroupId = 1;
 				WTW.lineY8.renderingGroupId = 1;
 
-				WTW.lineZ1 = BABYLON.MeshBuilder.CreateLines('linez1', {points: [new BABYLON.Vector3(-100, -.5, -.5), new BABYLON.Vector3(100, -.5, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ2 = BABYLON.MeshBuilder.CreateLines('linez2', {points: [new BABYLON.Vector3(-100, -.5, .5), new BABYLON.Vector3(100, -.5, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ3 = BABYLON.MeshBuilder.CreateLines('linez3', {points: [new BABYLON.Vector3(-100, .5, -.5), new BABYLON.Vector3(100, .5, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ4 = BABYLON.MeshBuilder.CreateLines('linez4', {points: [new BABYLON.Vector3(-100, .5, .5), new BABYLON.Vector3(100, .5, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ5 = BABYLON.MeshBuilder.CreateLines('linez5', {points: [new BABYLON.Vector3(-100, 0, -.5), new BABYLON.Vector3(100, 0, -.5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ6 = BABYLON.MeshBuilder.CreateLines('linez6', {points: [new BABYLON.Vector3(-100, 0, .5),	new BABYLON.Vector3(100, 0, .5)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ7 = BABYLON.MeshBuilder.CreateLines('linez5', {points: [new BABYLON.Vector3(-100, -.5, 0), new BABYLON.Vector3(100, -.5, 0)], useVertexAlpha: false, updatable: false}, scene);
-				WTW.lineZ8 = BABYLON.MeshBuilder.CreateLines('linez6', {points: [new BABYLON.Vector3(-100, .5, 0),	new BABYLON.Vector3(100, .5, 0)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ1 = BABYLON.MeshBuilder.CreateLines('linez1', {points: [new BABYLON.Vector3(-zlenx, zminy, zminz), new BABYLON.Vector3(zlenx, zminy, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ2 = BABYLON.MeshBuilder.CreateLines('linez2', {points: [new BABYLON.Vector3(-zlenx, zminy, zmaxz), new BABYLON.Vector3(zlenx, zminy, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ3 = BABYLON.MeshBuilder.CreateLines('linez3', {points: [new BABYLON.Vector3(-zlenx, zmaxy, zminz), new BABYLON.Vector3(zlenx, zmaxy, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ4 = BABYLON.MeshBuilder.CreateLines('linez4', {points: [new BABYLON.Vector3(-zlenx, zmaxy, zmaxz), new BABYLON.Vector3(zlenx, zmaxy, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ5 = BABYLON.MeshBuilder.CreateLines('linez5', {points: [new BABYLON.Vector3(-zlenx, 0, zminz), new BABYLON.Vector3(zlenx, 0, zminz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ6 = BABYLON.MeshBuilder.CreateLines('linez6', {points: [new BABYLON.Vector3(-zlenx, 0, zmaxz),	new BABYLON.Vector3(zlenx, 0, zmaxz)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ7 = BABYLON.MeshBuilder.CreateLines('linez5', {points: [new BABYLON.Vector3(-zlenx, zminy, 0), new BABYLON.Vector3(zlenx, zminy, 0)], useVertexAlpha: false, updatable: false}, scene);
+				WTW.lineZ8 = BABYLON.MeshBuilder.CreateLines('linez6', {points: [new BABYLON.Vector3(-zlenx, zmaxy, 0),	new BABYLON.Vector3(zlenx, zmaxy, 0)], useVertexAlpha: false, updatable: false}, scene);
 				WTW.lineZ1.isPickable = false;
 				WTW.lineZ2.isPickable = false;
 				WTW.lineZ3.isPickable = false;
@@ -2223,7 +2415,18 @@ WTWJS.prototype.openListItems = async function() {
 										zallitemslist += " onmouseover=\"WTW.hilightMold('" + zmoldname + "','yellow');\" onmouseout=\"WTW.unhilightMold('" + zmoldname + "');\" ";
 										break;
 									case 'Action Zones':
+										var zitemind = -1;
+										var zmoldname = '';
+										for (var j=0; j<WTW.actionZones.length;j++) {
+											if (WTW.actionZones[j] != null) {
+												if (WTW.actionZones[j].actionzoneid == zitemslist[i].itemid) {
+													zitemind = j;
+													zmoldname = WTW.actionZones[j].moldname;
+												}
+											}
+										}
 										zallitemslist += "onclick=\"WTW.openActionZoneForm('" + zitemslist[i].itemid + "');\" ";
+										zallitemslist += " onmouseover=\"WTW.showActionZone('" + zitemind + "');\" onmouseout=\"if (dGet('wtw_tactionzoneind').value != '" + zitemind + "') {WTW.hideActionZone('" + zitemind + "');}\" ";
 										break;
 									case '3D Webs':
 										var zitemind = -1;
@@ -2465,6 +2668,7 @@ WTWJS.prototype.createDuplicateShape = function() {
 		dGet('wtw_tmoldpositionx').value = zpositionx;
 		dGet('wtw_tmoldpositionz').value = zpositionz;
 		dGet('wtw_tmoldactionzoneid').value = '';
+		dGet('wtw_tmoldactionzone2id').value = '';
 		dGet('wtw_tmoldcsgaction').selectedIndex = 0;
 		dGet('wtw_tmoldcsgmoldid').value = '';
 		WTW.setWindowSize();
@@ -2735,7 +2939,7 @@ WTWJS.prototype.openMoldColorSelector = function(zobj, ztitle, zcolorgroup) {
 					}
 				}
 			} else {
-				var znode = scene.getTransformNodeByID(zmoldname);
+				var znode = WTW.getMeshOrNodeByID(zmoldname);
 				if (znode != null) {
 					var zchildmeshes = znode.getChildren();
 					for (var i=0;i<zchildmeshes.length;i++) {
@@ -2825,7 +3029,7 @@ WTWJS.prototype.resetMoldColor = function(zmoldname, zspecularcolor, zemissiveco
 				zmesh.material.dispose();
 				zmesh.material = zcovering;
 			} else {
-				var znode = scene.getTransformNodeByID(zmoldname);
+				var znode = WTW.getMeshOrNodeByID(zmoldname);
 				if (znode != null) {
 					var zchildmeshes = znode.getChildren();
 					for (var i=0;i<zchildmeshes.length;i++) {
@@ -2972,7 +3176,7 @@ WTWJS.prototype.setMoldColor = function(zmoldname, zcolorgroup, zr, zg, zb) {
 						}
 					}
 				} else {
-					var znode = scene.getTransformNodeByID(zmoldname2);
+					var znode = WTW.getMeshOrNodeByID(zmoldname2);
 					if (znode != null) {
 						var zchildmeshes = znode.getChildren();
 						for (var i=0;i<zchildmeshes.length;i++) {
@@ -3050,7 +3254,7 @@ WTWJS.prototype.setMoldColor = function(zmoldname, zcolorgroup, zr, zg, zb) {
 
 /* the following process is designed to update the mold appearance directly while you are editing it */
 
-WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
+WTWJS.prototype.setNewMold = function(zrebuildmold) {
 	/* use the form settings to redraw the mold */
 	/* zrebuildmold as true would force the mold to be deleted and rebuilt - some changes may require this anyways (set below) */
 	try {
@@ -3106,6 +3310,8 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 			var zmold = WTW.getMeshOrNodeByID(zmoldname);
 			var zmoldparent = null;
 			var zparentname = '';
+			var zlastmin = null;
+			var zlastmax = null;
 			if (zmold != null) {
 				try {
 					zmoldparent = zmold.parent;
@@ -3181,6 +3387,12 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 				}			
 				if (dGet('wtw_tmoldcovering').options[dGet('wtw_tmoldcovering').selectedIndex] != undefined) {
 					zcoveringname = dGet('wtw_tmoldcovering').options[dGet('wtw_tmoldcovering').selectedIndex].value;
+					if (zcoveringname.indexOf('mirror-') > -1) {
+						var znameparts = zcoveringname.split('-');
+						dGet('wtw_tmoldactionzone2id').value = znameparts[1];
+						zcoveringname = 'mirror';
+						zrebuildmold = 1;
+					}
 				}
 				zmolds[zmoldind].color.diffusecolor = dGet('wtw_tmolddiffusecolor').value;
 				zmolds[zmoldind].color.emissivecolor = dGet('wtw_tmoldemissivecolor').value;
@@ -3253,7 +3465,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 						}
 						break;
 				}
-				var znode = scene.getTransformNodeByID(zmoldname);
+				var znode = WTW.getMeshOrNodeByID(zmoldname);
 				if (znode != null) {
 					/* uses transform node as base */
 					var zchildmeshes = znode.getChildMeshes();
@@ -3277,6 +3489,17 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 										WTW.addReflectionRefraction(zchildmeshes[i]);
 									} else {
 										WTW.removeReflectionRefraction(zchildmeshes[i].name);
+									}
+								}
+								if (WTW.adminView == 1 && zchildmeshes[i].id.indexOf('line') == -1 && zchildmeshes[i].id.indexOf('move') == -1) {
+									var zmin = zchildmeshes[i].getBoundingInfo().boundingBox.minimum;
+									var zmax = zchildmeshes[i].getBoundingInfo().boundingBox.maximum;
+									if (zlastmin == null && zlastmax == null) {
+										zlastmin = zmin;
+										zlastmax = zmax;
+									} else {
+										zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+										zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
 									}
 								}
 							}
@@ -3811,8 +4034,17 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) { // actionzonetype
 						zmold = WTW.getMoldCSG(zmold, zmolds[zmoldind]);
 					}
 				}
-				WTW.openEditPoles(zmold);
+				if (WTW.adminView == 1) {
+					zmold.WTW = [];
+					zmold.WTW = {
+						'bounding': {
+							'min':zlastmin,
+							'max':zlastmax
+						}
+					};
+				}
 			}
+			WTW.openEditPoles(zmold);
 		}	
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_adminmolds.js-setNewMold=' + ex.message);

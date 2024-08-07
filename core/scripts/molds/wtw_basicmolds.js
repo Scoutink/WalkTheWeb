@@ -133,12 +133,12 @@ WTWJS.prototype.addMoldTorus = function(zmoldname, zlenx, zleny, zlenz, zsubdivi
 	return zmold;
 }
 
-WTWJS.prototype.addMoldPlane = function(zmoldname, zlenx, zleny, zlenz) {
+WTWJS.prototype.addMoldPlane = function(zmoldname, zlenx, zleny, zlenz, zcoveringname) {
 	var zmold;
 	try {
 		zmold = BABYLON.MeshBuilder.CreatePlane(zmoldname, {updatable: false, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene);
-		zmold.scaling = new BABYLON.Vector3(zlenx, zleny, zlenz);
 		zmold.convertToUnIndexedMesh();
+		zmold.scaling = new BABYLON.Vector3(zlenx, zleny, zlenz);
 		zmold.renderingGroupId = 1;
 	} catch (ex) {
 		WTW.log('core-scripts-molds-basicmolds\r\n addMoldPlane=' + ex.message);
@@ -1012,7 +1012,7 @@ WTWJS.prototype.addMoldVideo = function(zmoldname, zmolddef, zlenx, zleny, zlenz
 					zobjectanimations[14].additionalscript = 'WTW.hide';
 					zobjectanimations[14].additionalparameters = 'wtw_itooltip';
 					
-					zmold = scene.getTransformNodeByID(zmoldname);
+					zmold = WTW.getMeshOrNodeByID(zmoldname);
 
 					for (var i=0; i < zresults.meshes.length; i++) {
 						if (zresults.meshes[i] != null) {
@@ -1142,7 +1142,7 @@ WTWJS.prototype.addMoldCreateSceneKiosk = function(zmoldname, zmolddef, zlenx, z
 					zobjectanimations[0].additionalscript = 'WTW.create3DWebsite';
 					zobjectanimations[0].additionalparameters = '';
 
-					zmold = scene.getTransformNodeByID(zmoldname);
+					zmold = WTW.getMeshOrNodeByID(zmoldname);
 
 					for (var i=0; i < zresults.meshes.length; i++) {
 						if (zresults.meshes[i] != null) {
@@ -1644,6 +1644,8 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 						if (zresults.meshes != null) {
 							/* make sure the 3D Object is positioned over parent (if transformations are all applied, there is no position adjustment) */
 							var znode = WTW.getMeshOrNodeByID(zmoldname);
+							var zlastmin = null;
+							var zlastmax = null;
 							for (var i=0; i < zresults.meshes.length; i++) {
 								if (zresults.meshes[i] != null) {
 									/* add the base mold name to each of the child meshes */
@@ -1722,7 +1724,27 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 										/* if the parent has been deleted after this async process began (avoiding orphaned objects)*/
 										zresults.meshes[i].dispose();
 									}
+									if (WTW.adminView == 1) {
+										var zmin = zresults.meshes[i].getBoundingInfo().boundingBox.minimum;
+										var zmax = zresults.meshes[i].getBoundingInfo().boundingBox.maximum;
+										if (zlastmin == null && zlastmax == null) {
+											zlastmin = zmin;
+											zlastmax = zmax;
+										} else {
+											zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+											zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+										}
+									}
 								}
+							}
+							if (WTW.adminView == 1) {
+								zmold.WTW = [];
+								zmold.WTW = {
+									'bounding': {
+										'min':zlastmin,
+										'max':zlastmax
+									}
+								};
 							}
 						}
 

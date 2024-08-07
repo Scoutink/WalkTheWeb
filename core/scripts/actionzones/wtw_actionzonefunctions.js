@@ -66,15 +66,19 @@ WTWJS.prototype.checkActionZones = function() {
 							} else if (zmoldname.indexOf('loadanimations') > -1) {
 								/* when in zone, see if there are animations defined to load */
 								WTW.checkLoadAnimations(i);
-							} else if (zmoldname.indexOf('clickactivated') > -1) {
-								/* action zone for click activated items (not in use yet) */
+							} else if (zmoldname.indexOf('clickopen') > -1 && WTW.actionZones[i].status != 4 && WTW.actionZones[i].status != 3) {
+								/* action zone for click open items - activates with onclick in wtw_input.js */
+								if (zothersinzone) {
+									/* doors for other avatars currently do not wait for the click in multiplayer modes */
+									WTW.actionZones[i].status = 3;
+								}
 							} else if (zmoldname.indexOf('door') > -1 && WTW.actionZones[i].status != 4 && WTW.actionZones[i].status != 3) {
 								/* status 3 means opening door - status 4 means door is fully open */
 								WTW.actionZones[i].status = 3;
 							} else if (zmoldname.indexOf('mirror') > -1 && WTW.actionZones[i].status != 2) {
 								/* mirror zone loads objects into the mirror reflection */
 								WTW.actionZones[i].status = 2;
-								WTW.checkMirrorReflectionList(i);
+								WTW.refreshMirrorActionZones();
 							} else if (zmeinzone && zmoldname.indexOf('ridealong') > -1) {
 								/* when in ride along zone, set the avatar parent to zone parent to move with the parent and recalculate relative position */
 								WTW.checkRideAlongZone(zactionzone, i, zmeinzone, zothersinzone);
@@ -94,18 +98,19 @@ WTWJS.prototype.checkActionZones = function() {
 								WTW.pluginsExitActionZone(zmoldname, WTW.actionZones[i]);
 								/* status 0 means not in zone */
 								WTW.actionZones[i].status = 0;
-							} else if (zmoldname.indexOf('clickactivated') > -1) {
-								/* action zone for click activated items (not in use yet) */
+							} else if (zmoldname.indexOf('clickopen') > -1 && WTW.actionZones[i].status != 2 && WTW.actionZones[i].status != 1 && WTW.actionZones[i].status != 0) {
+								/* action zone for click open items - closes when avatar exits zone */
+								WTW.actionZones[i].status = 2;
 							} else if (zmoldname.indexOf('door') > -1 && WTW.actionZones[i].status != 2 && WTW.actionZones[i].status != 1 && WTW.actionZones[i].status != 0) {
 								/* door status 2 means closing door, status 0 means door closed */
 								WTW.actionZones[i].status = 2;
 							} else if (zmoldname.indexOf('teleportzone') > -1 && WTW.actionZones[i].status != 0) {
 								/* exited teleport */
 								WTW.actionZones[i].status = 0;
-							} else if (zmoldname.indexOf('mirror') > -1 && WTW.actionZones[i].status != 2) {
+							} else if (zmoldname.indexOf('mirror') > -1 && WTW.actionZones[i].status != 0) {
 								/* mirror status 0 means not in zone, unload reflection list */
 								WTW.actionZones[i].status = 0;
-								WTW.checkMirrorReflectionList(i);
+								WTW.refreshMirrorActionZones();
 							} else if (zmeinzone == false && zmoldname.indexOf('ridealong') > -1) {
 								/* when avatar returns from ride along zone, set the avatar parent to scene parent and recalculate position */
 								WTW.checkRideAlongZone(zactionzone, i, zmeinzone, zothersinzone);
@@ -323,61 +328,117 @@ WTWJS.prototype.checkRideAlongZone = function(zactionzone, zactionzoneind, zmein
 	}
 }
 
-WTWJS.prototype.initMirrorLoadZone = function(zmoldname, zmolddef) {
+WTWJS.prototype.refreshMirrorActionZones = function() {
 	try {
-/*		var zmold = WTW.getMeshOrNodeByID(zmoldname);
+		for (var j=0;j<WTW.actionZones.length;j++) {
+			if (WTW.actionZones[j] != null) {
+				if (WTW.actionZones[j].actionzonetype == 'mirror') {
+					var zrenderlist = [];
+					zrenderlist.push(WTW.sky);
+					zrenderlist.push(WTW.extraGround);
+					var zmold2 = null;
+					var zactionzone = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname);
+					if (zactionzone != null) {
+						for (var x=0;x<3;x++) {
+							/* cycle through all 3 mold arrays looking for objects in the mirror zone */
+							var zmolds = WTW.communitiesMolds;
+							switch (x) {
+								case 0:
+									zmolds = WTW.communitiesMolds;
+									break;
+								case 1:
+									zmolds = WTW.buildingMolds;
+									break;
+								case 2:
+									zmolds = WTW.thingMolds;
+									break;
+							}
+							/* locate the mold that will reflect the objects */
+							for (var k=0;k<zmolds.length;k++) {
+								if (zmolds[k] != null) {
+									if (zmolds[k].actionzone2id != undefined){
+										if (zactionzone.id.indexOf(zmolds[k].actionzone2id) > -1 && zmolds[k].actionzone2id != '') {
+											zmold2 = WTW.getMeshOrNodeByID(zmolds[k].moldname);
+										}
+									}
+								}
+							}
+						}
+						if (zmold2 != null) {
+							if (zmold2.material != null) {
+								if (zmold2.material.reflectionTexture != undefined) {
+									/* check meshes in the scene to see if they intersect the mirror zone */
+									for (var i=0;i<scene.meshes.length;i++) {
+										if (scene.meshes[i] != null) {
+											if ((scene.meshes[i].id.indexOf('molds-') > -1 || scene.meshes[i].id.indexOf('avatar') > -1) && (scene.meshes[i].id.indexOf('camera') == -1 && scene.meshes[i].id.indexOf('scale') == -1 && scene.meshes[i].id.indexOf('parameter') == -1 && scene.meshes[i].id.indexOf('center') == -1 && scene.meshes[i].id != 'myavatar-' + dGet('wtw_tinstanceid').value && scene.meshes[i].id != zmold2.id)) {
+												if (zactionzone.intersectsMesh(scene.meshes[i],false)) {
+													/* if they intersect add them to the mirror render list */
+													zrenderlist.push(scene.meshes[i]);
+												}
+											}
+										}
+									}
+								}
+								/* update the render list to the latest */
+								if (zmold2.material.subMaterials != undefined) {
+									/* if uses directional textures */
+									for (var i=0;i < zmold2.material.subMaterials.length;i++) {
+										if (zmold2.material.subMaterials[i].reflectionTexture != undefined) {
+											zmold2.material.subMaterials[i].reflectionTexture.renderList = zrenderlist;
+										}
+									}
+								} else {
+									zmold2.material.reflectionTexture.renderList = zrenderlist;
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+	} catch (ex) {
+		WTW.log('core-scripts-actionzones-wtw_actionzonefunctions.js-refreshMirrorActionZones=' + ex.message);
+	}
+}
+
+WTWJS.prototype.initMirrorLoadZone = function(zcovering, zmoldname, zmolddef) {
+	try {
+		var zmold = WTW.getMeshOrNodeByID(zmoldname);
 		if (zmold != null) {
 			if (zmoldname.indexOf('-') > -1) {
 				var znamepart = WTW.getMoldnameParts(zmoldname);
 				if (znamepart.molds != null) {
 					if (znamepart.molds[znamepart.moldind] != null) {
-						if (znamepart.molds[znamepart.moldind].mirroractionzoneid == '') {
-							var zactionzoneid = WTW.getRandomString(16);
-							znamepart.molds[znamepart.moldind].mirroractionzoneid = zactionzoneid;
-							var zactionzoneind = WTW.getNextCount(WTW.actionZones);
-							WTW.actionZones[zactionzoneind] = WTW.newActionZone();
-							WTW.actionZones[zactionzoneind].actionzoneid = zactionzoneid;
-							WTW.actionZones[zactionzoneind].actionzonetype = 'mirror';
-							WTW.actionZones[zactionzoneind].actionzoneshape = 'box';
-							WTW.actionZones[zactionzoneind].status = 0;
-							WTW.actionZones[zactionzoneind].shown = '0';
-							WTW.actionZones[zactionzoneind].parentname = zmoldname;
-							if (communityid != '') {
-								var zbuildingid = '';
-								if (communityid != '' && znamepart.webtype == 'buildingmolds' && znamepart.molds[znamepart.moldind].buildinginfo.buildingid != undefined) {
-									zbuildingid = znamepart.molds[znamepart.moldind].buildinginfo.buildingid;
+						if (znamepart.molds[znamepart.moldind].actionzone2id != '') {
+							var zactionzone2ind = WTW.getActionZoneInd(znamepart.molds[znamepart.moldind].actionzone2id, znamepart.cgind);
+							var zactionzone2name = 'local-actionzone-' + zactionzone2ind + '-' + znamepart.molds[znamepart.moldind].actionzone2id + '-' + znamepart.cgind + '-' + znamepart.cgid + '-mirror';
+							var zactionzone2 = WTW.getMeshOrNodeByID(zactionzone2name);
+							if (zactionzone2 != null) {
+								/* get all current scene meshes in the action zone and add to mirror reflection */
+								zcovering.reflectionTexture.renderList = [];
+								for (var i=0;i<scene.meshes.length;i++) {
+									if (scene.meshes[i] != null) {
+										if (scene.meshes[i].id == 'sky' || scene.meshes[i].id == 'communityeground-' || scene.meshes[i].id.indexOf('mold-') > -1 || scene.meshes[i].id.indexOf('avatar') > -1) {
+											if (zactionzone2.intersectsMesh(scene.meshes[i],false)) {
+//WTW.log("id=" + scene.meshes[i].id);
+												zcovering.reflectionTexture.renderList.push(scene.meshes[i]);
+											}
+										}
+									}
+									
 								}
-								WTW.actionZones[zactionzoneind].communityinfo.communityid = communityid;
-								WTW.actionZones[zactionzoneind].buildinginfo.buildingid = zbuildingid;
-							} else if (buildingid != '') {
-								WTW.actionZones[zactionzoneind].buildinginfo.buildingid = buildingid;
-							} else if (thingid != '') {
-								WTW.actionZones[zactionzoneind].thinginfo.thingid = thingid;
 							}
-							var zscalingx = zmold.scaling.x * 2;
-							var zscalingy = zmold.scaling.y * 2;
-							var zscalingz = zmold.scaling.z * 2;
-							if (zscalingx < 60) {
-								zscalingx = 60;
-							}
-							if (zscalingy < 60) {
-								zscalingy = 60;
-							}
-							if (zscalingz < 60) {
-								zscalingz = 60;
-							}
-							WTW.actionZones[zactionzoneind].scaling.x = zscalingx;
-							WTW.actionZones[zactionzoneind].scaling.y = zscalingy;
-							WTW.actionZones[zactionzoneind].scaling.z = zscalingz;
-							WTW.setShownMolds();
+//							WTW.setShownMolds();
 						}
 					}
 				}
 			}
-		}*/
+		}
 	} catch (ex) { 
 		WTW.log('core-scripts-actionzones-wtw_actionzonefunctions.js-initMirrorLoadZone=' + ex.message);
 	}
+	return zcovering;
 }
 
 WTWJS.prototype.teleport = function(zactionzoneind) {

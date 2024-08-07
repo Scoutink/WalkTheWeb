@@ -24,7 +24,6 @@ WTWJS.prototype.getCoveringList = function(zshape) {
 			}
 			zcoveringlist[zcoveringlist.length] = 'Color';
 			zcoveringlist[zcoveringlist.length] = 'Glass';
-			//zcoveringlist[zcoveringlist.length] = 'Mirror';
 			zcoveringlist[zcoveringlist.length] = 'Water';
 			zcoveringlist[zcoveringlist.length] = 'Fire';
 			zcoveringlist[zcoveringlist.length] = 'Marble';
@@ -45,10 +44,50 @@ WTWJS.prototype.getCoveringList = function(zshape) {
 				dGet('wtw_tmoldcovering').add(zoption);
 			}
 		}
+		WTW.checkMirrorActionZones();
 	} catch (ex) {
 		WTW.log('core-scripts-molds-addcoveringlist.js-getCoveringList=' + ex.message);
 	} 
 	return zcoveringlist;
+}
+
+WTWJS.prototype.checkMirrorActionZones = function() {
+	/* function to add mirror action zones as Coverings */
+	try {
+		var zfound = false;
+		/* get actionzones data */
+		WTW.getAsyncJSON('/connect/actionzones.php?communityid=' + communityid + '&buildingid=' + buildingid + '&thingid=' + thingid, 
+			function(zresponse) {
+				zresponse = JSON.parse(zresponse);
+				if (zresponse != null) {
+					if (zresponse.actionzones != null) {
+						zresponse = zresponse.actionzones;
+						if (zresponse.length > 0) {
+							for (var i=0;i < zresponse.length;i++) {
+								if (zresponse[i] != null) {
+									if (zresponse[i].actionzonetype == 'mirror') {
+										var zoption = document.createElement('option');
+										zoption.text = zresponse[i].actionzonename;
+										zoption.value = 'mirror-' + zresponse[i].actionzoneid;
+										if (zresponse[i].actionzoneid == dGet('wtw_tmoldactionzone2id').value) {
+											zoption.selected = true;
+											zfound = true;
+										}
+										dGet('wtw_tmoldcovering').add(zoption);
+									}
+								}
+							}
+						}
+					}
+					if (zfound) {
+						WTW.setNewMold(1);
+					}
+				}
+			}
+		);
+	} catch (ex) {
+		WTW.log('core-scripts-molds-addcoveringlist.js-checkMirrorActionZones=' + ex.message);
+	} 
 }
 
 WTWJS.prototype.addCovering = function(zcoveringname, zmoldname, zmolddef, zlenx, zleny, zlenz, zspecial1, zspecial2) {

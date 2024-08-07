@@ -432,7 +432,7 @@ WTWJS.prototype.setMoldActionZoneParent = function(zmolds, zmoldind) {
 				if (WTW.actionZones[j] != null) {
 					if (WTW.actionZones[j].parentname == zmolds[zmoldind].parentname) {
 						var zactionzonetype = WTW.actionZones[j].actionzonetype;
-						if (WTW.actionZones[j].actionzoneid == zmolds[zmoldind].actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickactivatedslidingdoor' || zactionzonetype == 'peoplemover' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverwheel')) {
+						if (WTW.actionZones[j].actionzoneid == zmolds[zmoldind].actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickopenslidingdoor' || zactionzonetype == 'clickopenswingingdoor' || zactionzonetype == 'peoplemover' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverwheel')) {
 							zparentname = WTW.actionZones[j].moldname.replace('actionzone-', 'actionzoneaxlebase2-');
 						} else if (WTW.actionZones[j].actionzoneid == zmolds[zmoldind].actionzoneid && zactionzonetype.indexOf('seat') > -1) {
 							zparentname = WTW.actionZones[j].moldname.replace('actionzone-', 'actionzoneaxlebase-');
@@ -978,61 +978,6 @@ WTWJS.prototype.removeReflectionRefraction = function(zmoldname) {
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_common.js-removeReflectionRefraction=' + ex.message);
 	} 
-}
-
-WTWJS.prototype.checkMirrorReflectionList = function(zactionzoneind) {
-	/* work in progress */
-	try {
-		if (WTW.actionZones[zactionzoneind] != null) {
-			if (WTW.actionZones[zactionzoneind].actionzonetype == 'mirror') {
-				var zactionzone = WTW.getMeshOrNodeByID(WTW.actionZones[zactionzoneind].moldname);
-				if (zactionzone != null) {
-					var zmold = zactionzone.parent;
-					if (zmold != null) {
-						if (zmold.material.reflectionTexture != null) {
-							var zreflectionlist = []
-							if (zmold.material.reflectionTexture.renderList != undefined) {
-								zreflectionlist = zmold.material.reflectionTexture.renderList;
-//								WTW.addMirrorReflectionList(WTW.sky, zreflectionlist);
-								WTW.addMirrorReflectionList(WTW.extraGround, zreflectionlist);
-							}
-							if (WTW.water != null) {
-								WTW.addMirrorReflectionList(WTW.water, zreflectionlist);
-							}
-							if (scene.meshes != null) {
-								for (var i=0;i < scene.meshes.length;i++) {
-									var zmoldname = scene.meshes[i].name;
-									if (zmoldname.indexOf('myavatar') > -1 || zmoldname.indexOf('molds') > -1) {
-										WTW.addMirrorReflectionList(scene.meshes[i], zreflectionlist);
-									}
-								}
-							}
-						}
-					}
-				}
-				window.setTimeout(function(){WTW.actionZones[zactionzoneind].status = 0;},1000);
-			}
-		}
-	} catch (ex) { 
-		WTW.log('core-scripts-prime-wtw_common.js-checkMirrorReflectionList=' + ex.message);
-	}
-}
-
-WTWJS.prototype.addMirrorReflectionList = function(zmold, zreflectionlist) {
-	/* work in progress */
-	try {
-		var zfound = false;
-		for (var i=0;i < zreflectionlist.length;i++) {
-			if (zreflectionlist[i].name == zmold.name) {
-				zfound = true;
-			}
-		}
-		if (zfound == false) {
-			zreflectionlist.push(zmold);
-		}
-	} catch (ex) { 
-		WTW.log('core-scripts-prime-wtw_common.js-addMirrorReflectionList=' + ex.message);
-	}
 }
 
 
@@ -1643,7 +1588,7 @@ WTWJS.prototype.processMoldQueue = function() {
 									if (WTW.loadMoldQueue[i].parentname == '' || zparentmold != null) {
 										zmold = WTW.addMold(zmoldname, zmolddef, WTW.loadMoldQueue[i].parentname, WTW.loadMoldQueue[i].coveringname);
 									}
-									var znode = scene.getTransformNodeByID(zmoldname);
+									var znode = WTW.getMeshOrNodeByID(zmoldname);
 									var zwebtype = '';
 									var zmolds = null;
 									var zmoldind = -1; 
@@ -1679,6 +1624,10 @@ WTWJS.prototype.processMoldQueue = function() {
 													if (WTW.actionZones[zattachmoldind] != null) {
 														WTW.addActionZone(zmolddef.moldname, WTW.actionZones[zattachmoldind]);
 													}
+												}
+											} else if (zmoldname.indexOf('actionzone-') > -1 && WTW.adminView == 1) {
+												if (dGet('wtw_bzones').title == 'Action Zones are Shown') {
+													WTW.showActionZone(zmoldind);
 												}
 											}
 											if (zmoldname.indexOf('molds-') > -1) {

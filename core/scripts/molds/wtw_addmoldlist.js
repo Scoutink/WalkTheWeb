@@ -224,7 +224,7 @@ WTWJS.prototype.addMold = function(zmoldname, zmolddef, zparentname, zcoveringna
 				break;
 			case 'plane':
 				/* plane - one sided flat box */
-				zmold = WTW.addMoldPlane(zmoldname, zlenx, zleny, zlenz);
+				zmold = WTW.addMoldPlane(zmoldname, zlenx, zleny, zlenz, zcoveringname);
 				break;
 			case 'disc':
 				/* disc - one sided flat oval */
@@ -379,7 +379,7 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 			var zrotz = Number(zmolddef.rotation.z);
 			var zspecial1 = 0;
 			var zspecial2 = 0;
-			var znode = scene.getTransformNodeByID(zmoldname);
+			var znode = WTW.getMeshOrNodeByID(zmoldname);
 			try {
 				if (zmolddef.checkcollisions != null) {
 					zcheckcollisions = zmolddef.checkcollisions;
@@ -486,9 +486,12 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 							zmold.material.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
 						} else if (zmolddef.color != undefined) {
 							if (zmolddef.color.indexOf('#') > -1) {
-								zcovering.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color);
+								zmold.material.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color);
 							}
 						}
+					}
+					if (zcoveringname.indexOf('mirror') > -1) {
+						WTW.refreshMirrorActionZones();
 					}
 				}
 			}
@@ -989,6 +992,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 		WTW.setDDLValue('wtw_tmoldcsgaction', '');
 		dGet('wtw_selectedcsgshape').innerHTML = '';
 		dGet('wtw_tmoldactionzoneid').value = '';
+		dGet('wtw_tmoldactionzone2id').value = '';
 	} catch (ex) {
 		WTW.log('core-scripts-molds-addmoldlist\r\n setNewMoldDefaults=' + ex.message);
 	} 

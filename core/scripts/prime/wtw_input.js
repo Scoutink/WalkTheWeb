@@ -92,6 +92,23 @@ WTWJS.prototype.inputClick = function(zevent) {
 				if (zpickedname != '') {
 					var zmold = WTW.getMeshOrNodeByID(zpickedname);
 					if (zpickedname.indexOf('-') > -1) {
+						var zparentmold = null;
+						var zparentmoldname = '';
+						if (zmold != null) {
+							zparentmold = zmold.parent;
+							if (zparentmold != null) {
+								if (zparentmold.id != undefined) {
+									while (zparentmold.id.indexOf('connectinggrid') == -1 && zparentmold.id.indexOf('actionzone') == -1 && zparentmold.parent != null) {
+										zparentmold = zparentmold.parent;
+									}
+								}
+							}
+						}
+						if (zparentmold != null) {
+							if (zparentmold.id != undefined) {
+								zparentmoldname = zparentmold.id;
+							}
+						}
 						if (WTW.avatarTimer != null) {
 							/* if my avatar is walking to a position, and any other click happened, then cancel walk to position */
 							WTW.cancelWalkToPosition();
@@ -106,6 +123,17 @@ WTWJS.prototype.inputClick = function(zevent) {
 							WTW.checkImageClick(zpickedname);
 						} else if (zpickedname.indexOf('-videoposter') > -1 || zpickedname.indexOf('-video-screen') > -1) {
 							WTW.checkVideoClick(zpickedname);
+						} else if (zparentmoldname.indexOf('-clickopen') > -1) {
+							var zmoldnameparts = WTW.getMoldnameParts(zparentmoldname);
+							var zactionzonename = zparentmoldname.replace('-actionzoneaxlebase2-','-actionzone-');
+							var zactionzone = WTW.getMeshOrNodeByID(zactionzonename);
+							var zmeinzone = false;
+							if (WTW.myAvatar != null && zactionzone != null) {
+								zmeinzone = WTW.myAvatar.intersectsMesh(zactionzone, false);
+							}
+							if (zmeinzone) {
+								WTW.actionZones[zmoldnameparts.moldind].status = 3;
+							}
 						} else if (zpickedname.indexOf('-vehicle') > -1) {
 							WTW.toggleStartVehicle(zpickedname);
 						} else {
@@ -114,12 +142,15 @@ WTWJS.prototype.inputClick = function(zevent) {
 								/* mold does not have an animation or jsfunction */
 								if (WTW.placeHolder == 0) {
 									/* only works if avatar is loaded */
-									if (zevent.detail === 1) {
-										/* single click - to walk */
-										WTW.selectWalkToPosition('myavatar-' + dGet('wtw_tinstanceid').value, zpickedname, false);
-									} else {
-										/* double click - to run */
-										WTW.selectWalkToPosition('myavatar-' + dGet('wtw_tinstanceid').value, zpickedname, true);
+									if (WTW.cameraFocus == 1) {
+										/* set click move to only work when avatar camera is active */
+										if (zevent.detail === 1) {
+											/* single click - to walk */
+											WTW.selectWalkToPosition('myavatar-' + dGet('wtw_tinstanceid').value, zpickedname, false);
+										} else {
+											/* double click - to run */
+											WTW.selectWalkToPosition('myavatar-' + dGet('wtw_tinstanceid').value, zpickedname, true);
+										}
 									}
 								}
 							}
@@ -1892,6 +1923,55 @@ WTWJS.prototype.hilightMoldFast = function(zmoldname, zcolor) {
 	}
 }
 
+WTWJS.prototype.setHilight = function(zmold, zcolorset) {
+	/* highlight a mold on the 3D Scene check child objects */
+	try {
+		if (zcolorset == undefined) {
+			zcolorset = null;
+		}
+		if (zmold != null) {
+			if (WTW.highlightLayer == null) {
+				WTW.highlightLayer = new BABYLON.HighlightLayer('highlightlayer', scene);
+			}
+			WTW.highlightLayer.outerGlow = true;
+			WTW.highlightLayer.innerGlow = false;
+			
+			if (zmold.id.indexOf('molds-') > -1) {
+				try {
+					WTW.highlightLayer.removeMesh(zmold);
+					if (zcolorset != null) {
+						WTW.highlightLayer.addMesh(zmold, zcolorset);
+					}
+				} catch (ex) {}
+			}
+			var zchildmolds = zmold.getChildren();
+			if (zchildmolds.length > 0) {
+				for (var i = 0;i<zchildmolds.length;i++) {
+					if (zchildmolds[i] != null) {
+						if (zchildmolds[i].id != undefined) {
+							if (zchildmolds[i].id.indexOf('molds-') > -1) {
+								try {
+									if (zcolorset == null) {
+										WTW.highlightLayer.removeMesh(zchildmolds[i]);
+									} else {
+										WTW.highlightLayer.addMesh(zchildmolds[i], zcolorset);
+									}
+								} catch (ex) {}
+							}
+							if (zchildmolds[i].id.indexOf('molds-') > -1 || zchildmolds[i].id.indexOf('-actionzone') > -1 || zchildmolds[i].id.indexOf('-connectinggrid') > -1) {
+								/* check for child objects to hilight for molds, action zones, and connecting grids */
+								WTW.setHilight(zchildmolds[i], zcolorset);
+							}
+						}
+					}
+				}
+			}
+		} 
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_input.js-setHilight=' + ex.message);
+	}
+}
+
 WTWJS.prototype.hilightMold = function(zmoldname, zcolor) {
 	/* highlight a mold on the 3D Scene */
 	try {
@@ -1913,31 +1993,8 @@ WTWJS.prototype.hilightMold = function(zmoldname, zcolor) {
 				zcolorset = BABYLON.Color3.Yellow();
 				break;
 		}
-		var zmold = scene.getMeshByID(zmoldname);
-		if (zmold != null && zmoldname.indexOf('connectinggrid') == -1) {
-			WTW.unhilightMold(zmoldname);
-			WTW.highlightLayer.outerGlow = true;
-			WTW.highlightLayer.innerGlow = false;
-			WTW.highlightLayer.addMesh(zmold, zcolorset);
-		} else {
-			zmold = scene.getTransformNodeByID(zmoldname);
-			if (zmold != null) {
-				var zchildmolds = zmold.getChildren();
-				for (var i = 0;i<zchildmolds.length;i++) {
-					if (zchildmolds[i] != null) {
-						try {
-							if (zchildmolds[i] != null) {
-								if (zchildmolds[i] != undefined) {
-									WTW.highlightLayer.addMesh(zchildmolds[i], zcolorset);
-								}
-							}
-						} catch (ex) {
-							
-						}
-					}
-				}
-			}
-		}
+		var zmold = WTW.getMeshOrNodeByID(zmoldname);
+		WTW.setHilight(zmold, zcolorset);
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_input.js-hilightMold=' + ex.message);
 	}
@@ -1947,26 +2004,8 @@ WTWJS.prototype.unhilightMold = function(zmoldname) {
 	/* unhighlight a mold on the 3D Scene */
 	try {
 		if (WTW.highlightLayer != null) {
-			var zmold = scene.getMeshByID(zmoldname);
-			if (zmold != null && zmoldname.indexOf('connectinggrid') == -1) {
-				WTW.highlightLayer.removeMesh(zmold);
-			} else {
-				zmold = scene.getTransformNodeByID(zmoldname);
-				if (zmold != null) {
-					var zchildmolds = zmold.getChildren();
-					for (var i = 0;i<zchildmolds.length;i++) {
-						try {
-							if (zchildmolds[i] != null) {
-								if (zchildmolds[i] != undefined) {
-									WTW.highlightLayer.removeMesh(zchildmolds[i]);
-								}
-							}
-						} catch (ex) {
-							
-						}
-					}
-				}
-			}
+			var zmold = WTW.getMeshOrNodeByID(zmoldname);
+			WTW.setHilight(zmold);
 		}
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_input.js-unhilightMold=' + ex.message);

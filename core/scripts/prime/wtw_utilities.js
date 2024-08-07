@@ -155,6 +155,7 @@ WTWJS.prototype.getMoldnameParts = function(zmoldname) {
 	var zloadactionzoneid = '';
 	var zunloadactionzoneid = '';
 	var zactionzoneid = '';
+	var zactionzone2id = '';
 	var zcoveringname = '';
 	var zmoldnamebase = '';
 	var zparentname = '';
@@ -241,6 +242,7 @@ WTWJS.prototype.getMoldnameParts = function(zmoldname) {
 				zloadactionzoneid = zmolds[zmoldind].loadactionzoneid;
 				zunloadactionzoneid = zmolds[zmoldind].unloadactionzoneid;
 				zactionzoneid = zmolds[zmoldind].actionzoneid;
+				zactionzone2id = zmolds[zmoldind].actionzone2id;
 				zcoveringname = zmolds[zmoldind].covering;
 			}
 		}
@@ -274,6 +276,7 @@ WTWJS.prototype.getMoldnameParts = function(zmoldname) {
 		'loadactionzoneid':zloadactionzoneid,
 		'unloadactionzoneid':zunloadactionzoneid,
 		'actionzoneid':zactionzoneid,
+		'actionzone2id':zactionzone2id,
 		'coveringname':zcoveringname,
 		'namepart':znamepart,
 		'moldnamebase':zmoldnamebase,
@@ -2279,7 +2282,7 @@ WTWJS.prototype.transformPosition = function(zmolddef, zposx, zposy, zposz) {
 					if (zactionzoneind == j) {
 						if (WTW.actionZones[j] != null) {
 							var zactionzonetype = WTW.actionZones[j].actionzonetype;
-							if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickactivatedslidingdoor' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverturningwheel' || zactionzonetype == 'driverwheel')) {
+							if (WTW.actionZones[j].actionzoneid == zmolddef.actionzoneid && (zactionzonetype == 'door' || zactionzonetype == 'slidingdoor' || zactionzonetype == 'clickopenslidingdoor' || zactionzonetype == 'clickopenswingingdoor' || zactionzonetype == 'swingingdoor' || zactionzonetype == 'rotate' || zactionzonetype == 'elevator' || zactionzonetype == 'driverturnangle' || zactionzonetype == 'driverturningwheel' || zactionzonetype == 'driverwheel')) {
 								var zactionzoneaxlebase = WTW.getMeshOrNodeByID(WTW.actionZones[j].moldname.replace('-actionzone-','-actionzoneaxlebase-'));
 								if (zactionzoneaxlebase != null) {
 									zposx -= zactionzoneaxlebase.position.x;

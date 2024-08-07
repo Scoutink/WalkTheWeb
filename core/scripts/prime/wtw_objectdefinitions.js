@@ -368,6 +368,8 @@ WTWJS.prototype.newMold = function() {
 			'jsparameters':'',
 			'actionzoneid':'',
 			'actionzoneind':'-1',
+			'actionzone2id':'',
+			'actionzone2ind':'-1',
 			'parentactionzoneind':'-1',
 			'loadactionzoneid':'',
 			'loadactionzoneind':'-1',

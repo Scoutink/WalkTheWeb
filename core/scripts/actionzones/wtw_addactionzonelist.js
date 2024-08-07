@@ -13,17 +13,18 @@ WTWJS.prototype.getActionZoneList = function() {
 		zactionzonelist[zactionzonelist.length] = {'name':'Unload Zone','helpurl':'https://www.walktheweb.com/wiki/load-zone-action-zones/', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Sliding Door','helpurl':'https://www.walktheweb.com/wiki/sliding-doors-action-zones/', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Swinging Door','helpurl':'https://www.walktheweb.com/wiki/swinging-doors-action-zone/', 'defaulteditform':'0'};
-		zactionzonelist[zactionzonelist.length] = {'name':'Click Activated Sliding Door','helpurl':'', 'defaulteditform':'0'};
+		zactionzonelist[zactionzonelist.length] = {'name':'Click Open Sliding Door','helpurl':'', 'defaulteditform':'0'};
+		zactionzonelist[zactionzonelist.length] = {'name':'Click Open Swinging Door','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Rotate','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Load Animations','helpurl':'', 'defaulteditform':'0'};
+		zactionzonelist[zactionzonelist.length] = {'name':'Mirror','helpurl':'', 'defaulteditform':'0'}; 
 		zactionzonelist[zactionzonelist.length] = {'name':'Ride Along','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Teleport Zone','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Spawn Zone','helpurl':'', 'defaulteditform':'0'};
 /* the following are works in progress and conceptual ideas */
 /*		zactionzonelist[zactionzonelist.length] = {'name':'Seat','helpurl':'', 'defaulteditform':'0'}; */
 		/* currently in testing or under development */
-/*		zactionzonelist[zactionzonelist.length] = {'name':'Mirror','helpurl':'', 'defaulteditform':'0'}; 
-		zactionzonelist[zactionzonelist.length] = {'name':'Elevator','helpurl':'', 'defaulteditform':'0'};
+/*		zactionzonelist[zactionzonelist.length] = {'name':'Elevator','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'People Mover','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Passenger Seat','helpurl':'', 'defaulteditform':'0'};
 		zactionzonelist[zactionzonelist.length] = {'name':'Driver Seat','helpurl':'', 'defaulteditform':'0'};
@@ -140,9 +141,13 @@ WTWJS.prototype.addActionZone = function(zactionzonename, zactionzonedef) {
 						/* swinging door zone = shape often box by default - triggers molds to move in a rotation around a defined axis direction when any avatar enters the zone */
 						zactionzone = WTW.addActionzoneSwingingDoor(zactionzonename, zactionzoneind, zactionzonedef);
 						break;
-					case 'clickactivatedslidingdoor':
+					case 'clickopenslidingdoor':
 						/* click to sliding door zone = (work in progress) selected mold to click - triggers molds to move in a defined axis direction when any avatar enters the zone */
 						zactionzone = WTW.addActionzoneClickSlidingDoor(zactionzonename, zactionzoneind, zactionzonedef);
+						break;
+					case 'clickopenswingingdoor':
+						/* click to swing door zone = (work in progress) selected mold to click - triggers molds to move in a defined axis direction when any avatar enters the zone */
+						zactionzone = WTW.addActionzoneClickSwingingDoor(zactionzonename, zactionzoneind, zactionzonedef);
 						break;
 					case 'mirror':
 						/* mirror - (work in progress) molds in this zone will automatically have a reflection in the mirrored surface of a selected mold */
@@ -223,18 +228,18 @@ WTWJS.prototype.setNewActionZoneDefaults = function(zactionzonetype) {
 		}
 		dGet('wtw_tactionzonetype').value = zactionzonetype;
 		dGet('wtw_tactionzoneshape').value = 'box';
-		dGet('wtw_taxispositionx').value = zpositionx; //.toFixed(2);
-		dGet('wtw_taxispositiony').value = zpositiony; //.toFixed(2);
-		dGet('wtw_taxispositionz').value = zpositionz; //.toFixed(2);
+		dGet('wtw_taxispositionx').value = Number(zpositionx).toFixed(2);
+		dGet('wtw_taxispositiony').value = Number(zpositiony).toFixed(2);
+		dGet('wtw_taxispositionz').value = Number(zpositionz).toFixed(2);
 		dGet('wtw_taxisscalingx').value = '0.20';
 		dGet('wtw_taxisscalingy').value = '0.20';
 		dGet('wtw_taxisscalingz').value = '20.00';
 		dGet('wtw_taxisrotationx').value = '0.00';
-		dGet('wtw_taxisrotationy').value = zrotationy; //.toFixed(2);
+		dGet('wtw_taxisrotationy').value = Number(zrotationy).toFixed(2);
 		dGet('wtw_taxisrotationz').value = '0.00';
-		dGet('wtw_tactionzoneposx').value = zpositionx; //.toFixed(2);
-		dGet('wtw_tactionzoneposy').value = zpositiony; //.toFixed(2);
-		dGet('wtw_tactionzoneposz').value = zpositionz; //.toFixed(2);
+		dGet('wtw_tactionzoneposx').value = Number(zpositionx).toFixed(2);
+		dGet('wtw_tactionzoneposy').value = Number(zpositiony).toFixed(2);
+		dGet('wtw_tactionzoneposz').value = Number(zpositionz).toFixed(2);
 		dGet('wtw_tactionzonescalingx').value = '20.00';
 		dGet('wtw_tactionzonescalingy').value = '20.00';
 		dGet('wtw_tactionzonescalingz').value = '20.00';
@@ -270,6 +275,7 @@ WTWJS.prototype.setNewActionZoneDefaults = function(zactionzonetype) {
 			case 'slidingdoor':
 				dGet('wtw_tactionzonename').value = 'New Sliding Door';
 				dGet('wtw_tactionzonemovementtype').value = 'slide';
+				dGet('wtw_taxisrotationy').value = (Number(zrotationy) - 90).toFixed(2);
 				break;
 			case 'swingingdoor':
 				dGet('wtw_tactionzonename').value = 'New Swinging Door';
@@ -280,19 +286,29 @@ WTWJS.prototype.setNewActionZoneDefaults = function(zactionzonetype) {
 				dGet('wtw_tactionzonerotatespeed').value = '10.00';
 				dGet('wtw_tactionzonemovementtype').value = 'swing';
 				break;
-			case 'clickactivatedslidingdoor':
+			case 'clickopenslidingdoor':
 				dGet('wtw_tactionzonename').value = 'New Click Sliding Door';
 				dGet('wtw_tactionzonemovementtype').value = 'slide';
+				dGet('wtw_taxisrotationy').value = (Number(zrotationy) - 90).toFixed(2);
 				break;
+			case 'clickopenswingingdoor':
+				dGet('wtw_tactionzonename').value = 'New Click Swinging Door';
+				dGet('wtw_taxisscalingx').value = '0.20';
+				dGet('wtw_taxisscalingy').value = '20.00';
+				dGet('wtw_taxisscalingz').value = '0.20';
+				dGet('wtw_taxisrotationy').value = '0.00';
+				dGet('wtw_tactionzonerotatespeed').value = '10.00';
+				dGet('wtw_tactionzonemovementtype').value = 'swing';
+				break;
+			case 'mirror':
+				dGet('wtw_tactionzonename').value = 'New Mirror Zone';
+				break; 
 			case 'seat':
 				dGet('wtw_tactionzonename').value = 'New Seat';
 				dGet('wtw_tactionzonescalingx').value = '4.00';
 				dGet('wtw_tactionzonescalingy').value = '1.00';
 				dGet('wtw_tactionzonescalingz').value = '4.00';
 				break;
-			case 'mirror':
-				dGet('wtw_tactionzonename').value = 'New Mirror Zone';
-				break; 
 			case 'ridealong':
 				dGet('wtw_tactionzonename').value = 'New Ride Along Zone';
 				break;
@@ -366,8 +382,10 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 		WTW.show('wtw_actionzoneadvancedoptslink');
 		WTW.show('wtw_actionzonepartsdiv');
 		WTW.show('wtw_actionzonepartsdivlabel');
+		dGet('wtw_actionzonenote').innerHTML = '';
 		switch (zactionzonetype) {
 			case 'loadzone':
+				dGet('wtw_actionzonenote').innerHTML = 'This zone defines an area where molds can be loaded into the 3D Scene. Edit the mold to set the load zone.';
 				WTW.hide('wtw_actionzoneaxisdiv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -379,6 +397,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_azjavascriptdiv');
 				break;
 			case 'unloadzone':
+				dGet('wtw_actionzonenote').innerHTML = 'This zone creates a hole in the load zone where a mold can be unloaded when the avatar enters it. Edit the mold to use this zone.';
 				WTW.hide('wtw_actionzoneaxisdiv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -390,6 +409,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_azjavascriptdiv');
 				break;
 			case 'teleportzone':
+				dGet('wtw_actionzonenote').innerHTML = 'This zone will relocate your avatar to another 3D Scene or spawn zone within the same 3D Scene.';
 				WTW.hide('wtw_actionzoneaxisdiv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -401,6 +421,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_actionzoneteleportdiv');
 				break;
 			case 'spawnzone':
+				dGet('wtw_actionzonenote').innerHTML = 'This zone defines an area for avatars to start in the 3D Scene or it can be a landing location for a teleport zone.';
 				WTW.hide('wtw_actionzoneaxisdiv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -411,6 +432,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_actionzoneadvancedopts');
 				break;
 			case 'loadanimations':
+				dGet('wtw_actionzonenote').innerHTML = 'When your avatar enters the zone, select animations are loaded to your available avatar animations. This is designed to assist in games that have specific avatar animation needs like golf.';
 				WTW.hide('wtw_actionzoneaxisdiv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -422,10 +444,12 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_actionzoneavataranimationsdiv');
 				break;
 			case 'slidingdoor':
+				dGet('wtw_actionzonenote').innerHTML = 'When your avatar enters the zone the door slides open and closes when you exit the zone.';
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Sliding Door';				
 				WTW.show('wtw_actionzonemovementdistancediv');
 				break;
 			case 'swingingdoor':
+				dGet('wtw_actionzonenote').innerHTML = 'When your avatar enters the zone the door swings open and closes when you exit the zone.';
 				WTW.hide('wtw_axisrotationy');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Swinging Door';
 				dGet('wtw_swingdistancediv').innerHTML = 'Swing Distance';
@@ -433,11 +457,34 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_rotatedirectiondiv');
 				WTW.show('wtw_actionzonerotatespeeddiv');
 				break;
-			case 'clickactivatedslidingdoor':
+			case 'clickopenslidingdoor':
+				dGet('wtw_actionzonenote').innerHTML = 'Like a standard Sliding Door except when your avatar is in the zone the door does not open until you click it.';
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Click Sliding Door';				
 				WTW.show('wtw_actionzonemovementdistancediv');
 				break;
+			case 'clickopenswingingdoor':
+				dGet('wtw_actionzonenote').innerHTML = 'Like a standard Swinging Door except when your avatar is in the zone the door does not open until you click it.';
+				WTW.hide('wtw_axisrotationy');
+				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Click Swinging Door';				
+				dGet('wtw_swingdistancediv').innerHTML = 'Swing Distance';
+				WTW.show('wtw_actionzoneswingdoordiv');
+				WTW.show('wtw_rotatedirectiondiv');
+				WTW.show('wtw_actionzonerotatespeeddiv');
+				break;
+			case 'mirror':
+				dGet('wtw_actionzonenote').innerHTML = 'This zone defines an area where a mirror will reflect all molds in the zone currently loaded into the 3D Scene. After adding the zone, add a Mold and set the covering to this Mirror Zone.';
+				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Mirror Zone';
+				WTW.hide('wtw_actionzonepartsdiv');
+				WTW.hide('wtw_actionzoneaxisdiv');
+				WTW.hide('wtw_copyaxletoactionzonediv');
+				WTW.hide('wtw_actionzoneadvancedoptslink');
+				dGet('wtw_tcopyaxletoactionzone').disabled = true;
+				dGet('wtw_actionzoneadvancedoptslink').innerHTML = '-- Hide Advanced Options --';
+				WTW.show('wtw_actionzoneadvancedopts');
+				WTW.hide('wtw_azjavascriptdiv');
+				break; 
 			case 'seat':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_actionzonesizediv');
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneaxisdiv');
@@ -451,10 +498,8 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_attachactionzonediv');
 				WTW.show('wtw_actionzonepartsdiv');
 				break;
-			case 'mirror':
-				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Mirror Zone';
-				break; 
 			case 'ridealong':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_copyaxletoactionzonediv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
 				WTW.hide('wtw_actionzoneaxisdiv');
@@ -465,6 +510,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_actionzoneadvancedopts');
 				break;
 			case 'rotate':
+				dGet('wtw_actionzonenote').innerHTML = 'This action zone provides an axis for rotation that molds can be added to rotate about the axis.';
 				WTW.hide('wtw_axisrotationy');
 				WTW.hide('wtw_actionzonesettingsdiv');
 				WTW.hide('wtw_actionzoneadvancedoptslink');
@@ -474,14 +520,17 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_actionzonerotatespeeddiv');
 				break;
 			case 'peoplemover':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add People Mover Zone';
 				WTW.show('wtw_actionzonemovementdistancediv');
 				break;
 			case 'elevator':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Elevator Zone';
 				WTW.show('wtw_actionzonemovementdistancediv');
 				break;
 			case 'passengerseat':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_actionzoneadvancedoptslink');
 				WTW.hide('wtw_actionzonepartsdivlabel');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Passenger Seat';
@@ -491,6 +540,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_attachactionzonediv');
 				break;
 			case 'driverseat':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_actionzoneadvancedoptslink');
 				WTW.hide('wtw_actionzonepartsdivlabel');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Driver Seat';
@@ -502,6 +552,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_attachactionzonediv');
 				break;
 			case 'driverturnangle':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_rotatedirectiondiv');
 				WTW.hide('wtw_swingdistancedegreesdiv');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Driver Turn Angle';
@@ -510,6 +561,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_axisrotationy');
 				break;
 			case 'driverturningwheel':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_rotatedirectiondiv');
 				WTW.hide('wtw_swingdistancedegreesdiv');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Driver Turning Wheel';
@@ -518,6 +570,7 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				WTW.show('wtw_axisrotationy');
 				break;
 			case 'driverwheel':
+				dGet('wtw_actionzonenote').innerHTML = '';
 				WTW.hide('wtw_rotatedirectiondiv');
 				WTW.hide('wtw_swingdistancedegreesdiv');
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Driver Wheel';
@@ -529,6 +582,11 @@ WTWJS.prototype.setActionZoneFormFields = function(zactionzonetype) {
 				dGet('wtw_editactionzoneformtitle').innerHTML = 'Add Action Zone';
 				WTW.pluginsSetActionZoneFormFields(zactionzonetype);
 				break;
+			if (dGet('wtw_actionzonenote').innerHTML == '') {
+				WTW.hide('wtw_actionzonenote');
+			} else {
+				WTW.show('wtw_actionzonenote');
+			}
 		}	
 	} catch (ex) {
 		WTW.log('core-scripts-actionzones-addactionzonelist\r\n setActionZoneFormFields=' + ex.message);

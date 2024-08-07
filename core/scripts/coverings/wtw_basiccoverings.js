@@ -81,9 +81,12 @@ WTWJS.prototype.addCoveringMirror = function(zmoldname, zmolddef) {
 	/* work in progress - adds a mirror surface to a mold and will load the molds that will reflect in that surface */
 	var zcovering;
 	try {
-		var zmirrorLevel = .9;
+		var zmold = WTW.getMeshOrNodeByID(zmoldname);
+		var zmirrorLevel = 1;
 		var zopacity = 1;
-/*		if (zmolddef.opacity != undefined) {
+		var zmoldworldmatrix = null;
+		var zmoldvertexdata = null;
+		if (zmolddef.opacity != undefined) {
 			if (WTW.isNumeric(zmolddef.opacity)) {
 				zopacity = Number(zmolddef.opacity) / 100;
 				if (zopacity > 1) {
@@ -92,18 +95,144 @@ WTWJS.prototype.addCoveringMirror = function(zmoldname, zmolddef) {
 					zopacity = 0;
 				}
 			}
-		}*/
-		zcovering = new BABYLON.StandardMaterial('mat' + zmoldname, scene);
-		zcovering.reflectionTexture = new BABYLON.MirrorTexture('matmirror' + zmoldname, 1024, scene, true);
-		zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, 1, -10.0);
-		//zcovering.reflectionTexture.renderList = [WTW.sky, WTW.extraGround];
+		}
+		if (zmold != null) {
+			zmold.computeWorldMatrix(true);
+			zmoldworldmatrix = zmold.getWorldMatrix();
+			zmoldvertexdata = zmold.getVerticesData("normal");
+		}
+		switch (zmolddef.shape) {
+			case 'plane':
+				zcovering = new BABYLON.StandardMaterial('mat' + zmoldname, scene);
+				zcovering.reflectionTexture = new BABYLON.MirrorTexture('matmirror' + zmoldname, 1024, scene, true);
+				if (zmold != null && zmoldworldmatrix != null && zmoldvertexdata != null) {
+					var zmoldnormal = new BABYLON.Vector3(zmoldvertexdata[0], zmoldvertexdata[1], zmoldvertexdata[2]);
+					zmoldnormal = BABYLON.Vector3.TransformNormal(zmoldnormal, zmoldworldmatrix);
+					var reflector = BABYLON.Plane.FromPositionAndNormal(zmold.position, zmoldnormal.scale(-1));
+					zcovering.reflectionTexture.mirrorPlane = reflector;
+				} else {
+					zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
+				}
+				break;
+/*			case 'box': // using directional textures
+				if (zmold != null && zmoldworldmatrix != null && zmoldvertexdata != null) {
+					zcovering = new BABYLON.MultiMaterial('cubemat' + zmoldname, scene);
+					if (zmold.material != null) {
+						if (zmold.material.subMaterials != undefined) {
+							for (var i=0;i < zmold.material.subMaterials.length;i++) {
+								if (zmold.material.subMaterials[i].diffuseTexture != undefined) {
+									if (zmold.material.subMaterials[i].diffuseTexture != null) {
+										zmold.material.subMaterials[i].diffuseTexture.dispose();
+										zmold.material.subMaterials[i].diffuseTexture = null;
+									}
+								}
+							}
+						}
+						
+					}
+					zmold.subMeshes = [];
+					if (zmold.subMeshes.length < 12) {
+						zmold.subMeshes.push(new BABYLON.SubMesh(0, 0, 4, 0, 6, zmold));
+						zmold.subMeshes.push(new BABYLON.SubMesh(1, 4, 4, 6, 6, zmold));
+						zmold.subMeshes.push(new BABYLON.SubMesh(2, 8, 4, 12, 6, zmold));
+						zmold.subMeshes.push(new BABYLON.SubMesh(3, 12, 4, 18, 6, zmold));
+						zmold.subMeshes.push(new BABYLON.SubMesh(4, 16, 4, 24, 6, zmold));
+						zmold.subMeshes.push(new BABYLON.SubMesh(5, 20, 4, 30, 6, zmold));
+					}
+
+					var zfmaterial = new BABYLON.StandardMaterial('fmirrormat' + zmoldname, scene);
+					zfmaterial.reflectionTexture = new BABYLON.MirrorTexture('fmirrortext' + zmoldname, 1024, scene, true);
+					var zfmoldnormal = new BABYLON.Vector3(zmoldvertexdata[0], zmoldvertexdata[1], zmoldvertexdata[2]);
+					zfmoldnormal = BABYLON.Vector3.TransformNormal(zfmoldnormal, zmoldworldmatrix);
+					zfmaterial.reflectionTexture.mirrorPlane = BABYLON.Plane.FromPositionAndNormal(zmold.position, zfmoldnormal.scale(-1));
+//					zfmaterial.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
+					zfmaterial.alpha = zopacity;
+					zfmaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zfmaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zfmaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zfmaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					var zlmaterial = new BABYLON.StandardMaterial('lmirrormat' + zmoldname, scene);
+					zlmaterial.reflectionTexture = new BABYLON.MirrorTexture('lmirrortext' + zmoldname, 1024, scene, true);
+					var zlmoldnormal = new BABYLON.Vector3(zmoldvertexdata[0], zmoldvertexdata[1], zmoldvertexdata[2]);
+					zlmoldnormal = BABYLON.Vector3.TransformNormal(zlmoldnormal, zmoldworldmatrix);
+					zlmaterial.reflectionTexture.mirrorPlane = BABYLON.Plane.FromPositionAndNormal(zmold.position, zlmoldnormal.scale(-1));
+					zlmaterial.alpha = zopacity;
+					zlmaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zlmaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zlmaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zlmaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					var zbmaterial = new BABYLON.StandardMaterial('bmirrormat' + zmoldname, scene);
+					zbmaterial.alpha = zopacity;
+					zbmaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zbmaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zbmaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zbmaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					var zrmaterial = new BABYLON.StandardMaterial('rmirrormat' + zmoldname, scene);
+					zrmaterial.alpha = zopacity;
+					zrmaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zrmaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zrmaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zrmaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					var zumaterial = new BABYLON.StandardMaterial('umirrormat' + zmoldname, scene);
+					zumaterial.alpha = zopacity;
+					zumaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zumaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zumaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zumaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					var zdmaterial = new BABYLON.StandardMaterial('dmirrormat' + zmoldname, scene);
+					zdmaterial.alpha = zopacity;
+					zdmaterial.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
+					zdmaterial.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
+					zdmaterial.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
+					zdmaterial.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
+
+					zcovering.subMaterials[0] = zlmaterial;
+					zcovering.subMaterials[1] = zrmaterial;
+					zcovering.subMaterials[2] = zbmaterial;
+					zcovering.subMaterials[3] = zfmaterial;
+					zcovering.subMaterials[4] = zumaterial;
+					zcovering.subMaterials[5] = zdmaterial;
+				} else {
+					zcovering = new BABYLON.StandardMaterial('mat' + zmoldname, scene);
+					zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
+				}
+*/
+				break;
+			case 'box':
+			case 'sphere':
+			default:
+				zcovering = new BABYLON.StandardMaterial('mat' + zmoldname, scene);
+				if (zmold != null) {
+					var zprobe = new BABYLON.ReflectionProbe('matmirror' + zmoldname, 1024, scene);
+					zprobe.attachToMesh(zmold);
+					zcovering.reflectionTexture = zprobe.cubeTexture;
+				} else {
+					zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
+				}
+				break;
+/*				zcovering = new BABYLON.StandardMaterial('mat' + zmoldname, scene);
+				zcovering.reflectionTexture = new BABYLON.MirrorTexture('matmirror' + zmoldname, 1024, scene, true);
+				if (zmold != null) {
+					zcovering.reflectionTexture.mirrorPlane = BABYLON.Plane.FromPositionAndNormal(zmold.position, zmold.getFacetNormal(0).scale(-1));
+				} else {
+					zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
+				}
+				break;
+*/		}
+		zcovering.backFaceCulling = true;
 		zcovering.reflectionTexture.level = zmirrorLevel;
 		zcovering.alpha = zopacity;
+		zcovering.reflectionTexture.adaptiveBlurKernel = 2;
 		zcovering.diffuseColor = new BABYLON.Color3.FromHexString(zmolddef.color.diffusecolor);
 		zcovering.emissiveColor = new BABYLON.Color3.FromHexString(zmolddef.color.emissivecolor);
 		zcovering.specularColor = new BABYLON.Color3.FromHexString(zmolddef.color.specularcolor);
 		zcovering.ambientColor = new BABYLON.Color3.FromHexString(zmolddef.color.ambientcolor);
-		WTW.initMirrorLoadZone(zmoldname, zmolddef);
+		//zcovering.reflectionTexture.coordinatesMode = BABYLON.Texture.SPHERICAL_MODE; //CUBIC_MODE;
 	} catch (ex) {
 		WTW.log('core-scripts-coverings-basiccoverings\r\n addCoveringMirror=' + ex.message);
 	}
