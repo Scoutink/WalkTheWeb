@@ -30,6 +30,7 @@ WTW_COINS.prototype.addActionZoneMyCustomZone = function(zactionzonename, zactio
 			zactionzone.rotation.z = WTW.getRadians(zactionzonedef.rotation.z);
 			zactionzone.isPickable = false;
 			zactionzone.checkCollisions = false;
+			zactionzone.renderingGroupId = 1;
 			zactionzone.position.x = zactionzonedef.position.x;
 			zactionzone.position.y = zactionzonedef.position.y;
 			zactionzone.position.z = zactionzonedef.position.z;
@@ -280,6 +281,7 @@ WTW_COINS.prototype.addActionZoneCoin = function(zactionzonename, zactionzoneind
 			zactionzone.rotation.z = WTW.getRadians(zactionzonedef.rotation.z);
 			zactionzone.isPickable = false;
 			zactionzone.checkCollisions = false;
+			zactionzone.renderingGroupId = 1;
 			zactionzone.position.x = zactionzonedef.position.x;
 			zactionzone.position.y = zactionzonedef.position.y;
 			zactionzone.position.z = zactionzonedef.position.z;
@@ -368,6 +370,7 @@ WTW_COINS.prototype.loadCoin = async function(zactionzonename, zvalue1, zscaling
 									zresults.meshes[i].scaling.y = 1 / zscalingy;
 									zresults.meshes[i].scaling.z = 1 / zscalingz;
 									zresults.meshes[i].position.y = 1 / zscalingy * 3;
+									zresults.meshes[i].renderingGroupId = 1;
 								}
 							}
 						}

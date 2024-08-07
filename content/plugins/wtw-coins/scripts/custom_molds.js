@@ -174,6 +174,7 @@ WTW_COINS.prototype.addMoldPlatform = function(zobjectfile, zmoldname, zmolddef,
 							if (zresults.meshes[i].parent == null) {
 								zresults.meshes[i].parent = zmold;
 							}
+							zresults.meshes[i].renderingGroupId = 1;
 							if (WTW.shadows != null) {
 								/* add mesh to world shadow map */
 //								WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
@@ -241,6 +242,7 @@ WTW_COINS.prototype.addMoldPlatformLift = function(zobjectfile, zmoldname, zmold
 							if (zresults.meshes[i].parent == null) {
 								zresults.meshes[i].parent = zmold;
 							}
+							zresults.meshes[i].renderingGroupId = 1;
 							if (WTW.shadows != null) {
 								/* add mesh to world shadow map */
 //								WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
