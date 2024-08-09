@@ -986,8 +986,9 @@ class wtwthings {
 				}
 				$zresults = $wtwhandlers->query("
 					select t3.thingmoldid as pastthingmoldid,
-						t4.actionzoneid as loadactionzoneid,
 						'".$zthingid."' as thingid,
+						t3.loadactionzoneid,
+						t3.unloadactionzoneid,
 						t3.shape,
 						t3.covering,
 						t3.positionx,
@@ -1046,36 +1047,94 @@ class wtwthings {
 						t3.maxheight,
 						t3.checkcollisions,
 						t3.ispickable,
-						t5.actionzoneid as actionzoneid,
+						t3.actionzoneid,
+						t3.actionzone2id,
 						t3.csgmoldid,
 						t3.csgaction,
 						t3.alttag,
 						t3.jsfunction,
 						t3.jsparameters
 					from ".wtw_tableprefix."thingmolds t3
-					left join (select actionzoneid, pastactionzoneid 
-							from ".wtw_tableprefix."actionzones 
-							where thingid='".$zthingid."' and (not thingid='')) t4
-						on t4.pastactionzoneid=t3.loadactionzoneid
-					left join (select actionzoneid, pastactionzoneid 
-							from ".wtw_tableprefix."actionzones 
-							where thingid='".$zthingid."' and (not thingid='')) t5
-						on t5.pastactionzoneid=t3.actionzoneid
 					where t3.thingid='".$zfromthingid."'
 						and t3.deleted=0;");
 				foreach ($zresults as $zrow) {
 					$zthingmoldid = $wtwhandlers->getRandomString(16,1);
-					$zunloadactionzoneid = '';
-					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
-						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
-					}
+					$zpastthingmoldid = $zrow["pastthingmoldid"];
+					$zloadactionzoneid = $zrow["loadactionzoneid"];
+					$zunloadactionzoneid = $zrow["unloadactionzoneid"];
+					$zshape = $zrow["shape"];
+					$zcovering = $zrow["covering"];
+					$zpositionx = $zrow["positionx"];
+					$zpositiony = $zrow["positiony"];
+					$zpositionz = $zrow["positionz"];
+					$zscalingx = $zrow["scalingx"];
+					$zscalingy = $zrow["scalingy"];
+					$zscalingz = $zrow["scalingz"];
+					$zrotationx = $zrow["rotationx"];
+					$zrotationy = $zrow["rotationy"];
+					$zrotationz = $zrow["rotationz"];
+					$zspecial1 = $zrow["special1"];
+					$zspecial2 = $zrow["special2"];
+					$zuoffset = $zrow["uoffset"];
+					$zvoffset = $zrow["voffset"];
+					$zuscale = $zrow["uscale"];
+					$zvscale = $zrow["vscale"];
+					$zuploadobjectid = $zrow["uploadobjectid"];
+					$zgraphiclevel = $zrow["graphiclevel"];
+					$ztextureid = $zrow["textureid"];
+					$ztexturebumpid = $zrow["texturebumpid"];
+					$ztexturehoverid = $zrow["texturehoverid"];
+					$zvideoid = $zrow["videoid"];
+					$zvideoposterid = $zrow["videoposterid"];
+					$zdiffusecolor = $zrow["diffusecolor"];
+					$zspecularcolor = $zrow["specularcolor"];
+					$zemissivecolor = $zrow["emissivecolor"];
+					$zambientcolor = $zrow["ambientcolor"];
+					$zheightmapid = $zrow["heightmapid"];
+					$zmixmapid = $zrow["mixmapid"];
+					$ztexturerid = $zrow["texturerid"];
+					$ztexturegid = $zrow["texturegid"];
+					$ztexturebid = $zrow["texturebid"];
+					$ztexturebumprid = $zrow["texturebumprid"];
+					$ztexturebumpgid = $zrow["texturebumpgid"];
+					$ztexturebumpbid = $zrow["texturebumpbid"];
+					$zsoundid = $zrow["soundid"];
+					$zsoundname = $zrow["soundname"];
+					$zsoundattenuation = $zrow["soundattenuation"];
+					$zsoundloop = $zrow["soundloop"];
+					$zsoundmaxdistance = $zrow["soundmaxdistance"];
+					$zsoundrollofffactor = $zrow["soundrollofffactor"];
+					$zsoundrefdistance = $zrow["soundrefdistance"];
+					$zsoundconeinnerangle = $zrow["soundconeinnerangle"];
+					$zsoundconeouterangle = $zrow["soundconeouterangle"];
+					$zsoundconeoutergain = $zrow["soundconeoutergain"];
+					$zwebtext = $zrow["webtext"];
+					$zwebstyle = $zrow["webstyle"];
+					$zopacity = $zrow["opacity"];
+					$zsideorientation = $zrow["sideorientation"];
+					$zbillboard = $zrow["billboard"];
+					$zwaterreflection = $zrow["waterreflection"];
+					$zreceiveshadows = $zrow["receiveshadows"];
+					$zsubdivisions = $zrow["subdivisions"];
+					$zminheight = $zrow["minheight"];
+					$zmaxheight = $zrow["maxheight"];
+					$zcheckcollisions = $zrow["checkcollisions"];
+					$zispickable = $zrow["ispickable"];
+					$zactionzoneid = $zrow["actionzoneid"];
+					$zactionzone2id = $zrow["actionzone2id"];
+					$zcsgmoldid = $zrow["csgmoldid"];
+					$zcsgaction = $zrow["csgaction"];
+					$zalttag = $zrow["alttag"];
+					$zjsfunction = $zrow["jsfunction"];
+					$zjsparameters = $zrow["jsparameters"];
+
 					$wtwhandlers->query("
 						insert into ".wtw_tableprefix."thingmolds
 						   (thingmoldid,
 							pastthingmoldid,
+							thingid,
 							loadactionzoneid,
 							unloadactionzoneid,
-							thingid,
 							shape,
 							covering,
 							positionx,
@@ -1144,78 +1203,78 @@ class wtwthings {
 							createdate,
 							createuserid,
 							updatedate,
-							updateuserid) 
+							updateuserid)
 						values
 						   ('".$zthingmoldid."',
 							'".$zrow["pastthingmoldid"]."',
-							'".$zrow["loadactionzoneid"]."',
-							'".$zunloadactionzoneid."',
 							'".$zrow["thingid"]."',
-							'".$zrow["shape"]."',
-							'".$zrow["covering"]."',
-							".$wtwhandlers->checkNumber($zrow["positionx"],0).",
-							".$wtwhandlers->checkNumber($zrow["positiony"],0).",
-							".$wtwhandlers->checkNumber($zrow["positionz"],0).",
-							".$wtwhandlers->checkNumber($zrow["scalingx"],1).",
-							".$wtwhandlers->checkNumber($zrow["scalingy"],1).",
-							".$wtwhandlers->checkNumber($zrow["scalingz"],1).",
-							".$wtwhandlers->checkNumber($zrow["rotationx"],0).",
-							".$wtwhandlers->checkNumber($zrow["rotationy"],0).",
-							".$wtwhandlers->checkNumber($zrow["rotationz"],0).",
-							".$wtwhandlers->checkNumber($zrow["special1"],0).",
-							".$wtwhandlers->checkNumber($zrow["special2"],0).",
-							".$wtwhandlers->checkNumber($zrow["uoffset"],0).",
-							".$wtwhandlers->checkNumber($zrow["voffset"],0).",
-							".$wtwhandlers->checkNumber($zrow["uscale"],0).",
-							".$wtwhandlers->checkNumber($zrow["vscale"],0).",
-							'".$zrow["uploadobjectid"]."',
-							".$wtwhandlers->checkNumber($zrow["graphiclevel"],0).",
-							'".$zrow["textureid"]."',
-							'".$zrow["texturebumpid"]."',
-							'".$zrow["texturehoverid"]."',
-							'".$zrow["videoid"]."',
-							'".$zrow["videoposterid"]."',
-							'".$zrow["diffusecolor"]."',
-							'".$zrow["specularcolor"]."',
-							'".$zrow["emissivecolor"]."',
-							'".$zrow["ambientcolor"]."',
-							'".$zrow["heightmapid"]."',
-							'".$zrow["mixmapid"]."',
-							'".$zrow["texturerid"]."',
-							'".$zrow["texturegid"]."',
-							'".$zrow["texturebid"]."',
-							'".$zrow["texturebumprid"]."',
-							'".$zrow["texturebumpgid"]."',
-							'".$zrow["texturebumpbid"]."',
-							'".$zrow["soundid"]."',
-							'".$zrow["soundname"]."',
-							'".$zrow["soundattenuation"]."',
-							".$wtwhandlers->checkNumber($zrow["soundloop"],1).",
-							".$wtwhandlers->checkNumber($zrow["soundmaxdistance"],100).",
-							".$wtwhandlers->checkNumber($zrow["soundrollofffactor"],1).",
-							".$wtwhandlers->checkNumber($zrow["soundrefdistance"],1).",
-							".$wtwhandlers->checkNumber($zrow["soundconeinnerangle"],90).",
-							".$wtwhandlers->checkNumber($zrow["soundconeouterangle"],180).",
-							".$wtwhandlers->checkNumber($zrow["soundconeoutergain"],1).",
-							'".$zrow["webtext"]."',
-							'".$zrow["webstyle"]."',
-							".$wtwhandlers->checkNumber($zrow["opacity"],100).",
-							'".$zrow["sideorientation"]."',
-							".$wtwhandlers->checkNumber($zrow["billboard"],0).",
-							".$wtwhandlers->checkNumber($zrow["waterreflection"],0).",
-							".$wtwhandlers->checkNumber($zrow["receiveshadows"],0).",
-							".$wtwhandlers->checkNumber($zrow["subdivisions"],12).",
-							".$wtwhandlers->checkNumber($zrow["minheight"],0).",
-							".$wtwhandlers->checkNumber($zrow["maxheight"],30).",
-							".$wtwhandlers->checkNumber($zrow["checkcollisions"],1).",
-							".$wtwhandlers->checkNumber($zrow["ispickable"],1).",
-							'".$zrow["actionzoneid"]."',
-							'".$zrow["actionzone2id"]."',
-							'".$zrow["csgmoldid"]."',
-							'".$zrow["csgaction"]."',
-							'".$zrow["alttag"]."',
-							'".$zrow["jsfunction"]."',
-							'".$zrow["jsparameters"]."',
+							'".$zloadactionzoneid."',
+							'".$zunloadactionzoneid."',
+							'".$zshape."',
+							'".$zcovering."',
+							".$wtwhandlers->checkNumber($zpositionx,0).",
+							".$wtwhandlers->checkNumber($zpositiony,0).",
+							".$wtwhandlers->checkNumber($zpositionz,0).",
+							".$wtwhandlers->checkNumber($zscalingx,1).",
+							".$wtwhandlers->checkNumber($zscalingy,1).",
+							".$wtwhandlers->checkNumber($zscalingz,1).",
+							".$wtwhandlers->checkNumber($zrotationx,0).",
+							".$wtwhandlers->checkNumber($zrotationy,0).",
+							".$wtwhandlers->checkNumber($zrotationz,0).",
+							".$wtwhandlers->checkNumber($zspecial1,0).",
+							".$wtwhandlers->checkNumber($zspecial2,0).",
+							".$wtwhandlers->checkNumber($zuoffset,0).",
+							".$wtwhandlers->checkNumber($zvoffset,0).",
+							".$wtwhandlers->checkNumber($zuscale,0).",
+							".$wtwhandlers->checkNumber($zvscale,0).",
+							'".$zuploadobjectid."',
+							".$wtwhandlers->checkNumber($zgraphiclevel,0).",
+							'".$ztextureid."',
+							'".$ztexturebumpid."',
+							'".$ztexturehoverid."',
+							'".$zvideoid."',
+							'".$zvideoposterid."',
+							'".$zdiffusecolor."',
+							'".$zspecularcolor."',
+							'".$zemissivecolor."',
+							'".$zambientcolor."',
+							'".$zheightmapid."',
+							'".$zmixmapid."',
+							'".$ztexturerid."',
+							'".$ztexturegid."',
+							'".$ztexturebid."',
+							'".$ztexturebumprid."',
+							'".$ztexturebumpgid."',
+							'".$ztexturebumpbid."',
+							'".$zsoundid."',
+							'".$wtwhandlers->escapeHTML($zsoundname)."',
+							'".$zsoundattenuation."',
+							".$wtwhandlers->checkNumber($zsoundloop,1).",
+							".$wtwhandlers->checkNumber($zsoundmaxdistance,100).",
+							".$wtwhandlers->checkNumber($zsoundrollofffactor,1).",
+							".$wtwhandlers->checkNumber($zsoundrefdistance,1).",
+							".$wtwhandlers->checkNumber($zsoundconeinnerangle,90).",
+							".$wtwhandlers->checkNumber($zsoundconeouterangle,180).",
+							".$wtwhandlers->checkNumber($zsoundconeoutergain,.5).",
+							'".$wtwhandlers->escapeHTML($zwebtext)."',
+							'".$wtwhandlers->escapeHTML($zwebstyle)."',
+							".$wtwhandlers->checkNumber($zopacity,100).",
+							'".$zsideorientation."',
+							".$wtwhandlers->checkNumber($zbillboard,0).",
+							".$wtwhandlers->checkNumber($zwaterreflection,0).",
+							".$wtwhandlers->checkNumber($zreceiveshadows,0).",
+							".$wtwhandlers->checkNumber($zsubdivisions,12).",
+							".$wtwhandlers->checkNumber($zminheight,0).",
+							".$wtwhandlers->checkNumber($zmaxheight,30).",
+							".$wtwhandlers->checkNumber($zcheckcollisions,1).",
+							".$wtwhandlers->checkNumber($zispickable,1).",
+							'".$zactionzoneid."',
+							'".$zactionzone2id."',
+							'".$zcsgmoldid."',
+							'".$zcsgaction."',
+							'".$wtwhandlers->escapeHTML($zalttag)."',
+							'".$zjsfunction."',
+							'".$zjsparameters."',
 							now(),
 							'".$wtwhandlers->userid."',
 							now(),
@@ -1341,11 +1400,6 @@ class wtwthings {
 						and thingid='".$zthingid."';");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."thingmolds
-					set loadactionzoneid=''
-					where loadactionzoneid is null 
-						and thingid='".$zthingid."';");
-				$wtwhandlers->query("
-					update ".wtw_tableprefix."thingmolds
 					set csgmoldid=''
 					where csgmoldid is null 
 						and thingid='".$zthingid."';");
@@ -1353,61 +1407,84 @@ class wtwthings {
 					update ".wtw_tableprefix."actionzones
 					set attachmoldid=''
 					where attachmoldid is null 
-						and thingid='".$zthingid."';");
+						and thingid='".$zthingid."' and (not thingid='');");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."thingmolds t1 
-						inner join (select * 
-							from ".wtw_tableprefix."thingmolds 
-							where thingid='".$zthingid."' 
-								and deleted=0) t2
+						left join (select * from ".wtw_tableprefix."thingmolds where thingid='".$zthingid."' and deleted=0) t2
 						on t1.csgmoldid = t2.pastthingmoldid
 					set t1.csgmoldid = t2.thingmoldid
-					where not t1.csgmoldid=''
-						and t1.thingid='".$zthingid."'
+					where t1.thingid='".$zthingid."'
+						and (not t1.csgmoldid='')
 						and (not t2.thingmoldid is null);");
 				$wtwhandlers->query("
+					update ".wtw_tableprefix."thingmolds t1 
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and deleted=0) t2
+						on t1.actionzoneid = t2.pastactionzoneid
+					set t1.actionzoneid = t2.actionzoneid
+					where t1.thingid='".$zthingid."'
+						and (not t1.actionzoneid='')
+						and (not t2.actionzoneid is null);");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."thingmolds t1 
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and deleted=0) t2
+						on t1.actionzone2id = t2.pastactionzoneid
+					set t1.actionzone2id = t2.actionzoneid
+					where t1.thingid='".$zthingid."'
+						and (not t1.actionzone2id='')
+						and (not t2.actionzoneid is null);");
+				$wtwhandlers->query("
 					update ".wtw_tableprefix."actionzones t1
-						inner join (select * 
-							from ".wtw_tableprefix."thingmolds 
-							where thingid='".$zthingid."' 
-								and deleted=0) t2
+						left join (select * from ".wtw_tableprefix."thingmolds where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
 						on t1.attachmoldid=t2.pastthingmoldid
 					set t1.attachmoldid=t2.thingmoldid
 					where t1.thingid='".$zthingid."'
-						and not t1.attachmoldid='';");
+						and (not t1.attachmoldid='')
+						and (not t2.thingmoldid is null);");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."actionzones t1
-						inner join (select * 
-							from ".wtw_tableprefix."actionzones 
-							where thingid='".$zthingid."' 
-								and deleted=0 
-								and (not thingid='')) t2
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
 						on t1.parentactionzoneid=t2.pastactionzoneid
 					set t1.parentactionzoneid=t2.actionzoneid
 					where t1.thingid='".$zthingid."'
-						and not t1.parentactionzoneid='';");
+						and (not t1.parentactionzoneid='')
+						and (not t2.actionzoneid is null);");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."actionzones t1
-						inner join (select * 
-							from ".wtw_tableprefix."actionzones 
-							where thingid='".$zthingid."' 
-								and deleted=0 
-								and (not thingid='')) t2
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
 						on t1.spawnactionzoneid=t2.pastactionzoneid
 					set t1.spawnactionzoneid=t2.actionzoneid
 					where t1.thingid='".$zthingid."'
-						and not t1.spawnactionzoneid='';");
+						and (not t1.spawnactionzoneid='')
+						and (not t2.actionzoneid is null);");
 				$wtwhandlers->query("
 					update ".wtw_tableprefix."actionzones t1
-						inner join (select * 
-							from ".wtw_tableprefix."actionzones 
-							where thingid='".$zthingid."' 
-								and deleted=0 
-								and (not thingid='')) t2
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
 						on t1.loadactionzoneid=t2.pastactionzoneid
 					set t1.loadactionzoneid=t2.actionzoneid
 					where t1.thingid='".$zthingid."'
-						and not t1.loadactionzoneid='';");
+						and (not t1.loadactionzoneid='')
+						and (not t2.actionzoneid is null);");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."automations t1
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
+						on t1.loadactionzoneid=t2.pastactionzoneid
+					set t1.loadactionzoneid=t2.actionzoneid
+					where t1.thingid='".$zthingid."'
+						and (not t1.loadactionzoneid='');");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."thingmolds t1
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
+						on t1.loadactionzoneid=t2.pastactionzoneid
+					set t1.loadactionzoneid=t2.actionzoneid
+					where t1.thingid='".$zthingid."'
+						and (not t1.loadactionzoneid='');");
+				$wtwhandlers->query("
+					update ".wtw_tableprefix."thingmolds t1
+						left join (select * from ".wtw_tableprefix."actionzones where thingid='".$zthingid."' and (not thingid='') and deleted=0) t2
+						on t1.unloadactionzoneid=t2.pastactionzoneid
+					set t1.unloadactionzoneid=t2.actionzoneid
+					where t1.thingid='".$zthingid."'
+						and (not t1.unloadactionzoneid='');");
 				$zsuccess = true;
 			}
 		} catch (Exception $e) {
