@@ -434,6 +434,7 @@ WTWJS.prototype.newMold = function() {
 				'vscale':'0.00',
 				'level':'0',
 				'receiveshadows':'0',
+				'castshadows':'1',
 				'waterreflection':'0',
 				'webimageind':'0',
 				'webimages':zwebimages

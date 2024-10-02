@@ -624,6 +624,7 @@ WTW_3DINTERNET.prototype.loadLoginSettings = function(zloaddefault) {
 			wtw3dinternet.multiPlayer = 20;
 		}
 		dGet('wtw_tavatarcount').value = wtw3dinternet.multiPlayer;
+		/* returns false so it will not call WTW.loadLoginAvatarSelect() until after these settings are loaded */
 		zloaddefault = false;
 	} catch (ex) {
 		WTW.log('plugins:wtw-3dinternet:scripts-class_main.js-loadLoginSettings=' + ex.message);
@@ -1402,7 +1403,15 @@ WTW_3DINTERNET.prototype.onMyAvatarSelect = function(zglobaluseravatarid, zusera
 										zresponse = JSON.parse(zresponse);
 										/* note serror would contain errors */
 										if (zresponse.globaluseravatarid != undefined) {
-											WTW.setCookie('globaluseravatarid', zresponse.globaluseravatarid, 365);
+											if (zresponse.globaluseravatarid != '') {
+												WTW.setCookie('globaluseravatarid', zresponse.globaluseravatarid, 365);
+											}
+											if (zresponse.useravatarid != '') {
+												WTW.setCookie('useravatarid', zresponse.useravatarid, 365);
+											}
+											if (zresponse.avatarid != '') {
+												WTW.setCookie('avatarid', zresponse.avatarid, 365);
+											}
 										}
 									}
 								);
@@ -2113,19 +2122,18 @@ WTW_3DINTERNET.prototype.hudLoginClick = function(zmoldname) {
 	}
 }
 
-WTW_3DINTERNET.prototype.hudLoginLogin = function(zlocal, zemail, zpassword, zremembercheck) {
+WTW_3DINTERNET.prototype.hudLoginLogin = function(zlocalserver, zemail, zpassword, zremembercheck) {
 	/* run login attempt */
 	try {
-		if (zlocal == false) {
+		if (zlocalserver == false) {
 			if (zremembercheck) {
 				WTW.setCookie('globalloginemail', zemail, 365);
 				WTW.setCookie('globalloginpassword', btoa(zpassword), 365);
-				WTW.setCookie('globalloginremember', zremembercheck, 365);
 			} else {
 				WTW.deleteCookie('globalloginemail');
 				WTW.deleteCookie('globalloginpassword');
-				WTW.deleteCookie('globalloginremember');
 			}
+			WTW.setCookie('globalloginremember', zremembercheck, 365);
 			var zserverip = dGet('wtw_serverip').value;
 			var zrequest = {
 				'useremail':btoa(zemail),
@@ -2176,7 +2184,18 @@ WTW_3DINTERNET.prototype.hudLoginLogin = function(zlocal, zemail, zpassword, zre
 								zresponse = JSON.parse(zresponse);
 								/* continue if no errors */
 								if (WTW.globalLoginResponse(zresponse)) {
-									WTW.openLoginHUD('Select My Avatar');
+									if (dGet('wtw_tglobaluseravatarid').value != '' || dGet('wtw_tuseravatarid').value != '') {
+										var zavatarserver = WTW.getCookie('avatarlocation');
+										var zglobaluseravatarid = dGet('wtw_tglobaluseravatarid').value;
+										if (zavatarserver == 'local') {
+											zglobaluseravatarid = '';
+										}
+										WTW.openLoginHUD('Loading 3D Avatar');
+										/* if avatar saved, load avatar */
+										WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, dGet('wtw_tglobaluseravatarid').value, dGet('wtw_tuseravatarid').value, dGet('wtw_tavatarid').value, false);
+									} else {
+										WTW.openLoginHUD('Select My Avatar');
+									}
 								}
 							}
 						);
@@ -2260,10 +2279,10 @@ WTW_3DINTERNET.prototype.hudLoginLogin = function(zlocal, zemail, zpassword, zre
 	}
 }
 
-WTW_3DINTERNET.prototype.hudLoginCreate = function(zlocal, zemail, zpassword, zpassword2) {
+WTW_3DINTERNET.prototype.hudLoginCreate = function(zlocalserver, zemail, zpassword, zpassword2) {
 	/* run create Login */
 	try {
-		if (zlocal == false) {
+		if (zlocalserver == false) {
 			var zserverip = dGet('wtw_serverip').value;
 			var zdisplayname = '';
 			var zemailparts = zemail.split('@');

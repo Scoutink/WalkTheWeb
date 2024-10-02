@@ -70,7 +70,8 @@ try {
 	$zrotation = array();
 	$zgraphics = array(
 		'waterreflection'=>'1',
-		'receiveshadows'=>'0'
+		'receiveshadows'=>'0',
+		'castshadows'=>'1'
 	);
 	$zavataranimationdefs = array();
 	if ($wtwconnect->hasValue($zfounduseravatarid)) {
