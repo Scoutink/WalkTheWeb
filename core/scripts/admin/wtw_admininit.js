@@ -140,6 +140,8 @@ WTWJS.prototype.adminLoadAfterScreen = function() {
 			WTW.loadBuildingForm(buildingid);
 		} else if (thingid != '') {
 			WTW.loadThingForm(thingid);
+		} else if (avatarid != '') {
+			WTW.loadAvatarForEdit();
 		}
 		if (WTW.getCookie('wtw_bfocus') != null) {
 			if (WTW.getCookie('wtw_bfocus') == '0') {

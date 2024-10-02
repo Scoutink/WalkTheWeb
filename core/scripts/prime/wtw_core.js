@@ -22,7 +22,6 @@ WTWJS.prototype.initLoadSequence = function() {
 WTWJS.prototype.loadSequence = function() {
 	/* when babylon engine is supported, this is the load sequence of functions */
 	/* this will load through the Babylon engine */
-	/* each function can be found in order after this function */
 	try {
 		if (typeof WTW.adminInit == 'function') {
 			/* check if loading in admin mode, if so, the function is loaded - sets WTW.adminView variable */
@@ -38,25 +37,21 @@ WTWJS.prototype.loadSequence = function() {
 		WTW.initEnvironment();
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_core.js-loadSequence=' + ex.message);
-	} 
+	}
 }
 
 WTWJS.prototype.continueLoadSequence = function() {
 	/* when babylon engine is supported, this is the load sequence of functions */
 	/* this will load after the babylon engine */
-	/* each function can be found in order after this function */
 	try {
-		WTW.loadLoginSettings();
 		/* get user settings that were saved by cookies - implemented before the load scene function */
 		WTW.loadUserSettings();
+		/* get login settings for the server */
+		WTW.loadLoginSettings();
 		/* load rest of scene starting with connecting grids, which trigger loading action zones, molds, and then automations */
 		WTW.loadScene();
 		/* additional settings that are loaded after the scene is loaded - like initializing multiplayer functions */
 		WTW.loadUserSettingsAfterEngine();
-		/* load avatar for edit in admin mode only */
-		if (WTW.adminView == 1 && avatarid != '') {
-			WTW.loadAvatarForEdit();
-		}
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_core.js-continueLoadSequence=' + ex.message);
 	} 
@@ -211,10 +206,16 @@ WTWJS.prototype.loadInitSettings = function() {
 				WTW.init.sunDirectionX = Number(wtw_domain.communityinfo.sundirectionx);
 				WTW.init.sunDirectionY = Number(wtw_domain.communityinfo.sundirectiony);
 				WTW.init.sunDirectionZ = Number(wtw_domain.communityinfo.sundirectionz);
+				WTW.init.sunPositionX = Number(wtw_domain.communityinfo.sunpositionx);
+				WTW.init.sunPositionY = Number(wtw_domain.communityinfo.sunpositiony);
+				WTW.init.sunPositionZ = Number(wtw_domain.communityinfo.sunpositionz);
 				WTW.init.backLightIntensity = Number(wtw_domain.communityinfo.backlightintensity);
 				WTW.init.backLightDirectionX = Number(wtw_domain.communityinfo.backlightdirectionx);
 				WTW.init.backLightDirectionY = Number(wtw_domain.communityinfo.backlightdirectiony);
 				WTW.init.backLightDirectionZ = Number(wtw_domain.communityinfo.backlightdirectionz);
+				WTW.init.backLightPositionX = Number(wtw_domain.communityinfo.backlightpositionx);
+				WTW.init.backLightPositionY = Number(wtw_domain.communityinfo.backlightpositiony);
+				WTW.init.backLightPositionZ = Number(wtw_domain.communityinfo.backlightpositionz);
 				if (WTW.isHexColor(wtw_domain.communityinfo.backlightdiffusecolor)) {
 					WTW.init.backLightDiffuseColor = wtw_domain.communityinfo.backlightdiffusecolor;
 				}
@@ -530,97 +531,6 @@ WTWJS.prototype.loadParentAndCamera = function() {
 	} 
 }
 
-WTWJS.prototype.loadLoginSettings = function() {
-	/* load login settings */
-	try {
-		if (WTW.adminView == 1) {
-			if (dGet('wtw_tuserid').value == '') {
-				/* if not logged in, redirect user to server home page */
-				window.location.href = '/';
-			}
-		}
-		WTW.getSettings('WTW_globalLogins, WTW_localLogins, WTW_anonymousLogins', 'WTW.responseLoadLoginSettings');
-		/* hook for plugins to be able to intercept the user loading process and add functions to include or replace */
-	} catch (ex) {
-		WTW.log('core-scripts-prime-wtw_core.js-loadLoginSettings=' + ex.message);
-	} 
-}
-
-WTWJS.prototype.responseLoadLoginSettings = async function(zsettings, zparameters) {
-	/* performed after it loads the login settings - sets the login global variables */
-	try {
-		zsetting = JSON.parse(zsettings);
-		if (zsetting.WTW_globalLogins != undefined) {
-			if (zsetting.WTW_globalLogins != '') {
-				WTW.globalLogins = zsetting.WTW_globalLogins;					
-			}
-		}
-		if (zsetting.WTW_localLogins != undefined) {
-			if (zsetting.WTW_localLogins != '') {
-				WTW.localLogins = zsetting.WTW_localLogins;					
-			}
-		}
-		if (zsetting.WTW_anonymousLogins != undefined) {
-			if (zsetting.WTW_anonymousLogins != '') {
-				WTW.anonymousLogins = zsetting.WTW_anonymousLogins;					
-			}
-		}
-		/* Check to see if the 3D Internet Plugin is active */
-		if (typeof wtw3dinternet == undefined || typeof wtw3dinternet == 'undefined') {
-			WTW.globalLogins = '0';
-		}
-		if (WTW.globalLogins != '1') {
-			WTW.localLogins = '1';
-		}
-		/* Select if a plugin is going to handle the login and avatar selection process */
-		var zloaddefault = true;
-		zloaddefault = WTW.pluginsLoadLoginSettings(zloaddefault);
-		if (zloaddefault) {
-			/* if no plugin returns false, continue default loading */
-			WTW.loadLoginAvatarSelect();
-		}
-	} catch (ex) {
-		WTW.log('core-scripts-prime-wtw_core.js-responseLoadLoginSettings=' + ex.message);
-	} 
-}
-
-WTWJS.prototype.loadLoginAvatarSelect = function() {
-	/* check login and open login or avatar select window if needed */
-	try {
-		if (dGet('wtw_tuserid').value == '') {
-			/* user not logged in - open login window */
-			WTW.openLoginMenu();
-			WTW.hide('wtw_menuloggedin');
-			WTW.show('wtw_menulogin');
-		} else {
-			/* logged in, set login values */
-			WTW.setLoginValues();
-			/* check cookie and load Avatar OR open select Avatar list */
-			WTW.hide('wtw_menulogin');
-			WTW.hide('wtw_menuloggedin');
-			var zavatarid = WTW.getCookie('avatarid');
-			var zuseravatarid = WTW.getCookie('useravatarid');
-			if (zavatarid == '' || zavatarid == null) {
-				zavatarid = '3b9bt5c70igtmqux';
-			}
-			if (zuseravatarid != '' && zuseravatarid != null) {
-				var zglobaluseravatarid = '';
-				if (WTW.getCookie('globaluseravatarid') != null) {
-					zglobaluseravatarid = WTW.getCookie('globaluseravatarid');
-				}
-				WTW.openLoginHUD('Loading 3D Avatar');
-				/* if avatar saved, load avatar */
-				WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, zglobaluseravatarid, zuseravatarid, '', false);
-			} else {
-				/* avatar not saved, select random avatar */
-				WTW.hudLoginEnter();
-			}
-		}
-	} catch (ex) {
-		WTW.log('core-scripts-prime-wtw_core.js-loadLoginAvatarSelect=' + ex.message);
-	} 
-}
-
 WTWJS.prototype.loadUserSettings = function() {
 	/* get the user settings to be used in the 3d scene */
 	try {
@@ -670,13 +580,26 @@ WTWJS.prototype.loadUserSettings = function() {
 		if (zsoundmute != null) {
 			WTW.toggleSoundMute();
 		}
+		var zglobaluseravatarid = WTW.getCookie('globaluseravatarid');
+		if (zglobaluseravatarid != null) {
+			dGet('wtw_tglobaluseravatarid').value = zglobaluseravatarid;
+		} else {
+			dGet('wtw_tglobaluseravatarid').value = '';
+		}
 		var zuseravatarid = WTW.getCookie('useravatarid');
 		if (zuseravatarid != null) {
 			dGet('wtw_tuseravatarid').value = zuseravatarid;
 		} else {
 			dGet('wtw_tuseravatarid').value = '';
 		}
-
+		var zavatarid = WTW.getCookie('avatarid');
+		if (zuseravatarid != null) {
+			dGet('wtw_tavatarid').value = zavatarid;
+		} 
+		if (dGet('wtw_tavatarid').value == '') {
+			dGet('wtw_tavatarid').value = '3b9bt5c70igtmqux';
+		}
+		
 		var zshowcompass = WTW.getCookie('showcompass');
 
 		var zshowarrows = WTW.getCookie('showarrows');
@@ -771,6 +694,95 @@ WTWJS.prototype.loadUserSettings = function() {
 	}
 }
 
+WTWJS.prototype.loadLoginSettings = function() {
+	/* load login settings */
+	try {
+		if (WTW.adminView == 1 && dGet('wtw_tuserid').value == '') {
+			/* if not logged in, redirect user to server home page */
+			window.location.href = '/';
+		}
+		/* get server settings from database */
+		WTW.getSettings('WTW_globalLogins, WTW_localLogins, WTW_anonymousLogins', 'WTW.responseLoadLoginSettings');
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_core.js-loadLoginSettings=' + ex.message);
+	} 
+}
+
+WTWJS.prototype.responseLoadLoginSettings = async function(zsettings, zparameters) {
+	/* performed after it loads the login settings - sets the login global variables */
+	try {
+		zsetting = JSON.parse(zsettings);
+		if (zsetting.WTW_globalLogins != undefined) {
+			if (zsetting.WTW_globalLogins != '') {
+				WTW.globalLogins = zsetting.WTW_globalLogins;					
+			}
+		}
+		if (zsetting.WTW_localLogins != undefined) {
+			if (zsetting.WTW_localLogins != '') {
+				WTW.localLogins = zsetting.WTW_localLogins;					
+			}
+		}
+		if (zsetting.WTW_anonymousLogins != undefined) {
+			if (zsetting.WTW_anonymousLogins != '') {
+				WTW.anonymousLogins = zsetting.WTW_anonymousLogins;					
+			}
+		}
+		/* Check to see if the 3D Internet Plugin is active */
+		if (typeof wtw3dinternet == undefined || typeof wtw3dinternet == 'undefined') {
+			WTW.globalLogins = '0';
+		}
+		if (WTW.globalLogins != '1') {
+			WTW.localLogins = '1';
+		}
+		/* Select if a plugin is going to handle the login and avatar selection process */
+		/* hook for plugins to be able to intercept the user loading process and add functions to include or replace */
+		var zloaddefault = true;
+		zloaddefault = WTW.pluginsLoadLoginSettings(zloaddefault);
+		if (zloaddefault) {
+			/* if no plugin returns false, continue default loading */
+			WTW.loadLoginAvatarSelect();
+		}
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_core.js-responseLoadLoginSettings=' + ex.message);
+	} 
+}
+
+WTWJS.prototype.loadLoginAvatarSelect = function() {
+	/* check login and open login or avatar select window if needed */
+	try {
+		if (dGet('wtw_tuserid').value == '') {
+			/* user not logged in - open login window */
+			WTW.openLoginMenu();
+			WTW.hide('wtw_menuloggedin');
+			WTW.show('wtw_menulogin');
+			dGet('wtw_tavatarid').value = '3b9bt5c70igtmqux';
+			WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, '', '', dGet('wtw_tavatarid').value, false);
+		} else {
+			/* logged in, set login values */
+			WTW.setLoginValues();
+			/* check cookie and load Avatar OR open select Avatar list */
+			WTW.hide('wtw_menulogin');
+			WTW.hide('wtw_menuloggedin');
+
+			if (dGet('wtw_tglobaluseravatarid').value != '' || dGet('wtw_tuseravatarid').value != '' || dGet('wtw_tavatarid').value != '') {
+				var zavatarserver = WTW.getCookie('avatarlocation');
+				var zglobaluseravatarid = dGet('wtw_tglobaluseravatarid').value;
+				if (zavatarserver == 'local') {
+					zglobaluseravatarid = '';
+				}
+				WTW.openLoginHUD('Loading 3D Avatar');
+				/* if avatar saved, load avatar */
+				WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, zglobaluseravatarid, dGet('wtw_tuseravatarid').value, dGet('wtw_tavatarid').value, false);
+			} else {
+				/* avatar not saved, select random avatar */
+				WTW.hudLoginEnter();
+			}
+		}
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_core.js-loadLoginAvatarSelect=' + ex.message);
+	} 
+}
+
 WTWJS.prototype.loadScene = async function() {
 	/* if a community, fetch the community scene settings */
 	try {
@@ -792,6 +804,7 @@ WTWJS.prototype.loadScene = async function() {
 WTWJS.prototype.loadUserSettingsAfterEngine = function() {
 	/* load any settings that are set after the scene is created */
 	try {
+		/* determining gpu can assist in setting the load frequencies */
 		var zgpusetting = WTW.getCookie('gpusetting');
 		if (zgpusetting != null) {
 			WTW.gpuSetting = zgpusetting;
@@ -959,13 +972,13 @@ WTWJS.prototype.loadCommunity = function(zaddcommunities) {
 
 		/* extended ground */
 		/* set ground emissive color based on scene lighting - day or night degrees of hue */
-		WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
+//		WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
 		if (WTW.init.groundTexturePath != '' && WTW.init.groundTexturePath != '/content/system/stock/dirt-512x512.jpg') {
 			WTW.extraGround.material.diffuseTexture = new BABYLON.Texture(WTW.init.groundTexturePath, scene);
 		}
 		WTW.extraGround.material.diffuseTexture.uScale = 500;
 		WTW.extraGround.material.diffuseTexture.vScale = 500;
-		WTW.extraGround.material.specularColor = new BABYLON.Color3(.1,.1,.1);
+//		WTW.extraGround.material.specularColor = new BABYLON.Color3(.1,.1,.1);
 		/* refresh-reload ground texture */
 		var zgroundcovering = WTW.extraGround.material;
 		WTW.extraGround.material.dispose();
@@ -1014,7 +1027,7 @@ WTWJS.prototype.loadCommunity = function(zaddcommunities) {
 			WTW.waterMat.addToRenderList(WTW.extraGround);
 		}
 		
-		if (WTW.init.skyType == '') {
+		if (WTW.init.skyType == '' && WTW.sky != null) {
 			if (WTW.sky.position.x != WTW.init.startPositionX + WTW.init.skyPositionOffsetX || WTW.sky.position.y != WTW.init.startPositionY + WTW.init.skyPositionOffsetY || WTW.sky.position.z != WTW.init.startPositionZ + WTW.init.skyPositionOffsetZ) {
 				/* set initial sky position */
 				WTW.sky.position.x = WTW.init.startPositionX + WTW.init.skyPositionOffsetX;
@@ -1032,8 +1045,7 @@ WTWJS.prototype.loadCommunity = function(zaddcommunities) {
             if (zshadowsetting == null || isNaN(zshadowsetting))  {
                 if (WTW.gpuSetting == 'medium') {
 					WTW.shadowSet = 1;
-                }
-                else if (WTW.gpuSetting == 'high') {
+                } else if (WTW.gpuSetting == 'high') {
 					WTW.shadowSet = 3;
                 } else {
 					WTW.shadowSet = 3;
@@ -1046,7 +1058,7 @@ WTWJS.prototype.loadCommunity = function(zaddcommunities) {
 		WTW.getConnectingGrids();
 		if (WTW.adminView == 1) {
 			/* if admin mode, then execute the load admin settings function after 2 seconds */
-			/* base mold count is used to set the number of molds befre you build in a scene (used to calculate the number of molds for a web object) */
+			/* base mold count is used to set the number of molds before you build in a scene (used to calculate the number of molds for a web object) */
 			WTW.baseMoldCount = scene.meshes.length;
 			if (typeof WTW.adminLoadAfterScreen == 'function') {
 				window.setTimeout( function() { WTW.adminLoadAfterScreen();},2000 );

@@ -300,6 +300,7 @@ WTWJS.prototype.saveMyProfile = async function() {
 		/* validate entries... */
 		var zrequest = {
 			'userid': dGet('wtw_tuserid').value,
+			'useravatarid': dGet('wtw_tuseravatarid').value,
 			'displayname':btoa(dGet('wtw_tprofiledisplayname').value),
 			'useremail':dGet('wtw_tprofileemail').value,
 			'firstname':btoa(dGet('wtw_tprofilefirstname').value),
@@ -457,11 +458,23 @@ WTWJS.prototype.onMyAvatarSelect = function(zglobaluseravatarid, zuseravatarid, 
 	/* and allows plugins to provide alternate loading and saving of changed avatars */
 	try {
 		WTW.openLoginHUD('Loading 3D Avatar');
-		dGet('wtw_tuseravatarid').value = zuseravatarid;
 		dGet('wtw_tglobaluseravatarid').value = zglobaluseravatarid;
+		dGet('wtw_tuseravatarid').value = zuseravatarid;
 		dGet('wtw_tavatarid').value = zavatarid;
-		WTW.setCookie('globaluseravatarid', zglobaluseravatarid, 365);
-		WTW.setCookie('useravatarid', zuseravatarid, 365);
+		if (zglobaluseravatarid != '') {
+			WTW.setCookie('globaluseravatarid', zglobaluseravatarid, 365);
+		}
+		if (zuseravatarid != '') {
+			WTW.setCookie('useravatarid', zuseravatarid, 365);
+		}
+		if (zavatarid != '' && zavatarid != '3b9bt5c70igtmqux') {
+			WTW.setCookie('avatarid', zavatarid, 365);
+		}
+		if (zglobaluseravatarid != '') {
+			WTW.setCookie('avatarlocation', 'wtw', 365);
+		} else {
+			WTW.setCookie('avatarlocation', 'local', 365);
+		}
 		WTW.closeIFrame();
 		var zloading = WTW.pluginsOnMyAvatarSelect(zglobaluseravatarid, zuseravatarid, zavatarid);
 		if (zloading == false) {
@@ -599,7 +612,7 @@ WTWJS.prototype.logout = async function() {
 				if (window.location.href.indexOf('admin.php') > -1) {
 					window.location.href = '//' + wtw_domainname + '/';
 				} else {
-					WTW.openLoginHUDLogin();
+					WTW.openLoginHUD('Enter Menu');
 				}
 			}
 		);

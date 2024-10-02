@@ -165,6 +165,7 @@ WTWJS.prototype.hudSaveCameras = async function() {
 		/* validate entries... */
 /*		var zrequest = {
 			'userid':dGet('wtw_tuserid').value,
+			'useravatarid':dGet('wtw_tuseravatarid').value,
 			'displayname':btoa(dGet('hud-textbox-displayname').value.replace('|','')),
 			'useremail':dGet('hud-textbox-email').value.replace('|',''),
 			'firstname':btoa(dGet('hud-textbox-firstname').value.replace('|','')),

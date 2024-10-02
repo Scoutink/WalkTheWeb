@@ -1163,32 +1163,29 @@ WTWJS.prototype.setShadowSettings = function() {
 		
 		WTW.setCookie('wtw_shadowsetting',WTW.shadowSet,365);
 		
-		var zrenderlist = [];
         if (WTW.shadows != null) {
-//			zrenderlist = WTW.shadows.getShadowMap().renderList;
             WTW.shadows.dispose();
             WTW.shadows = null;
         }
 		WTW.shadows = new BABYLON.ShadowGenerator(zshadowresolution, WTW.sun);
-		WTW.shadows.depthScale = 20000;
+
 		WTW.shadows.setDarkness(0);
 		WTW.shadows.bias = 0.01;
-		WTW.shadows.usePercentageCloserFiltering = true;
-		
-//		WTW.shadows.useKernelBlur = true;
-//		WTW.shadows.blurKernel = 64;
-		//WTW.shadows.getShadowMap().refreshRate = BABYLON.RenderTargetTexture.REFRESHRATE_RENDER_ONCE;
-//		WTW.shadows.forceBackFacesOnly = true;
+		WTW.shadows.useBlurExponentialShadowMap = true;
+		WTW.shadows.blurBoxOffset = 2;
 
-//		if (WTW.shadowSet < 2) {
+/*		//more shadow options
+		WTW.shadows.depthScale = 20000;
+		WTW.shadows.usePercentageCloserFiltering = true;
+		WTW.shadows.useKernelBlur = true;
+		WTW.shadows.blurKernel = 64;
+		WTW.shadows.getShadowMap().refreshRate = BABYLON.RenderTargetTexture.REFRESHRATE_RENDER_ONCE;
+		WTW.shadows.forceBackFacesOnly = true;
 		WTW.shadows.usePoissonSampling = true;
-//		} else if (WTW.shadowSet < 3) {
-//          WTW.shadows.useExponentialShadowMap = true;
-//		} else {
-//			WTW.shadows.useBlurExponentialShadowMap = true;
-//		}
-//		WTW.shadows.getShadowMap().renderList = zrenderlist;
-        
+        WTW.shadows.useExponentialShadowMap = true;
+*/
+		WTW.reloadShadows();
+		
 		if (WTW.extraGround != null) {
 			if (WTW.shadowSet > 0) {
 				if (WTW.extraGround.material != null) {
@@ -1203,6 +1200,62 @@ WTWJS.prototype.setShadowSettings = function() {
 		}
     } catch (ex) {
         WTW.log('core-scripts-hud-wtw_hud.js-setShadowSettings=' +ex.message);
+    }
+}
+
+WTWJS.prototype.reloadShadows = function() {
+	/* after shadow generator is reset, this reloads the shadows for the molds in the scene */
+	try {
+		/* add shadows to molds in the scene */
+		if (WTW.communitiesMolds.length > 0) {
+			for (var i=0;i<WTW.communitiesMolds.length;i++) {
+				if (WTW.communitiesMolds[i].graphics.castshadows == '1') {
+					if (WTW.communitiesMolds[i].moldname != undefined) {
+						var zmold = WTW.getMeshOrNodeByID(WTW.communitiesMolds[i].moldname);
+						if (zmold != null) {
+							WTW.shadows.getShadowMap().renderList.push(zmold);
+						}
+					}
+				}
+			}
+		}
+		if (WTW.buildingMolds.length > 0) {
+			for (var i=0;i<WTW.buildingMolds.length;i++) {
+				if (WTW.buildingMolds[i].graphics.castshadows == '1') {
+					if (WTW.buildingMolds[i].moldname != undefined) {
+						var zmold = WTW.getMeshOrNodeByID(WTW.buildingMolds[i].moldname);
+						if (zmold != null) {
+							WTW.shadows.getShadowMap().renderList.push(zmold);
+						}
+					}
+				}
+			}
+		}
+		if (WTW.thingMolds.length > 0) {
+			for (var i=0;i<WTW.thingMolds.length;i++) {
+				if (WTW.thingMolds[i].graphics.castshadows == '1') {
+					if (WTW.thingMolds[i].moldname != undefined) {
+						var zmold = WTW.getMeshOrNodeByID(WTW.thingMolds[i].moldname);
+						if (zmold != null) {
+							WTW.shadows.getShadowMap().renderList.push(zmold);
+						}
+					}
+				}
+			}
+		}
+		/* add avatar shadows */
+		var zavatarparts = [];
+		var zavatarscale = WTW.getMeshOrNodeByID('myavatar-' + dGet('wtw_tinstanceid').value + '-scale');
+		if (zavatarscale != null) {
+			zavatarparts = zavatarscale.getChildren();
+		}
+		for (var i=0; i<zavatarparts.length; i++) {
+			if (zavatarparts[i] != null) {
+				WTW.shadows.getShadowMap().renderList.push(zavatarparts[i]);
+			}
+		}
+    } catch (ex) {
+        WTW.log('core-scripts-hud-wtw_hud.js-reloadShadows=' +ex.message);
     }
 }
 

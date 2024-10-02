@@ -370,6 +370,8 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 			var zcheckcollisions = '1';
 			var zshape = 'box'; 
 			var ziswaterreflection = '0';
+			var zreceiveshadows = false;
+			var zcastshadows = false;
 			var znamepart = zmoldname.split('-');
 			var zlenx = Number(zmolddef.scaling.x);
 			var zleny = Number(zmolddef.scaling.y);
@@ -394,6 +396,20 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 			try {
 				if (zmolddef.graphics.waterreflection != null) {
 					ziswaterreflection = zmolddef.graphics.waterreflection;
+				}
+			} catch(ex) {}
+			try {
+				if (zmolddef.graphics.receiveshadows != null) {
+					if (zmolddef.graphics.receiveshadows == '1') {
+						zreceiveshadows = true;
+					}
+				}
+			} catch(ex) {}
+			try {
+				if (zmolddef.graphics.castshadows != null) {
+					if (zmolddef.graphics.castshadows == '1') {
+						zcastshadows = true;
+					}
 				}
 			} catch(ex) {}
 			try {
@@ -499,6 +515,8 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 				/* if mold is set to add reflection, add mold to the reflections array */
 				WTW.addReflectionRefraction(zmold);
 			}
+			
+			
 			if (WTW.adminView == 1 || zmolddef.ispickable == '1') {
 				zmold.isPickable = true;
 			}
@@ -510,6 +528,14 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 				zmolddef.checkcollisions = '0';
 				zmold.checkCollisions = false;
 			}
+			if (zreceiveshadows) {
+				zmold.receiveShadows = zreceiveshadows;
+			}
+			if (zcastshadows) {
+				WTW.addShadowToMold(zmold, WTW.shadows);
+			}
+//			WTW.addShadowToMold(zmold, WTW.shadows);
+			
 			/* work in progress - currently disabled, freeze world matrix can speed up the scene with less calculations */
 			if (WTW.AdminView == 0 && zparentname.indexOf('actionzone') == -1 && zparentname != '') {
 				zmold.freezeWorldMatrix();
@@ -585,6 +611,7 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 		dGet('wtw_tmoldcoveringold').value = 'color';
 		dGet('wtw_tmoldgraphiclevel').checked = false;
 		dGet('wtw_tmoldreceiveshadows').checked = false;
+		dGet('wtw_tmoldcastshadows').checked = false;
 		dGet('wtw_tmoldtextureid').value = '';
 		dGet('wtw_tmoldtexturepath').value = '';
 		dGet('wtw_tmoldtexturebumpid').value = '';

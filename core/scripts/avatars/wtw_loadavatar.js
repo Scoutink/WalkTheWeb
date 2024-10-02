@@ -36,8 +36,13 @@ WTWJS.prototype.loadAvatarPlaceholder = function() {
 WTWJS.prototype.reloadAvatar = function() {
 	/* used by the global login page to trigger an avatar reload after changes are made */
 	try {
+		var zavatarserver = WTW.getCookie('avatarlocation');
+		var zglobaluseravatarid = dGet('wtw_tglobaluseravatarid').value;
+		if (zavatarserver == 'local') {
+			zglobaluseravatarid = '';
+		}
 		WTW.openLoginHUD('Loading 3D Avatar');
-		WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, dGet('wtw_tglobaluseravatarid').value, dGet('wtw_tuseravatarid').value, '', true);
+		WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, zglobaluseravatarid, dGet('wtw_tuseravatarid').value, '', true);
     } catch (ex) {
 		WTW.log('core-scripts-avatars-wtw_loadavatar.js-reloadAvatar=' + ex.message);
     }
@@ -117,12 +122,18 @@ WTWJS.prototype.updateAvatar = function(zavatarname, zavatardef, zsendrefresh) {
 			zinstanceid = zavatarname.split('-')[1];
 		}
 		if (zavatarname.indexOf('myavatar') > -1) {
-			dGet('wtw_tavatarid').value = zavatardef.avatarid;
-			WTW.setCookie('globaluseravatarid', zavatardef.globaluseravatarid, 365);
-			dGet('wtw_tglobaluseravatarid').value = zavatardef.globaluseravatarid;
-			WTW.setCookie('useravatarid', zavatardef.useravatarid, 365);
-			dGet('wtw_tuseravatarid').value = zavatardef.useravatarid;
-			WTW.setCookie('useravatarid', zavatardef.useravatarid, 365);
+			if (zavatardef.globaluseravatarid != '') {
+				WTW.setCookie('globaluseravatarid', zavatardef.globaluseravatarid, 365);
+				dGet('wtw_tglobaluseravatarid').value = zavatardef.globaluseravatarid;
+			}
+			if (zavatardef.useravatarid != '') {
+				WTW.setCookie('useravatarid', zavatardef.useravatarid, 365);
+				dGet('wtw_tuseravatarid').value = zavatardef.useravatarid;
+			}
+			if (zavatardef.avatarid != '') {
+				WTW.setCookie('avatarid', zavatardef.avatarid, 365);
+				dGet('wtw_tavatarid').value = zavatardef.avatarid;
+			}
 		}
 		if (zavatar != null) {
 			/* get the previously loaded avatarid (avatar definition from the database avatars table) */
@@ -941,7 +952,9 @@ WTWJS.prototype.avatarLoadComplete = function(zavatarname) {
 		if (typeof WTW.pluginsAvatarLoadComplete == 'function') {
 			WTW.pluginsAvatarLoadComplete(zavatarname);
 		}
-		WTW.closeLoginHUD();
+		if (dGet('wtw_tuserid').value != '') {
+			WTW.closeLoginHUD();
+		}
     } catch (ex) {
 		WTW.log('core-scripts-avatars-wtw_loadavatar.js-avatarLoadComplete=' + ex.message);
     }
@@ -969,11 +982,14 @@ WTWJS.prototype.closeAvatarSettings = function() {
 }
 
 WTWJS.prototype.logoutMyAvatar = function() {
-	/* log out my avatar (current user) from the scene - dispose of the avatar */
+	/* log out my avatar (current user) from the scene - replace the avatar with anonymous */
 	try {
-		WTW.disposeAvatar('myavatar-' + dGet('wtw_tinstanceid').value);
 		WTW.hide('wtw_menuloggedin');
 		WTW.show('wtw_menulogin');
+		if (dGet('wtw_tavatarid').value != '3b9bt5c70igtmqux') {
+			dGet('wtw_tavatarid').value = '3b9bt5c70igtmqux';
+			WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, '', '', dGet('wtw_tavatarid').value, false);
+		}
 	} catch (ex) {
 		WTW.log('core-scripts-avatars-wtw_loadavatar.js-logoutMyAvatar=' + ex.message);
 	}

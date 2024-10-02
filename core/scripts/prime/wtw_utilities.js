@@ -1075,7 +1075,7 @@ WTWJS.prototype.deleteCookie = function(zname) {
 			document.cookie = zname + 'non=' + zexpires + ';path=/';
 		}
     } catch (ex) {
-        WTW.log('core-scripts-prime-wtw_utilities.js-getCookie=' +ex.message);
+        WTW.log('core-scripts-prime-wtw_utilities.js-deleteCookie=' +ex.message);
     }
 }
 

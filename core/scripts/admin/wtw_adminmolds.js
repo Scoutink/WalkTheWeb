@@ -75,6 +75,11 @@ WTWJS.prototype.openMoldForm = async function(zmoldind, zshape, zwebtype, zsavep
 				} else {
 					dGet('wtw_tmoldreceiveshadows').checked = false;
 				}
+				if (zmolds[zmoldind].graphics.castshadows == '1') {
+					dGet('wtw_tmoldcastshadows').checked = true;
+				} else {
+					dGet('wtw_tmoldcastshadows').checked = false;
+				}
 				if (zmolds[zmoldind].graphics.level == '1') {
 					dGet('wtw_tmoldgraphiclevel').checked = true;
 				} else {
@@ -404,6 +409,11 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		} else {
 			dGet('wtw_tmoldreceiveshadows').checked = false;
 		}
+		if (zmolddef.graphics.castshadows == '1') {
+			dGet('wtw_tmoldcastshadows').checked = true;
+		} else {
+			dGet('wtw_tmoldcastshadows').checked = false;
+		}
 		if (zmolddef.graphics.level == '1') {
 			dGet('wtw_tmoldgraphiclevel').checked = true;
 		} else {
@@ -603,6 +613,11 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 			zmolds[zmoldind].graphics.receiveshadows = '1';
 		} else {
 			zmolds[zmoldind].graphics.receiveshadows = '0';
+		}
+		if (dGet('wtw_tmoldcastshadows').checked == true) {
+			zmolds[zmoldind].graphics.castshadows = '1';
+		} else {
+			zmolds[zmoldind].graphics.castshadows = '0';
 		}
 		if (dGet('wtw_tmoldgraphiclevel').checked == true) {
 			zmolds[zmoldind].graphics.level = '1';
@@ -1347,6 +1362,11 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 			} else {
 				zmolds[zmoldind].graphics.receiveshadows = '0';
 			}
+			if (dGet('wtw_tmoldcastshadows').checked) {
+				zmolds[zmoldind].graphics.castshadows = '1';
+			} else {
+				zmolds[zmoldind].graphics.castshadows = '0';
+			}
 			zmolds[zmoldind].opacity = dGet('wtw_tmoldopacity').value;
 			zmolds[zmoldind].objects.uploadobjectid = dGet('wtw_tmolduploadobjectid').value;
 			zmolds[zmoldind].objects.folder = dGet('wtw_tmoldobjectfolder').value;
@@ -1470,6 +1490,7 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 				'objectfolder': zmolds[zmoldind].objects.folder,
 				'objectfile': zmolds[zmoldind].objects.file,
 				'receiveshadows': zmolds[zmoldind].graphics.receiveshadows,
+				'castshadows': zmolds[zmoldind].graphics.castshadows,
 				'graphiclevel': zmolds[zmoldind].graphics.level,
 				'videoid': zmolds[zmoldind].graphics.texture.videoid,
 				'videoposterid': zmolds[zmoldind].graphics.texture.videoposterid,
@@ -1626,6 +1647,7 @@ WTWJS.prototype.clearEditMold = function() {
 		dGet('wtw_tmoldispickable').checked = false;
 		dGet('wtw_tmoldmaxheight').value = '30';
 		dGet('wtw_tmoldreceiveshadows').checked = false;
+		dGet('wtw_tmoldcastshadows').checked = false;
 		dGet('wtw_tmoldgraphiclevel').checked = false;
 		dGet('wtw_tmoldaddimagepath').value = '';
 		dGet('wtw_tmoldaddimageid').value = '';
@@ -3305,6 +3327,8 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 			var zalphamold = 1;
 			var zreceiveshadows = false;
 			var zreceiveshadowsupdate = false;
+			var zcastshadows = false;
+			var zcastshadowsupdate = false;
 			var zwaterreflection = false;
 			var zwaterreflectionupdate = false;
 			var zmold = WTW.getMeshOrNodeByID(zmoldname);
@@ -3341,6 +3365,22 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 							zreceiveshadowsupdate = true;
 						}
 						zmolds[zmoldind].graphics.receiveshadows = '0';
+					}
+				}
+				if (zmolds[zmoldind].graphics.castshadows != undefined) {
+					if (dGet('wtw_tmoldcastshadows').checked) {
+						if (zmolds[zmoldind].graphics.castshadows != '1') {
+							zcastshadowsupdate = true;
+						}
+						zmolds[zmoldind].graphics.castshadows = '1';
+						zcastshadows = true;
+						zrebuildmold = 1;
+					} else {
+						if (zmolds[zmoldind].graphics.castshadows != '0') {
+							zcastshadowsupdate = true;
+							zrebuildmold = 1;
+						}
+						zmolds[zmoldind].graphics.castshadows = '0';
 					}
 				}
 				if (zmolds[zmoldind].graphics.waterreflection != undefined) {
@@ -3483,6 +3523,14 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 								}
 								if (zreceiveshadowsupdate) {
 									zchildmeshes[i].receiveShadows = zreceiveshadows;
+									WTW.shadows.recreateShadowMap();
+								}
+								if (zcastshadowsupdate && zcastshadows) {
+									WTW.addShadowToMold(zchildmeshes[i], WTW.shadows);
+									WTW.shadows.recreateShadowMap();
+								} else if (zcastshadowsupdate) {
+									WTW.shadows.removeShadowCaster(zchildmeshes[i], true);
+									WTW.shadows.recreateShadowMap();
 								}
 								if (zwaterreflectionupdate && WTW.waterMat != null) {
 									if (zwaterreflection) {
@@ -3502,6 +3550,25 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 										zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
 									}
 								}
+							}
+						}
+					} else {
+						if (zreceiveshadowsupdate) {
+							znode.receiveShadows = zreceiveshadows;
+							WTW.shadows.recreateShadowMap();
+						}
+						if (zcastshadowsupdate && zcastshadows) {
+							WTW.addShadowToMold(znode, WTW.shadows);
+							WTW.shadows.recreateShadowMap();
+						} else if (zcastshadowsupdate) {
+							WTW.shadows.removeShadowCaster(znode, true);
+							WTW.shadows.recreateShadowMap();
+						}
+						if (zwaterreflectionupdate && WTW.waterMat != null) {
+							if (zwaterreflection) {
+								WTW.addReflectionRefraction(znode);
+							} else {
+								WTW.removeReflectionRefraction(znode.name);
 							}
 						}
 					}
@@ -3981,6 +4048,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 					var zcsgmain = WTW.getMeshOrNodeByID(zcsgmainname);
 					if (zcsgmain != null) {
 						zreceiveshadows = false;
+						zcastshadows = false;
 						zwaterreflection = false;
 						WTW.disposeClean(zcsgmainname);
 						//zmolds[zcsgmainind].shown = '0';
@@ -3991,12 +4059,21 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 								zreceiveshadows = true;
 							}
 						}
+						if (zmolds[zcsgmainind].graphics.castshadows != undefined) {
+							if (zmolds[zcsgmainind].graphics.castshadows == '1') {
+								zcastshadows = true;
+							}
+						}
 						if (zmolds[zcsgmainind].graphics.waterreflection != undefined) {
 							if (zmolds[zcsgmainind].graphics.waterreflection == '1') {
 								zwaterreflection = true;
 							}
 						}
 						zmold.receiveShadows = zreceiveshadows;
+						if (zcastshadows) {
+							WTW.addShadowToMold(zmold, WTW.shadows);
+						}
+
 						if (zwaterreflection && WTW.waterMat != null) {
 							WTW.addReflectionRefraction(zmold);
 							//WTW.waterMat.addToRenderList(zmold);

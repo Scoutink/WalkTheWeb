@@ -509,7 +509,7 @@ WTWJS.prototype.addAvatar3DObject = function(zavatarname, zavatardef) {
 									zresults.meshes[i].parent = zavatarparent;
 								}
 								if (WTW.shadows != null) {
-//									WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
+									WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
 								}
 								if (zresults.meshes[i].material != null) {
 									zresults.meshes[i].material.unfreeze();
@@ -997,7 +997,7 @@ WTWJS.prototype.addAvatarForEdit = function(zavatarname, zavatardef) {
 									zresults.meshes[i].parent = zavatarparent;
 								}
 								if (WTW.shadows != null) {
-//									WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
+									WTW.shadows.getShadowMap().renderList.push(zresults.meshes[i]);
 								}
 								if (zresults.meshes[i].material != null) {
 									zresults.meshes[i].material.unfreeze();

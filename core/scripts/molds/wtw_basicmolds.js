@@ -1529,6 +1529,7 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 		var zspecularcolor = '#000000';
 		var zambientcolor = '#ffffff';
 		var zreceiveshadows = false;
+		var zcastshadows = false;
 		var zwaterreflection = false;
 		var zcheckcollisions = true;
 		var zispickable = true;
@@ -1615,6 +1616,11 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 				zreceiveshadows = true;
 			}
 		}
+		if (zmolddef.graphics.castshadows != undefined) {
+			if (zmolddef.graphics.castshadows == '1') {
+				zcastshadows = true;
+			}
+		}
 		if (zmolddef.graphics.waterreflection != undefined) {
 			if (zmolddef.graphics.waterreflection == '1') {
 				zwaterreflection = true;
@@ -1680,6 +1686,10 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 									}
 									/* turn on or off receive shadows */
 									zresults.meshes[i].receiveShadows = zreceiveshadows;
+									if (zcastshadows) {
+										WTW.addShadowToMold(zresults.meshes[i], WTW.shadows);
+									}
+									
 									/* add reflection on water if set */
 									if (zwaterreflection && WTW.waterMat != null) {
 										WTW.addReflectionRefraction(zresults.meshes[i]);

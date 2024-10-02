@@ -105,15 +105,26 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[3].additionalparameters = '';
 
 				zobjectanimations[4] = WTW.newObjectAnimation();
-				zobjectanimations[4].animationname = 'HUDLOGINbuttoncloseloginmenu';
+				zobjectanimations[4].animationname = 'HUDLOGINbuttonxclose';
 				zobjectanimations[4].moldevent = 'onclick';
-				zobjectanimations[4].moldnamepart = 'button-closeloginmenu';
+				zobjectanimations[4].moldnamepart = 'button-xclose';
 				zobjectanimations[4].startframe = 60;
 				zobjectanimations[4].endframe = 80;
 				zobjectanimations[4].animationloop = false;
 				zobjectanimations[4].speedratio = 1.00;
 				zobjectanimations[4].additionalscript = '';
 				zobjectanimations[4].additionalparameters = '';
+
+				zobjectanimations[5] = WTW.newObjectAnimation();
+				zobjectanimations[5].animationname = 'HUDLOGINbuttoncloseloginmenu';
+				zobjectanimations[5].moldevent = 'onclick';
+				zobjectanimations[5].moldnamepart = 'button-closeloginmenu';
+				zobjectanimations[5].startframe = 80;
+				zobjectanimations[5].endframe = 100;
+				zobjectanimations[5].animationloop = false;
+				zobjectanimations[5].speedratio = 1.00;
+				zobjectanimations[5].additionalscript = '';
+				zobjectanimations[5].additionalparameters = '';
 				break;
 			case "Enter":
 			case "Enter Menu":
@@ -212,9 +223,9 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[4].additionalparameters = '';
 
 				zobjectanimations[5] = WTW.newObjectAnimation();
-				zobjectanimations[5].animationname = 'HUDLOGINbuttonclose';
+				zobjectanimations[5].animationname = 'HUDLOGINbuttonxclose';
 				zobjectanimations[5].moldevent = 'onclick';
-				zobjectanimations[5].moldnamepart = 'button-close';
+				zobjectanimations[5].moldnamepart = 'button-xclose';
 				zobjectanimations[5].startframe = 80;
 				zobjectanimations[5].endframe = 100;
 				zobjectanimations[5].animationloop = false;
@@ -231,8 +242,8 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[0].animationname = 'HUDLOGINonloadlogin';
 				zobjectanimations[0].moldevent = 'onload';
 				zobjectanimations[0].moldnamepart = '';
-				zobjectanimations[0].startframe = 80;
-				zobjectanimations[0].endframe = 100;
+				zobjectanimations[0].startframe = 100;
+				zobjectanimations[0].endframe = 120;
 				zobjectanimations[0].animationloop = false;
 				zobjectanimations[0].speedratio = 1.00;
 				zobjectanimations[0].additionalscript = '';
@@ -283,16 +294,26 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[4].additionalparameters = '';
 
 				zobjectanimations[5] = WTW.newObjectAnimation();
-				zobjectanimations[5].animationname = 'HUDLOGINbuttonclose';
+				zobjectanimations[5].animationname = 'HUDLOGINbuttonxclose';
 				zobjectanimations[5].moldevent = 'onclick';
-				zobjectanimations[5].moldnamepart = 'button-close';
-				zobjectanimations[5].startframe = 100;
-				zobjectanimations[5].endframe = 120;
+				zobjectanimations[5].moldnamepart = 'button-xclose';
+				zobjectanimations[5].startframe = 80;
+				zobjectanimations[5].endframe = 100;
 				zobjectanimations[5].animationloop = false;
 				zobjectanimations[5].speedratio = 1.00;
 				zobjectanimations[5].additionalscript = '';
 				zobjectanimations[5].additionalparameters = '';
 
+				zobjectanimations[6] = WTW.newObjectAnimation();
+				zobjectanimations[6].animationname = 'HUDLOGINbuttonclose';
+				zobjectanimations[6].moldevent = 'onclick';
+				zobjectanimations[6].moldnamepart = 'button-close';
+				zobjectanimations[6].startframe = 120;
+				zobjectanimations[6].endframe = 140;
+				zobjectanimations[6].animationloop = false;
+				zobjectanimations[6].speedratio = 1.00;
+				zobjectanimations[6].additionalscript = '';
+				zobjectanimations[6].additionalparameters = '';
 				break;
 			case "Create WTW Login":
 			case "Create Login":
@@ -302,8 +323,8 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[0].animationname = 'HUDLOGINonloadcreatelogin';
 				zobjectanimations[0].moldevent = 'onload';
 				zobjectanimations[0].moldnamepart = '';
-				zobjectanimations[0].startframe = 80;
-				zobjectanimations[0].endframe = 100;
+				zobjectanimations[0].startframe = 100;
+				zobjectanimations[0].endframe = 120;
 				zobjectanimations[0].animationloop = false;
 				zobjectanimations[0].speedratio = 1.00;
 				zobjectanimations[0].additionalscript = '';
@@ -342,6 +363,17 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[3].additionalscript = '';
 				zobjectanimations[3].additionalparameters = '';
 
+				zobjectanimations[4] = WTW.newObjectAnimation();
+				zobjectanimations[4].animationname = 'HUDLOGINbuttonxclose';
+				zobjectanimations[4].moldevent = 'onclick';
+				zobjectanimations[4].moldnamepart = 'button-xclose';
+				zobjectanimations[4].startframe = 80;
+				zobjectanimations[4].endframe = 100;
+				zobjectanimations[4].animationloop = false;
+				zobjectanimations[4].speedratio = 1.00;
+				zobjectanimations[4].additionalscript = '';
+				zobjectanimations[4].additionalparameters = '';
+				
 				break;
 			case "Reset Password":
 				zobjectfile = 'wtw-passwordreset.babylon';
@@ -369,26 +401,15 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[1].additionalparameters = '';
 
 				zobjectanimations[2] = WTW.newObjectAnimation();
-				zobjectanimations[2].animationname = 'HUDLOGINbuttonclose';
+				zobjectanimations[2].animationname = 'HUDLOGINbuttonxclose';
 				zobjectanimations[2].moldevent = 'onclick';
-				zobjectanimations[2].moldnamepart = 'button-close';
+				zobjectanimations[2].moldnamepart = 'button-xclose';
 				zobjectanimations[2].startframe = 20;
 				zobjectanimations[2].endframe = 40;
 				zobjectanimations[2].animationloop = false;
 				zobjectanimations[2].speedratio = 1.00;
 				zobjectanimations[2].additionalscript = '';
 				zobjectanimations[2].additionalparameters = '';
-
-				zobjectanimations[3] = WTW.newObjectAnimation();
-				zobjectanimations[3].animationname = 'HUDLOGINbuttoncancelreset';
-				zobjectanimations[3].moldevent = 'onclick';
-				zobjectanimations[3].moldnamepart = 'button-cancelreset';
-				zobjectanimations[3].startframe = 60;
-				zobjectanimations[3].endframe = 80;
-				zobjectanimations[3].animationloop = false;
-				zobjectanimations[3].speedratio = 1.00;
-				zobjectanimations[3].additionalscript = '';
-				zobjectanimations[3].additionalparameters = '';
 
 				break;
 			case "Select My Avatar":
@@ -398,8 +419,8 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[0].animationname = 'HUDLOGINonloadselectavatar';
 				zobjectanimations[0].moldevent = 'onload';
 				zobjectanimations[0].moldnamepart = '';
-				zobjectanimations[0].startframe = 80;
-				zobjectanimations[0].endframe = 100;
+				zobjectanimations[0].startframe = 100;
+				zobjectanimations[0].endframe = 120;
 				zobjectanimations[0].animationloop = false;
 				zobjectanimations[0].speedratio = 1.00;
 				zobjectanimations[0].additionalscript = '';
@@ -450,16 +471,16 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[4].additionalparameters = '';
 
 				zobjectanimations[5] = WTW.newObjectAnimation();
-				zobjectanimations[5].animationname = 'HUDLOGINbuttonclose';
+				zobjectanimations[5].animationname = 'HUDLOGINbuttonxclose';
 				zobjectanimations[5].moldevent = 'onclick';
-				zobjectanimations[5].moldnamepart = 'button-close';
-				zobjectanimations[5].startframe = 100;
-				zobjectanimations[5].endframe = 120;
+				zobjectanimations[5].moldnamepart = 'button-xclose';
+				zobjectanimations[5].startframe = 80;
+				zobjectanimations[5].endframe = 100;
 				zobjectanimations[5].animationloop = false;
 				zobjectanimations[5].speedratio = 1.00;
 				zobjectanimations[5].additionalscript = '';
 				zobjectanimations[5].additionalparameters = '';
-
+				
 				break;
 			case "Edit My Avatar":
 				zobjectfile = 'wtw-editavatarmenu.babylon';
@@ -468,8 +489,8 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[0].animationname = 'HUDLOGINonloadeditavatarmenu';
 				zobjectanimations[0].moldevent = 'onload';
 				zobjectanimations[0].moldnamepart = '';
-				zobjectanimations[0].startframe = 280;
-				zobjectanimations[0].endframe = 300;
+				zobjectanimations[0].startframe = 300;
+				zobjectanimations[0].endframe = 320;
 				zobjectanimations[0].animationloop = false;
 				zobjectanimations[0].speedratio = 1.00;
 				zobjectanimations[0].additionalscript = '';
@@ -629,6 +650,54 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				zobjectanimations[14].additionalscript = '';
 				zobjectanimations[14].additionalparameters = '';
 
+				zobjectanimations[15] = WTW.newObjectAnimation();
+				zobjectanimations[15].animationname = 'HUDLOGINbuttonxclose';
+				zobjectanimations[15].moldevent = 'onclick';
+				zobjectanimations[15].moldnamepart = 'button-xclose';
+				zobjectanimations[15].startframe = 280;
+				zobjectanimations[15].endframe = 300;
+				zobjectanimations[15].animationloop = false;
+				zobjectanimations[15].speedratio = 1.00;
+				zobjectanimations[15].additionalscript = '';
+				zobjectanimations[15].additionalparameters = '';
+
+				break;
+			case "Edit Profile":
+				zobjectfile = 'wtw-editprofile.babylon';
+				
+				zobjectanimations[0] = WTW.newObjectAnimation();
+				zobjectanimations[0].animationname = 'HUDLOGINonloadeditprofile';
+				zobjectanimations[0].moldevent = 'onload';
+				zobjectanimations[0].moldnamepart = '';
+				zobjectanimations[0].startframe = 100;
+				zobjectanimations[0].endframe = 120;
+				zobjectanimations[0].animationloop = false;
+				zobjectanimations[0].speedratio = 1.00;
+				zobjectanimations[0].additionalscript = '';
+				zobjectanimations[0].additionalparameters = '';
+				
+				zobjectanimations[1] = WTW.newObjectAnimation();
+				zobjectanimations[1].animationname = 'HUDLOGINbuttonsaveprofile';
+				zobjectanimations[1].moldevent = 'onclick';
+				zobjectanimations[1].moldnamepart = 'button-saveprofile';
+				zobjectanimations[1].startframe = 1;
+				zobjectanimations[1].endframe = 20;
+				zobjectanimations[1].animationloop = false;
+				zobjectanimations[1].speedratio = 1.00;
+				zobjectanimations[1].additionalscript = '';
+				zobjectanimations[1].additionalparameters = '';
+
+				zobjectanimations[2] = WTW.newObjectAnimation();
+				zobjectanimations[2].animationname = 'HUDLOGINbuttonxclose';
+				zobjectanimations[2].moldevent = 'onclick';
+				zobjectanimations[2].moldnamepart = 'button-xclose';
+				zobjectanimations[2].startframe = 80;
+				zobjectanimations[2].endframe = 100;
+				zobjectanimations[2].animationloop = false;
+				zobjectanimations[2].speedratio = 1.00;
+				zobjectanimations[2].additionalscript = '';
+				zobjectanimations[2].additionalparameters = '';
+
 				break;
 
 		}
@@ -717,7 +786,6 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 									}
 									break;
 								case 'button-enterlogin':
-								case 'button-enter':
 									if (zpage == 'Enter Menu') {
 										zresults.meshes[i].isPickable = true;
 										zresults.meshes[i].isVisible = true;
@@ -730,7 +798,6 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 									}
 									break;
 								case 'button-enterlogintext':
-								case 'button-entertext':
 									zresults.meshes[i].isPickable = false;
 									if (zpage == 'Enter Menu') {
 										zresults.meshes[i].isVisible = true;
@@ -738,6 +805,7 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 										zresults.meshes[i].isVisible = false;
 									}
 									break;
+								case 'button-xclose':
 								case 'button-closeloginmenu':
 									zresults.meshes[i].isPickable = true;
 									zresults.meshes[i].isVisible = true;
@@ -757,19 +825,26 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 								case 'button-forgot':
 								case 'button-cancellogin':
 								case 'button-cancelselect':
-								case 'button-cancelreset':
 								case 'button-cancelcreate':
 								case 'email-email':
+								case 'email-email2':
 								case 'password-password':
 								case 'password-password2':
 								case 'name-displayname':
+								case 'name-displayname2':
+								case 'name-firstname':
+								case 'name-lastname':
+								case 'name-gender':
+								case 'date-birth':
 								case 'check-remember':
+								case 'check-local':
 								case 'button-color':
 								case 'button-size':
 								case 'button-savecolorscaling':
 								case 'button-next':
 								case 'button-previous':
 								case 'button-save':
+								case 'button-saveprofile':
 								case 'button-close':
 								case 'preview':
 									zresults.meshes[i].isPickable = true;
@@ -786,8 +861,21 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 								case 'password-passwordborderfocus':
 								case 'password-password2borderfocus':
 								case 'check-rememberborderfocus':
+								case 'check-localborderfocus':
 								case 'name-displaynameborder':
 								case 'name-displaynameborderfocus':
+								case 'name-displayname2border':
+								case 'name-displayname2borderfocus':
+								case 'email-email2border':
+								case 'email-email2borderfocus':
+								case 'name-firstnameborder':
+								case 'name-firstnameborderfocus':
+								case 'name-lastnameborder':
+								case 'name-lastnameborderfocus':
+								case 'name-genderborder':
+								case 'name-genderborderfocus':
+								case 'date-birthborder':
+								case 'date-birthborderfocus':
 								case 'loading':
 								case 'loading3dscene':
 								case 'loading3dmodel':
@@ -835,6 +923,8 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 								case 'button-scalez2text':
 								case 'button-scalez3':
 								case 'button-scalez3text':
+								case 'button-enter':
+								case 'button-entertext':
 									zresults.meshes[i].isPickable = false;
 									zresults.meshes[i].isVisible = false;
 									break;
@@ -903,6 +993,7 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 				} else {
 					/* perform any after load function like Focus or title selection */
 					var zremember = false;
+					var zlocal = false;
 					var zemail = '';
 					var zpassword = '';
 					var zmoldfocus = '';
@@ -957,6 +1048,7 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 							break;
 						case "WalkTheWeb Login":
 							zremember = WTW.getCookie('globalloginremember');
+							zlocal = WTW.getCookie('globalloginlocal');
 							zemail = WTW.getCookie('globalloginemail');
 							zpassword = WTW.getCookie('globalloginpassword');
 							if (zmoldfocus == '' && zremember) {
@@ -973,10 +1065,12 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 							WTW.hudLoginFocusText('hudlogin-email-email', true);
 							WTW.hudLoginFocusText('hudlogin-password-password', true);
 							WTW.hudLoginFocusText('hudlogin-check-remember', true);
+							WTW.hudLoginFocusText('hudlogin-check-local', true);
 							WTW.tabNextField();
 							break;
 						case "3D Website Login":
 							zremember = WTW.getCookie('localloginremember');
+							zlocal = WTW.getCookie('localloginlocal');
 							zemail = WTW.getCookie('localloginemail');
 							zpassword = WTW.getCookie('localloginpassword');
 							if (zmoldfocus == '' && zremember) {
@@ -993,6 +1087,7 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 							WTW.hudLoginFocusText('hudlogin-email-email', true);
 							WTW.hudLoginFocusText('hudlogin-password-password', true);
 							WTW.hudLoginFocusText('hudlogin-check-remember', true);
+							WTW.hudLoginFocusText('hudlogin-check-local', true);
 							WTW.tabNextField();
 							break;
 						case "Reset Password":
@@ -1006,6 +1101,17 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 							WTW.cameraDistance = 34;
 							/* open for color changing */
 							WTW.hudLoginLoadEditAvatarColors();
+							break;
+						case "Edit Profile":
+							zmoldfocus = 'hudlogin-name-displayname2';
+							WTW.hudLoginFocusText('hudlogin-name-displayname2', true);
+							WTW.hudLoginFocusText('hudlogin-email-email2', true);
+							WTW.hudLoginFocusText('hudlogin-name-firstname', true);
+							WTW.hudLoginFocusText('hudlogin-name-lastname', true);
+							WTW.hudLoginFocusText('hudlogin-name-gender', true);
+							WTW.hudLoginFocusText('hudlogin-date-birth', true);
+							WTW.tabNextField();
+							WTW.hudLoginLoadProfile();
 							break;
 					}
 					if (zmoldfocus != '') {
@@ -1024,26 +1130,39 @@ WTWJS.prototype.openLoginHUD = function(zpage) {
 WTWJS.prototype.openLoginHUDLogin = function() {
 	/* Select which Login Menu or Form based on Active Global Login variables */
 	try {
-		if ((WTW.globalLogins == '1' && WTW.localLogins == '1') || (WTW.globalLogins == '1' && WTW.anonymousLogins == '1') || (WTW.localLogins == '1' && WTW.anonymousLogins == '1')) {
-			/* if there is more than one choice */
-			WTW.openLoginHUD('Login Menu');
-		} else if (WTW.globalLogins == '1') {
+		if (WTW.globalLogins == '1') {
 			/* open global login */
 			WTW.openLoginHUD('WalkTheWeb Login');
+			if (dGet('hudlogin-check-local-textbox') != null) {
+				dGet('hudlogin-check-local-textbox').checked = false;
+				WTW.focusText(false);
+			}
+			if (WTW.localLogins == '1') {
+				/* show and set local checkbox */
+
+			} else {
+				/* hide local checkbox */
+				
+			}
 		} else if (WTW.localLogins == '1') {
 			/* open local login */
 			WTW.openLoginHUD('3D Website Login');
-		} else if (WTW.anonymousLogins == '1') {
-			/* login not required - open select avatar */
-			WTW.openLoginHUD('Select My Avatar');
-		} else {
-			WTW.openLoginHUD('Login Menu');
+			if (dGet('hudlogin-check-local-textbox') != null) {
+				dGet('hudlogin-check-local-textbox').checked = true;
+				WTW.focusText(false);
+			}
+			if (WTW.globalLogins == '1') {
+				/* show and set local checkbox */
+				
+			} else {
+				/* hide local checkbox */
+				
+			}
 		}
 	} catch (ex) {
 		WTW.log('core-scripts-hud-wtw_hud_login.js-openLoginHUDLogin=' + ex.message);
 	}
 }
-
 
 WTWJS.prototype.mouseOverLoginHUD = function(zmoldname, zhover) {
 	/* mouse over Login HUD */
@@ -1096,6 +1215,7 @@ WTWJS.prototype.mouseOverLoginHUD = function(zmoldname, zhover) {
 		}
 		
 		switch (zmoldname) {
+			case 'hudlogin-button-xclose':
 			case 'hudlogin-button-loginwtw':
 			case 'hudlogin-button-loginlocal':
 			case 'hudlogin-button-loginguest':
@@ -1112,6 +1232,7 @@ WTWJS.prototype.mouseOverLoginHUD = function(zmoldname, zhover) {
 			case 'hudlogin-button-enterlogin':
 			case 'hudlogin-button-save':
 			case 'hudlogin-button-savecolorscaling':
+			case 'hudlogin-button-saveprofile':
 			case 'hudlogin-button-part-0':
 			case 'hudlogin-button-part-1':
 			case 'hudlogin-button-part-2':
@@ -1159,7 +1280,6 @@ WTWJS.prototype.mouseOverLoginHUD = function(zmoldname, zhover) {
 			case 'hudlogin-button-cancellogin':
 			case 'hudlogin-button-cancelselect':
 			case 'hudlogin-button-cancelcreate':
-			case 'hudlogin-button-cancelreset':
 			case 'hudlogin-button-close':
 			case 'hudlogin-button-closeloginmenu':
 				/* smaller buttons */
@@ -1206,7 +1326,14 @@ WTWJS.prototype.hudLoginClick = function(zmoldname) {
 			case 'hudlogin-password-password':
 			case 'hudlogin-password-password2':
 			case 'hudlogin-check-remember':
+			case 'hudlogin-check-local':
 			case 'hudlogin-name-displayname':
+			case 'hudlogin-name-displayname2':
+			case 'hudlogin-email-email2':
+			case 'hudlogin-name-firstname':
+			case 'hudlogin-name-lastname':
+			case 'hudlogin-name-gender':
+			case 'hudlogin-date-birth':
 				WTW.changeLoginHUDFocus(zmoldname);
 				break;
 			case 'hudlogin-button-scalex0':
@@ -1258,7 +1385,7 @@ WTWJS.prototype.hudLoginClick = function(zmoldname) {
 					} else if (zmoldname == 'hudlogin-button-editprofile') {
 						/* open edit profile */
 						WTW.closeLoginHUD();
-						WTW.openLocalLogin('Edit Profile', .4, .6);
+						WTW.openLoginHUD('Edit Profile');
 					} else if (zmoldname == 'hudlogin-button-loginguest' || zmoldname == 'hudlogin-button-avatarselect') {
 						/* select my avatar */
 						WTW.openLoginHUD('Select My Avatar');
@@ -1297,7 +1424,7 @@ WTWJS.prototype.hudLoginClick = function(zmoldname) {
 					} else if (zmoldname == 'hudlogin-button-reset') {
 						/* reset password */
 						
-					} else if (zmoldname == 'hudlogin-button-enterlogin' || zmoldname == 'hudlogin-button-cancellogin' || zmoldname == 'hudlogin-button-cancelcreate' || zmoldname == 'hudlogin-button-cancelreset') {
+					} else if (zmoldname == 'hudlogin-button-enterlogin' || zmoldname == 'hudlogin-button-cancelcreate') {
 						/* open hud login */
 						WTW.openLoginHUDLogin();
 					} else if (zmoldname == 'hudlogin-button-next') {
@@ -1323,10 +1450,20 @@ WTWJS.prototype.hudLoginClick = function(zmoldname) {
 						WTW.cameraDistance = WTW.getCookie('cameradistance');
 						WTW.saveMyAvatarColorScaling();
 						WTW.closeLoginHUD();
+					} else if (zmoldname == 'hudlogin-button-saveprofile') {
+						/* save my avatar colors and scaling */
+						WTW.hudLoginSaveProfile();
+						WTW.closeLoginHUD();
 					} else if (zmoldname == 'hudlogin-button-close' || zmoldname == 'hudlogin-button-closeloginmenu' || zmoldname == 'hudlogin-button-cancelselect') {
 						/* reset camera distance - from edit avatar */
 						WTW.cameraDistance = WTW.getCookie('cameradistance');
 						WTW.closeLoginHUD();
+					} else if (zmoldname == 'hudlogin-button-xclose' || zmoldname == 'hudlogin-button-cancellogin') {
+						/* close X button */
+						WTW.closeLoginHUD();
+						if (dGet('wtw_tuserid').value == '') {
+							WTW.openLoginHUD('Enter Menu'); //cancellogin
+						}
 					}
 					/* allow plugins to add code */
 					WTW.pluginsHudLoginClick(zmoldname);
@@ -1418,8 +1555,23 @@ WTWJS.prototype.changeLoginHUDFocus = function(zmoldname) {
 		var zpassword2borderfocus = WTW.getMeshOrNodeByID('hudlogin-password-password2borderfocus');
 		var zrememberborder = WTW.getMeshOrNodeByID('hudlogin-check-rememberborder');
 		var zrememberborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-rememberborderfocus');
+		var zlocalborder = WTW.getMeshOrNodeByID('hudlogin-check-localborder');
+		var zlocalborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-localborderfocus');
 		var zdisplaynameborder = WTW.getMeshOrNodeByID('hudlogin-name-displaynameborder');
 		var zdisplaynameborderfocus = WTW.getMeshOrNodeByID('hudlogin-name-displaynameborderfocus');
+		var zdisplayname2border = WTW.getMeshOrNodeByID('hudlogin-name-displayname2border');
+		var zdisplayname2borderfocus = WTW.getMeshOrNodeByID('hudlogin-name-displayname2borderfocus');
+		var zemail2border = WTW.getMeshOrNodeByID('hudlogin-email-email2border');
+		var zemail2borderfocus = WTW.getMeshOrNodeByID('hudlogin-email-email2borderfocus');
+		var zfirstnameborder = WTW.getMeshOrNodeByID('hudlogin-name-firstnameborder');
+		var zfirstnameborderfocus = WTW.getMeshOrNodeByID('hudlogin-name-firstnameborderfocus');
+		var zlastnameborder = WTW.getMeshOrNodeByID('hudlogin-name-lastnameborder');
+		var zlastnameborderfocus = WTW.getMeshOrNodeByID('hudlogin-name-lastnameborderfocus');
+		var zgenderborder = WTW.getMeshOrNodeByID('hudlogin-name-genderborder');
+		var zgenderborderfocus = WTW.getMeshOrNodeByID('hudlogin-name-genderborderfocus');
+		var zdatebirthborder = WTW.getMeshOrNodeByID('hudlogin-date-birthborder');
+		var zdatebirthborderfocus = WTW.getMeshOrNodeByID('hudlogin-date-birthborderfocus');
+
 		if (zemailborder != null) {
 			zemailborder.isVisible = true;
 		}
@@ -1444,13 +1596,55 @@ WTWJS.prototype.changeLoginHUDFocus = function(zmoldname) {
 		if (zrememberborderfocus != null) {
 			zrememberborderfocus.isVisible = false;
 		}
+		if (zlocalborder != null) {
+			zlocalborder.isVisible = true;
+		}
+		if (zlocalborderfocus != null) {
+			zlocalborderfocus.isVisible = false;
+		}
 		if (zdisplaynameborder != null) {
 			zdisplaynameborder.isVisible = true;
 		}
 		if (zdisplaynameborderfocus != null) {
 			zdisplaynameborderfocus.isVisible = false;
 		}
-		
+		if (zdisplayname2border != null) {
+			zdisplayname2border.isVisible = true;
+		}
+		if (zdisplayname2borderfocus != null) {
+			zdisplayname2borderfocus.isVisible = false;
+		}
+		if (zemail2border != null) {
+			zemail2border.isVisible = true;
+		}
+		if (zemail2borderfocus != null) {
+			zemail2borderfocus.isVisible = false;
+		}
+		if (zfirstnameborder != null) {
+			zfirstnameborder.isVisible = true;
+		}
+		if (zfirstnameborderfocus != null) {
+			zfirstnameborderfocus.isVisible = false;
+		}
+		if (zlastnameborder != null) {
+			zlastnameborder.isVisible = true;
+		}
+		if (zlastnameborderfocus != null) {
+			zlastnameborderfocus.isVisible = false;
+		}
+		if (zgenderborder != null) {
+			zgenderborder.isVisible = true;
+		}
+		if (zgenderborderfocus != null) {
+			zgenderborderfocus.isVisible = false;
+		}
+		if (zdatebirthborder != null) {
+			zdatebirthborder.isVisible = true;
+		}
+		if (zdatebirthborderfocus != null) {
+			zdatebirthborderfocus.isVisible = false;
+		}
+
 		if (zborder != null) {
 			zborder.isVisible = false;
 		}
@@ -1481,10 +1675,18 @@ WTWJS.prototype.hudLoginFocusText = function(zmoldname, zeditdone) {
 			'hudlogin-button-avatarselect',
 			'hudlogin-button-avataredit',
 			'hudlogin-button-logout',
+			'hudlogin-name-displayname',
+			'hudlogin-name-displayname2',
 			'hudlogin-email-email',
+			'hudlogin-email-email2',
 			'hudlogin-password-password',
 			'hudlogin-password-password2',
 			'hudlogin-check-remember',
+			'hudlogin-check-local',
+			'hudlogin-name-firstname',
+			'hudlogin-name-lastname',
+			'hudlogin-name-gender',
+			'hudlogin-date-birth',
 			'hudlogin-button-login',
 			'hudlogin-button-create',
 			'hudlogin-button-reset',
@@ -1492,11 +1694,10 @@ WTWJS.prototype.hudLoginFocusText = function(zmoldname, zeditdone) {
 			'hudlogin-button-forgot',
 			'hudlogin-button-cancellogin',
 			'hudlogin-button-cancelcreate',
-			'hudlogin-button-cancelreset',
-			'hudlogin-name-displayname',
 			'hudlogin-button-next',
 			'hudlogin-button-previous',
 			'hudlogin-button-save',
+			'hudlogin-button-saveprofile',
 			'hudlogin-button-close'
 		];
 		if (WTW.selectedMoldName != zmoldname) {
@@ -1532,8 +1733,38 @@ WTWJS.prototype.hudLoginFocusText = function(zmoldname, zeditdone) {
 					}
 				}
 				break;
+			case 'hudlogin-check-local':
+				WTW.offsetY = -2.78;
+				WTW.offsetZ = -6.91;
+				WTW.maxLength = 1;
+				if (dGet(WTW.selectedMoldName + '-textbox') != null) {
+					if (dGet(WTW.selectedMoldName + '-textbox').checked) {
+						dGet(WTW.selectedMoldName + '-textbox').checked = false;
+					} else {
+						dGet(WTW.selectedMoldName + '-textbox').checked = true;
+					}
+				}
+				break;
 			case 'hudlogin-name-displayname':
 				WTW.offsetY = 1.8;
+				break;
+			case 'hudlogin-name-displayname2':
+				WTW.offsetY = 4.8;
+				break;
+			case 'hudlogin-email-email2':
+				WTW.offsetY = 2.9;
+				break;
+			case 'hudlogin-name-firstname':
+				WTW.offsetY = 1.1;
+				break;
+			case 'hudlogin-name-lastname':
+				WTW.offsetY = -.8;
+				break;
+			case 'hudlogin-name-gender':
+				WTW.offsetY = -2.6;
+				break;
+			case 'hudlogin-date-birth':
+				WTW.offsetY = -4.4;
 				break;
 		}
 		WTW.webStyle = {
@@ -1587,6 +1818,7 @@ WTWJS.prototype.hudLoginLogin = function() {
 		var zemail = dGet('hudlogin-email-email-textbox').value;
 		var zpassword = dGet('hudlogin-password-password-textbox').value;
 		var zremembercheck = dGet('hudlogin-check-remember-textbox').checked;
+		var zlocalcheck = dGet('hudlogin-check-local-textbox').checked;
 		let zinvalidemail = WTW.getMeshOrNodeByID('hudlogin-invalidemail');
 		let zremember = WTW.getMeshOrNodeByID('hudlogin-check-remember');
 		let zrememberborder = WTW.getMeshOrNodeByID('hudlogin-check-rememberborder');
@@ -1595,10 +1827,10 @@ WTWJS.prototype.hudLoginLogin = function() {
 		let zremember3dtext = WTW.getMeshOrNodeByID('hudlogin-check-remember-text');
 		let ztitlewtw = WTW.getMeshOrNodeByID('hudlogin-titlewtw');
 		let zfocus = false;
-		let zlocal = true;
+		let zlocalserver = true;
 		if (ztitlewtw != null) {
 			if (ztitlewtw.isVisible) {
-				zlocal = false;
+				zlocalserver = false;
 			}
 		}
 		if (WTW.isEmail(zemail) == false) {
@@ -1669,16 +1901,15 @@ WTWJS.prototype.hudLoginLogin = function() {
 			if (zremembertext != null) {
 				zremembertext.isVisible = true;
 			}
-			if (zlocal) {
+			if (zlocalserver) {
 				if (zremembercheck) {
 					WTW.setCookie('localloginemail', zemail, 365);
 					WTW.setCookie('localloginpassword', btoa(zpassword), 365);
-					WTW.setCookie('localloginremember', zremembercheck, 365);
 				} else {
 					WTW.deleteCookie('localloginemail');
 					WTW.deleteCookie('localloginpassword');
-					WTW.deleteCookie('localloginremember');
 				}
+				WTW.setCookie('localloginremember', zremembercheck, 365);
 				var zrequest = {
 					'useremail':zemail,
 					'password':btoa(zpassword),
@@ -1692,7 +1923,7 @@ WTWJS.prototype.hudLoginLogin = function() {
 					}
 				);
 			}
-			WTW.pluginsHudLoginLogin(zlocal, zemail, zpassword, zremembercheck);
+			WTW.pluginsHudLoginLogin(zlocalserver, zemail, zpassword, zremembercheck);
 		}
 	} catch (ex) {
 		WTW.log('core-scripts-hud-wtw_hud_login.js-hudLoginLogin=' + ex.message);
@@ -1727,7 +1958,19 @@ WTWJS.prototype.hudLoginLoginResponse = function(zresponse) {
 					if (WTW.enableEmailValidation == 1) {
 						WTW.checkEmailValidation(zresponse.email);
 					} else {
-						WTW.openLoginHUD('Select My Avatar');
+						if (dGet('wtw_tglobaluseravatarid').value != '' || dGet('wtw_tuseravatarid').value != '') {
+							var zavatarserver = WTW.getCookie('avatarlocation');
+							var zglobaluseravatarid = dGet('wtw_tglobaluseravatarid').value;
+							if (zavatarserver == 'local') {
+								zglobaluseravatarid = '';
+							}
+							WTW.openLoginHUD('Loading 3D Avatar');
+							/* if avatar saved, load avatar */
+							WTW.getSavedAvatar('myavatar-' + dGet('wtw_tinstanceid').value, zglobaluseravatarid, dGet('wtw_tuseravatarid').value, dGet('wtw_tavatarid').value, false);
+						} else {
+							/* avatar not saved, open select avatar */
+							WTW.openLoginHUD('Select My Avatar');
+						}
 					}
 				}
 			}
@@ -1742,6 +1985,11 @@ WTWJS.prototype.hudLoginLoginResponse = function(zresponse) {
 			var zrememberborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-rememberborderfocus');
 			var zremembertext = WTW.getMeshOrNodeByID('hudlogin-check-remembertext');
 			var zremember3dtext = WTW.getMeshOrNodeByID('hudlogin-check-remember-text');
+			var zlocal = WTW.getMeshOrNodeByID('hudlogin-check-local');
+			var zlocalborder = WTW.getMeshOrNodeByID('hudlogin-check-localborder');
+			var zlocalborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-localborderfocus');
+			var zlocaltext = WTW.getMeshOrNodeByID('hudlogin-check-localtext');
+			var zlocal3dtext = WTW.getMeshOrNodeByID('hudlogin-check-local-text');
 			if (zinvalidlogin != null) {
 				zinvalidlogin.isVisible = true;
 			}
@@ -1761,6 +2009,22 @@ WTWJS.prototype.hudLoginLoginResponse = function(zresponse) {
 			if (zremember3dtext != null) {
 				zremember3dtext.isVisible = false;
 			}
+			if (zlocal != null) {
+				zlocal.isVisible = false;
+			}
+			if (zlocalborder != null) {
+				zlocalborder.isVisible = false;
+			}
+			if (zlocalborderfocus != null) {
+				zfocus = zlocalborderfocus.isVisible;
+				zlocalborderfocus.isVisible = false;
+			}
+			if (zlocaltext != null) {
+				zlocaltext.isVisible = false;
+			}
+			if (zlocal3dtext != null) {
+				zlocal3dtext.isVisible = false;
+			}
 			window.setTimeout(function(){
 				zinvalidlogin = WTW.getMeshOrNodeByID('hudlogin-invalidlogin');
 				zremember = WTW.getMeshOrNodeByID('hudlogin-check-remember');
@@ -1768,6 +2032,11 @@ WTWJS.prototype.hudLoginLoginResponse = function(zresponse) {
 				zrememberborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-rememberborderfocus');
 				zremembertext = WTW.getMeshOrNodeByID('hudlogin-check-remembertext');
 				zremember3dtext = WTW.getMeshOrNodeByID('hudlogin-check-remember-text');
+				zlocal = WTW.getMeshOrNodeByID('hudlogin-check-local');
+				zlocalborder = WTW.getMeshOrNodeByID('hudlogin-check-localborder');
+				zlocalborderfocus = WTW.getMeshOrNodeByID('hudlogin-check-localborderfocus');
+				zlocaltext = WTW.getMeshOrNodeByID('hudlogin-check-localtext');
+				zlocal3dtext = WTW.getMeshOrNodeByID('hudlogin-check-local-text');
 				if (zinvalidlogin != null) {
 					zinvalidlogin.isVisible = false;
 				}
@@ -1788,6 +2057,24 @@ WTWJS.prototype.hudLoginLoginResponse = function(zresponse) {
 				}
 				if (zremember3dtext != null) {
 					zremember3dtext.isVisible = true;
+				}
+				if (zremember != null) {
+					zremember.isVisible = true;
+				}
+				if (zfocus) {
+					if (zlocalborderfocus != null) {
+						zlocalborderfocus.isVisible = true;
+					}
+				} else {
+					if (zlocalborder != null) {
+						zlocalborder.isVisible = true;
+					}
+				}
+				if (zlocaltext != null) {
+					zlocaltext.isVisible = true;
+				}
+				if (zlocal3dtext != null) {
+					zlocal3dtext.isVisible = true;
 				}
 			},5000);
 		}
@@ -3070,5 +3357,75 @@ WTWJS.prototype.saveMyAvatarColorScaling = function() {
 		}
 	} catch (ex) {
 		WTW.log('core-scripts-hud-wtw_hud_login.js-saveMyAvatarColorScaling=' + ex.message);
+	}
+}
+
+WTWJS.prototype.hudLoginLoadProfile = function() {
+	/* get profile ready for edit */
+	try {
+		WTW.getAsyncJSON('/connect/userprofile.php?useravatarid=' + dGet('wtw_tuseravatarid').value, 
+			function(zresponse) {
+				zresponse = JSON.parse(zresponse);
+				let zpagediv = '';
+				var zdob = '';
+				if (zresponse.dob != 'null' && zresponse.dob != null) {
+					zdob = zresponse.dob;
+				}
+				if (dGet('hudlogin-name-displayname2-textbox') != null) {
+					dGet('hudlogin-name-displayname2-textbox').value = zresponse.displayname;
+				}
+				if (dGet('hudlogin-email-email2-textbox') != null) {
+					dGet('hudlogin-email-email2-textbox').value = zresponse.email;
+				}
+				if (dGet('hudlogin-name-firstname-textbox') != null) {
+					dGet('hudlogin-name-firstname-textbox').value = zresponse.firstname;
+				}
+				if (dGet('hudlogin-name-lastname-textbox') != null) {
+					dGet('hudlogin-name-lastname-textbox').value = zresponse.lastname;
+				}
+				if (dGet('hudlogin-name-gender-textbox') != null) {
+					dGet('hudlogin-name-gender-textbox').value = zresponse.gender;
+				}
+				if (dGet('hudlogin-date-birth-textbox') != null) {
+					dGet('hudlogin-date-birth-textbox').value = zdob;
+				}
+				WTW.hudLoginFocusText('hudlogin-name-displayname2', true);
+				WTW.hudLoginFocusText('hudlogin-email-email2', true);
+				WTW.hudLoginFocusText('hudlogin-name-firstname', true);
+				WTW.hudLoginFocusText('hudlogin-name-lastname', true);
+				WTW.hudLoginFocusText('hudlogin-name-gender', true);
+				WTW.hudLoginFocusText('hudlogin-date-birth', true);
+				WTW.tabNextField();
+			}
+		);		
+	} catch (ex) {
+		WTW.log('core-scripts-hud-wtw_hud_login.js-hudLoginLoadProfile=' + ex.message);
+	}
+}
+
+WTWJS.prototype.hudLoginSaveProfile = async function() {
+	/* save local server user profile */
+	try {
+		WTW.setLoginValues(dGet('wtw_tuserid').value, dGet('hudlogin-name-displayname2-textbox').value, dGet('hudlogin-email-email2-textbox').value);
+		/* validate entries... */
+		var zrequest = {
+			'userid': dGet('wtw_tuserid').value,
+			'useravatarid': dGet('wtw_tuseravatarid').value,
+			'displayname':btoa(dGet('hudlogin-name-displayname2-textbox').value),
+			'useremail':dGet('hudlogin-email-email2-textbox').value,
+			'firstname':btoa(dGet('hudlogin-name-firstname-textbox').value),
+			'lastname':btoa(dGet('hudlogin-name-lastname-textbox').value),
+			'gender':btoa(dGet('hudlogin-name-gender-textbox').value),
+			'dob':dGet('hudlogin-date-birth-textbox').value,
+			'function':'savemyprofile'
+		};
+		WTW.postAsyncJSON('/core/handlers/users.php', zrequest, 
+			function(zresponse) {
+				zresponse = JSON.parse(zresponse);
+				/* note serror would contain errors */
+			}
+		);
+	} catch (ex) {
+		WTW.log('core-scripts-prime-wtw_login.js-hudLoginSaveProfile=' + ex.message);
 	}
 }

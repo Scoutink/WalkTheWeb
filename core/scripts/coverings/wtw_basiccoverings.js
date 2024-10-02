@@ -108,8 +108,8 @@ WTWJS.prototype.addCoveringMirror = function(zmoldname, zmolddef) {
 				if (zmold != null && zmoldworldmatrix != null && zmoldvertexdata != null) {
 					var zmoldnormal = new BABYLON.Vector3(zmoldvertexdata[0], zmoldvertexdata[1], zmoldvertexdata[2]);
 					zmoldnormal = BABYLON.Vector3.TransformNormal(zmoldnormal, zmoldworldmatrix);
-					var reflector = BABYLON.Plane.FromPositionAndNormal(zmold.position, zmoldnormal.scale(-1));
-					zcovering.reflectionTexture.mirrorPlane = reflector;
+					var zreflector = BABYLON.Plane.FromPositionAndNormal(zmold.position, zmoldnormal.scale(-1));
+					zcovering.reflectionTexture.mirrorPlane = zreflector;
 				} else {
 					zcovering.reflectionTexture.mirrorPlane = new BABYLON.Plane(0, 0, -1, -2);
 				}

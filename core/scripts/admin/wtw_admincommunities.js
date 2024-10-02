@@ -822,10 +822,16 @@ WTWJS.prototype.openSceneForm = function() {
 		dGet('wtw_tsundirectionxbackup').value = WTW.init.sunDirectionX;
 		dGet('wtw_tsundirectionybackup').value = WTW.init.sunDirectionY;
 		dGet('wtw_tsundirectionzbackup').value = WTW.init.sunDirectionZ;
+		dGet('wtw_tsunpositionxbackup').value = WTW.init.sunPositionX;
+		dGet('wtw_tsunpositionybackup').value = WTW.init.sunPositionY;
+		dGet('wtw_tsunpositionzbackup').value = WTW.init.sunPositionZ;
 		dGet('wtw_tbacklightintensitybackup').value = WTW.init.backLightIntensity;
 		dGet('wtw_tbacklightdirectionxbackup').value = WTW.init.backLightDirectionX;
 		dGet('wtw_tbacklightdirectionybackup').value = WTW.init.backLightDirectionY;
 		dGet('wtw_tbacklightdirectionzbackup').value = WTW.init.backLightDirectionZ;
+		dGet('wtw_tbacklightpositionxbackup').value = WTW.init.backLightPositionX;
+		dGet('wtw_tbacklightpositionybackup').value = WTW.init.backLightPositionY;
+		dGet('wtw_tbacklightpositionzbackup').value = WTW.init.backLightPositionZ;
 		dGet('wtw_tbacklightdiffusecolorbackup').value = WTW.init.backLightDiffuseColor;
 		dGet('wtw_tbacklightspecularcolorbackup').value = WTW.init.backLightSpecularColor;
 		
@@ -842,12 +848,18 @@ WTWJS.prototype.openSceneForm = function() {
 		dGet('wtw_tsundirectionx').value = WTW.init.sunDirectionX;
 		dGet('wtw_tsundirectiony').value = WTW.init.sunDirectionY;
 		dGet('wtw_tsundirectionz').value = WTW.init.sunDirectionZ;
+		dGet('wtw_tsunpositionx').value = WTW.init.sunPositionX;
+		dGet('wtw_tsunpositiony').value = WTW.init.sunPositionY;
+		dGet('wtw_tsunpositionz').value = WTW.init.sunPositionZ;
 		dGet('wtw_tbacklightintensity').value = WTW.init.backLightIntensity;
 		dGet('wtw_tbacklightdiffusecolor').value = WTW.init.backLightDiffuseColor;
 		dGet('wtw_tbacklightspecularcolor').value = WTW.init.backLightSpecularColor;
 		dGet('wtw_tbacklightdirectionx').value = WTW.init.backLightDirectionX;
 		dGet('wtw_tbacklightdirectiony').value = WTW.init.backLightDirectionY;
 		dGet('wtw_tbacklightdirectionz').value = WTW.init.backLightDirectionZ;
+		dGet('wtw_tbacklightpositionx').value = WTW.init.backLightPositionX;
+		dGet('wtw_tbacklightpositiony').value = WTW.init.backLightPositionY;
+		dGet('wtw_tbacklightpositionz').value = WTW.init.backLightPositionZ;
 
 		dGet('wtw_tscenefogenabled').checked = WTW.init.sceneFogEnabled;
 		WTW.setDDLValue('wtw_tscenefogmode', WTW.init.sceneFogMode);
@@ -859,6 +871,7 @@ WTWJS.prototype.openSceneForm = function() {
 		WTW.setCommunityScene();
 		WTW.hide('wtw_loadingscenesettingsform');
 		WTW.show('wtw_adminmenu46b');
+
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_admincommunities.js-openSceneForm=' + ex.message);
 	}
@@ -881,7 +894,7 @@ WTWJS.prototype.setCommunityScene = function() {
 		WTW.init.sceneUseClonedMeshMap = dGet('wtw_tsceneuseclonedmeshmap').checked;
 		WTW.init.sceneBlockMaterialDirtyMechanism = dGet('wtw_tsceneblockmaterialdirtymechanism').checked;
 		scene.ambientColor = new BABYLON.Color3.FromHexString(WTW.init.sceneAmbientColor);
-		scene.clearColor = new BABYLON.Color3.FromHexString(WTW.init.sceneClearColor); //optional light setting  */
+		scene.clearColor = new BABYLON.Color3.FromHexString(WTW.init.sceneClearColor); 
 		scene.useClonedMeshMap = WTW.init.sceneUseClonedMeshMap;
 		scene.blockMaterialDirtyMechanism = WTW.init.sceneBlockMaterialDirtyMechanism;
 
@@ -889,30 +902,51 @@ WTWJS.prototype.setCommunityScene = function() {
 		if (WTW.isNumeric(dGet('wtw_tsundirectionalintensity').value) == false) {
 			dGet('wtw_tsundirectionalintensity').value = '1.00';
 		} else if (Number(dGet('wtw_tsundirectionalintensity').value) > 20) {
-			dGet('wtw_tsundirectionalintensity').value = '20.00';
+			dGet('wtw_tsundirectionalintensity').value = '100.00';
 		} else if (Number(dGet('wtw_tsundirectionalintensity').value) < 0) {
 			dGet('wtw_tsundirectionalintensity').value = '0.00';
 		}
 		if (WTW.isNumeric(dGet('wtw_tsundirectionx').value) == false) {
-			dGet('wtw_tsundirectionx').value = '999.00';
+			dGet('wtw_tsundirectionx').value = '0.00';
 		} else if (Number(dGet('wtw_tsundirectionx').value) > 5000) {
 			dGet('wtw_tsundirectionx').value = '5000.00';
 		} else if (Number(dGet('wtw_tsundirectionx').value) < -5000) {
 			dGet('wtw_tsundirectionx').value = '-5000.00';
 		}
 		if (WTW.isNumeric(dGet('wtw_tsundirectiony').value) == false) {
-			dGet('wtw_tsundirectiony').value = '999.00';
+			dGet('wtw_tsundirectiony').value = '1000.00';
 		} else if (Number(dGet('wtw_tsundirectiony').value) > 5000) {
 			dGet('wtw_tsundirectiony').value = '5000.00';
 		} else if (Number(dGet('wtw_tsundirectiony').value) < -5000) {
 			dGet('wtw_tsundirectiony').value = '-5000.00';
 		}
 		if (WTW.isNumeric(dGet('wtw_tsundirectionz').value) == false) {
-			dGet('wtw_tsundirectionz').value = '999.00';
+			dGet('wtw_tsundirectionz').value = '0.00';
 		} else if (Number(dGet('wtw_tsundirectionz').value) > 5000) {
 			dGet('wtw_tsundirectionz').value = '5000.00';
 		} else if (Number(dGet('wtw_tsundirectionz').value) < -5000) {
 			dGet('wtw_tsundirectionz').value = '-5000.00';
+		}
+		if (WTW.isNumeric(dGet('wtw_tsunpositionx').value) == false) {
+			dGet('wtw_tsunpositionx').value = '999.00';
+		} else if (Number(dGet('wtw_tsunpositionx').value) > 5000) {
+			dGet('wtw_tsunpositionx').value = '5000.00';
+		} else if (Number(dGet('wtw_tsunpositionx').value) < -5000) {
+			dGet('wtw_tsunpositionx').value = '-5000.00';
+		}
+		if (WTW.isNumeric(dGet('wtw_tsunpositiony').value) == false) {
+			dGet('wtw_tsunpositiony').value = '999.00';
+		} else if (Number(dGet('wtw_tsunpositiony').value) > 5000) {
+			dGet('wtw_tsunpositiony').value = '5000.00';
+		} else if (Number(dGet('wtw_tsunpositiony').value) < -5000) {
+			dGet('wtw_tsunpositiony').value = '-5000.00';
+		}
+		if (WTW.isNumeric(dGet('wtw_tsunpositionz').value) == false) {
+			dGet('wtw_tsunpositionz').value = '999.00';
+		} else if (Number(dGet('wtw_tsunpositionz').value) > 5000) {
+			dGet('wtw_tsunpositionz').value = '5000.00';
+		} else if (Number(dGet('wtw_tsunpositionz').value) < -5000) {
+			dGet('wtw_tsunpositionz').value = '-5000.00';
 		}
 		if (WTW.isNumeric(dGet('wtw_tbacklightintensity').value) == false) {
 			dGet('wtw_tbacklightintensity').value = '1.00';
@@ -942,6 +976,27 @@ WTWJS.prototype.setCommunityScene = function() {
 		} else if (Number(dGet('wtw_tbacklightdirectionz').value) < -5000) {
 			dGet('wtw_tbacklightdirectionz').value = '-5000.00';
 		}
+		if (WTW.isNumeric(dGet('wtw_tbacklightpositionx').value) == false) {
+			dGet('wtw_tbacklightpositionx').value = '0.00';
+		} else if (Number(dGet('wtw_tbacklightpositionx').value) > 5000) {
+			dGet('wtw_tbacklightpositionx').value = '5000.00';
+		} else if (Number(dGet('wtw_tbacklightpositionx').value) < -5000) {
+			dGet('wtw_tbacklightpositionx').value = '-5000.00';
+		}
+		if (WTW.isNumeric(dGet('wtw_tbacklightpositiony').value) == false) {
+			dGet('wtw_tbacklightpositiony').value = '1000.00';
+		} else if (Number(dGet('wtw_tbacklightpositiony').value) > 5000) {
+			dGet('wtw_tbacklightpositiony').value = '5000.00';
+		} else if (Number(dGet('wtw_tbacklightpositiony').value) < -5000) {
+			dGet('wtw_tbacklightpositiony').value = '-5000.00';
+		}
+		if (WTW.isNumeric(dGet('wtw_tbacklightpositionz').value) == false) {
+			dGet('wtw_tbacklightpositionz').value = '0.00';
+		} else if (Number(dGet('wtw_tbacklightpositionz').value) > 5000) {
+			dGet('wtw_tbacklightpositionz').value = '5000.00';
+		} else if (Number(dGet('wtw_tbacklightpositionz').value) < -5000) {
+			dGet('wtw_tbacklightpositionz').value = '-5000.00';
+		}
 		WTW.init.sunDirectionalIntensity = Number(dGet('wtw_tsundirectionalintensity').value);
 		if (WTW.isHexColor(dGet('wtw_tsundiffusecolor').value)) {
 			WTW.init.sunDiffuseColor = dGet('wtw_tsundiffusecolor').value;
@@ -961,6 +1016,9 @@ WTWJS.prototype.setCommunityScene = function() {
 		WTW.init.sunDirectionX = Number(dGet('wtw_tsundirectionx').value);
 		WTW.init.sunDirectionY = Number(dGet('wtw_tsundirectiony').value);
 		WTW.init.sunDirectionZ = Number(dGet('wtw_tsundirectionz').value);
+		WTW.init.sunPositionX = Number(dGet('wtw_tsunpositionx').value);
+		WTW.init.sunPositionY = Number(dGet('wtw_tsunpositiony').value);
+		WTW.init.sunPositionZ = Number(dGet('wtw_tsunpositionz').value);
 		WTW.init.backLightIntensity = Number(dGet('wtw_tbacklightintensity').value);
 		if (WTW.isHexColor(dGet('wtw_tbacklightdiffusecolor').value)) {
 			WTW.init.backLightDiffuseColor = dGet('wtw_tbacklightdiffusecolor').value;
@@ -975,10 +1033,14 @@ WTWJS.prototype.setCommunityScene = function() {
 		WTW.init.backLightDirectionX = Number(dGet('wtw_tbacklightdirectionx').value);
 		WTW.init.backLightDirectionY = Number(dGet('wtw_tbacklightdirectiony').value);
 		WTW.init.backLightDirectionZ = Number(dGet('wtw_tbacklightdirectionz').value);
+		WTW.init.backLightPositionX = Number(dGet('wtw_tbacklightpositionx').value);
+		WTW.init.backLightPositionY = Number(dGet('wtw_tbacklightpositiony').value);
+		WTW.init.backLightPositionZ = Number(dGet('wtw_tbacklightpositionz').value);
 		
 		WTW.setSunLight();
 
 		/* fog settings */
+
 		if (WTW.isNumeric(dGet('wtw_tscenefogdensity').value) == false) {
 			dGet('wtw_tscenefogdensity').value = '0.00';
 		} else if (Number(dGet('wtw_tscenefogdensity').value) > 100) {
@@ -1033,8 +1095,9 @@ WTWJS.prototype.setCommunityScene = function() {
 		} else {
 			WTW.hide('wtw_scenefogenableddiv');
 		}
+
 		WTW.setFog();
-		WTW.setExtendedGround();
+		WTW.setShadowSettings();
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_admincommunities.js-setCommunityScene=' + ex.message);
 	}
@@ -1075,10 +1138,16 @@ WTWJS.prototype.saveCommunityScene = async function() {
 			'sundirectionx': WTW.init.sunDirectionX,
 			'sundirectiony': WTW.init.sunDirectionY,
 			'sundirectionz': WTW.init.sunDirectionZ,
+			'sunpositionx': WTW.init.sunPositionX,
+			'sunpositiony': WTW.init.sunPositionY,
+			'sunpositionz': WTW.init.sunPositionZ,
 			'backlightintensity': WTW.init.backLightIntensity,
 			'backlightdirectionx': WTW.init.backLightDirectionX,
 			'backlightdirectiony': WTW.init.backLightDirectionY,
 			'backlightdirectionz': WTW.init.backLightDirectionZ,
+			'backlightpositionx': WTW.init.backLightPositionX,
+			'backlightpositiony': WTW.init.backLightPositionY,
+			'backlightpositionz': WTW.init.backLightPositionZ,
 			'backlightdiffusecolor': WTW.init.backLightDiffuseColor,
 			'backlightspecularcolor': WTW.init.backLightSpecularColor,
 			'function':'savecommunityscene'
@@ -1114,10 +1183,16 @@ WTWJS.prototype.cancelCommunityScene = function() {
 		WTW.init.sunDirectionX = dGet('wtw_tsundirectionxbackup').value;
 		WTW.init.sunDirectionY = dGet('wtw_tsundirectionybackup').value;
 		WTW.init.sunDirectionZ = dGet('wtw_tsundirectionzbackup').value;
+		WTW.init.sunPositionX = dGet('wtw_tsunpositionxbackup').value;
+		WTW.init.sunPositionY = dGet('wtw_tsunpositionybackup').value;
+		WTW.init.sunPositionZ = dGet('wtw_tsunpositionzbackup').value;
 		WTW.init.backLightIntensity = dGet('wtw_tbacklightintensitybackup').value;
 		WTW.init.backLightDirectionX = dGet('wtw_tbacklightdirectionxbackup').value;
 		WTW.init.backLightDirectionY = dGet('wtw_tbacklightdirectionybackup').value;
 		WTW.init.backLightDirectionZ = dGet('wtw_tbacklightdirectionzbackup').value;
+		WTW.init.backLightPositionX = dGet('wtw_tbacklightpositionxbackup').value;
+		WTW.init.backLightPositionY = dGet('wtw_tbacklightpositionybackup').value;
+		WTW.init.backLightPositionZ = dGet('wtw_tbacklightpositionzbackup').value;
 		WTW.init.backLightDiffuseColor = dGet('wtw_tbacklightdiffusecolorbackup').value;
 		WTW.init.backLightSpecularColor = dGet('wtw_tbacklightspecularcolorbackup').value;
 	} catch (ex) {

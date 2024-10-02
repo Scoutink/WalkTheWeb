@@ -994,27 +994,35 @@ WTWJS.prototype.setSunLight = function () {
 			WTW.backLight.dispose();
 			WTW.backLight = null;
 		}
+
 		/* set 2 light sources so that the front and backs of 3D Objects have at least a minimum light */
 		/* direct light immitating the sun */
 		WTW.sun = new BABYLON.DirectionalLight('sun', new BABYLON.Vector3(WTW.init.sunDirectionX, WTW.init.sunDirectionY, WTW.init.sunDirectionZ), scene);
-		WTW.sun.position = new BABYLON.Vector3(0, WTW.sunPositionY, 0);
-		if (WTW.init.skyType == '') {
-			WTW.sun.intensity = WTW.getSunIntensity(WTW.init.skyInclination, WTW.init.skyAzimuth);
-		} else {
-			WTW.sun.intensity = WTW.init.sunDirectionalIntensity;
-		}
-		WTW.sun.shadowMinZ = 1;
-		WTW.sun.shadowMaxZ = 2500;
+
+//		WTW.sun.position = new BABYLON.Vector3(WTW.sunPositionX, WTW.sunPositionY, WTW.sunPositionZ);
+
+		WTW.sun.intensity = WTW.init.sunDirectionalIntensity;
+		
 		WTW.sun.diffuse = new BABYLON.Color3.FromHexString(WTW.init.sunDiffuseColor);
 		WTW.sun.specular = new BABYLON.Color3.FromHexString(WTW.init.sunSpecularColor);
 		WTW.sun.groundColor = new BABYLON.Color3.FromHexString(WTW.init.sunGroundColor);
 
+/*		// unused options
+		WTW.sun.autoUpdateExtends = true;
+		WTW.sun.shadowMinZ = 1;
+		WTW.sun.shadowMaxZ = 2500;
+		WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
+*/
 		/* lesser light for back sides of 3D Objects */
 		WTW.backLight = new BABYLON.HemisphericLight('backlight', new BABYLON.Vector3(WTW.init.backLightDirectionX, WTW.init.backLightDirectionY, WTW.init.backLightDirectionZ), scene);
+		WTW.backLight.position = new BABYLON.Vector3(WTW.backLightPositionX, WTW.backLightPositionY, WTW.backLightPositionZ);
 		WTW.backLight.intensity = WTW.init.backLightIntensity;
-		WTW.backLight.range = 10000;
+
 		WTW.backLight.diffuse = new BABYLON.Color3.FromHexString(WTW.init.backLightDiffuseColor);
 		WTW.backLight.specular = new BABYLON.Color3.FromHexString(WTW.init.backLightSpecularColor);
+
+		// unused options
+//		WTW.backLight.range = 10000;
 	} catch (ex) {
 		WTW.log('core-scripts-prime-wtw_common.js-setSunLight=' + ex.message);
 	}
@@ -1283,7 +1291,7 @@ WTWJS.prototype.createSky = function () {
 WTWJS.prototype.loadSkyScene = function (zinclination, zluminance, zazimuth, zrayleigh, zturbidity, zmiedirectionalg, zmiecoefficient, zspeedratio) {
 	/* load sky material based on passed settings */
 	try {
-		if (WTW.init.skyType == '') {
+		if (WTW.init.skyType == '' && WTW.sky != null) {
 			var zframescount = 100;
 			var zintensity = WTW.getSunIntensity(zinclination, zazimuth);
 			if (zinclination < .3 && zinclination > -.3 && zazimuth > .2) {
@@ -1399,7 +1407,7 @@ WTWJS.prototype.loadSkyScene = function (zinclination, zluminance, zazimuth, zra
 			WTW.init.skyMieCoefficient = zmiecoefficient;
 
 			if (WTW.extraGround.material != undefined) {
-				WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
+//				WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
 			}
 		}
 	} catch (ex) {
@@ -1421,7 +1429,7 @@ WTWJS.prototype.setExtendedGround = function () {
 		WTW.extraGround.isPickable = true;
 		WTW.extraGround.checkCollisions = true;
 		WTW.extraGround.material = new BABYLON.StandardMaterial('mat-communityeground', scene);
-		WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
+//		WTW.extraGround.material.emissiveColor = new BABYLON.Color3(WTW.sun.intensity, WTW.sun.intensity, WTW.sun.intensity);
 		WTW.extraGround.material.diffuseTexture = new BABYLON.Texture(WTW.init.groundTexturePath, scene);
 		WTW.extraGround.material.diffuseTexture.uScale = 500;
 		WTW.extraGround.material.diffuseTexture.vScale = 500;
@@ -1632,7 +1640,8 @@ WTWJS.prototype.processMoldQueue = function() {
 											}
 											if (zmoldname.indexOf('molds-') > -1) {
 												var zcsgcount = 0;
-												var zreceiveshadows = '0';
+												var zreceiveshadows = false;
+												var zcastshadows = false;
 												var zwaterreflection = '0';
 												if (zmolddef.csg.count != undefined) {
 													if (WTW.isNumeric(zmolddef.csg.count)) {
@@ -1641,7 +1650,12 @@ WTWJS.prototype.processMoldQueue = function() {
 												}
 												if (zmolddef.graphics.receiveshadows != undefined) {
 													if (zmolddef.graphics.receiveshadows == '1') {
-														zreceiveshadows = '1';
+														zreceiveshadows = true;
+													}
+												}
+												if (zmolddef.graphics.castshadows != undefined) {
+													if (zmolddef.graphics.castshadows == '1') {
+														zcastshadows = true;
 													}
 												}
 												if (zmolddef.graphics.waterreflection != undefined) {
@@ -1653,29 +1667,14 @@ WTWJS.prototype.processMoldQueue = function() {
 													zmold = WTW.getMoldCSG(zmold, zmolddef);
 												}
 												if (zmold != null) {
-													if (zreceiveshadows == '1' && znode == null) {
+													if (znode == null) {
 														zmold.material.unfreeze();
-														zmold.receiveShadows = true;
-													} else if (zmold.material != null && znode == null && WTW.adminView == 0) {
-														zmold.material.freeze();
-													}
-													if (WTW.shadowSet > 0 && zmoldname.indexOf('babylonfile') == -1) {
-														if (znode == null) {
-	//														WTW.shadows.addShadowCaster(zmold, true);
-														} else {
-															/* add shadows to child meshes and child node child meshes */
-															var zchildnodes = zmold.getChildTransformNodes(true);
-															var zchildmeshes = zmold.getChildMeshes();
-															for (var k=0;k < zchildmeshes.length;k++) {
-	//															WTW.shadows.addShadowCaster(zchildmeshes[k], true);
-															}
-															for (var j=0;j < zchildnodes.length;j++) {
-																zchildmeshes = zchildnodes[j].getChildMeshes();
-																for (var k=0;k < zchildmeshes.length;k++) {
-	//																WTW.shadows.addShadowCaster(zchildmeshes[k], true);
-																}
-															}
-															
+														zmold.receiveShadows = zreceiveshadows;
+														if (zcastshadows && WTW.shadowSet > 0 && zmoldname.indexOf('babylonfile') == -1) {
+															WTW.shadows.addShadowCaster(zmold, true);
+														}
+														if (zmold.material != null && WTW.adminView == 0) {
+															zmold.material.freeze();
 														}
 													}
 													if (zwaterreflection == '1' && WTW.waterMat != null && znode == null) {

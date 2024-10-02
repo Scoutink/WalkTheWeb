@@ -14,11 +14,11 @@ WTWJS.prototype.focusText = function(zeditdone) {
 		var ztextbox = WTW.selectedMoldName + '-textbox';
 		var ztitlewtw = WTW.getMeshOrNodeByID('hudlogin-titlewtw');
 		var ztitlecreatewtw = WTW.getMeshOrNodeByID('hudlogin-titlecreatewtw');
-		var zlocal = true;
+		var zlocalserver = true;
 		var zcreatelocal = true;
 		if (ztitlewtw != null) {
 			if (ztitlewtw.isVisible) {
-				zlocal = false;
+				zlocalserver = false;
 			}
 		}
 		if (ztitlecreatewtw != null) {
@@ -47,26 +47,33 @@ WTWJS.prototype.focusText = function(zeditdone) {
 			if (ztitlewtw != null) {
 				/* only load from cookies if on login page */
 				var zremember = WTW.getCookie('localloginremember');
-				if (zlocal == false) {
+				if (zlocalserver == false) {
 					zremember = WTW.getCookie('globalloginremember');
 				}
 				if (zremember) {
 					/* only load field if it is the login page */
 					if (WTW.selectedMoldName.indexOf('-email-email') > -1) {
 						var zemail = WTW.getCookie('localloginemail');
-						if (zlocal == false) {
+						if (zlocalserver == false) {
 							zemail = WTW.getCookie('globalloginemail');
 						}
 						zinput.value = zemail;
 						WTW.textCursor = zemail.length;
 					} else if (WTW.selectedMoldName.indexOf('-password-password') > -1) {
 						var zpassword = WTW.getCookie('localloginpassword');
-						if (zlocal == false) {
+						if (zlocalserver == false) {
 							zpassword = WTW.getCookie('globalloginpassword');
 						}
 						zinput.value = atob(zpassword);
 						WTW.textCursor = zpassword.length;
 					} else if (WTW.selectedMoldName.indexOf('-check-remember') > -1) {
+						zinput.checked = true;
+					}
+				}
+				if (WTW.selectedMoldName.indexOf('-check-local') > -1) {
+					if (ztitlewtw.isVisible) {
+						zinput.checked = false;
+					} else {
 						zinput.checked = true;
 					}
 				}
@@ -120,10 +127,60 @@ WTWJS.prototype.addText = function(zeditdone) {
 			var zshowtext = dGet(zinputid).value;
 			/* if text is too long, trim text for display */
 			if (WTW.selectedMoldName.indexOf('-check-') > -1) {
+				var ztitlewtw = WTW.getMeshOrNodeByID('hudlogin-titlewtw');
+				var ztitlelocal = WTW.getMeshOrNodeByID('hudlogin-titlelocal');
 				if (dGet(zinputid).checked) {
 					zshowtext = 'x';
+					if (zinputid == 'hudlogin-check-local-textbox') {
+						if (ztitlewtw != null && ztitlelocal != null) {
+							ztitlewtw.isVisible = false;
+							ztitlelocal.isVisible = true;
+							var zremember = WTW.getCookie('localloginremember');
+							if (zremember) {
+								var zemail = WTW.getCookie('localloginemail');
+								var zpassword = WTW.getCookie('localloginpassword');
+								if (dGet('hudlogin-email-email-textbox') != null) {
+									dGet('hudlogin-email-email-textbox').value = zemail;
+								}
+								if (dGet('hudlogin-password-password-textbox') != null) {
+									dGet('hudlogin-password-password-textbox').value = atob(zpassword);
+								}
+								if (dGet('hudlogin-check-remember-textbox') != null) {
+									dGet('hudlogin-check-remember-textbox').checked = true;
+								}
+							} else {
+								if (dGet('hudlogin-check-remember-textbox') != null) {
+									dGet('hudlogin-check-remember-textbox').checked = false;
+								}
+							}
+						}
+					}
 				} else {
 					zshowtext = '';
+					if (zinputid == 'hudlogin-check-local-textbox') {
+						if (ztitlewtw != null && ztitlelocal != null) {
+							ztitlewtw.isVisible = true;
+							ztitlelocal.isVisible = false;
+							var zremember = WTW.getCookie('globalloginremember');
+							if (zremember) {
+								var zemail = WTW.getCookie('globalloginemail');
+								var zpassword = WTW.getCookie('globalloginpassword');
+								if (dGet('hudlogin-email-email-textbox') != null) {
+									dGet('hudlogin-email-email-textbox').value = zemail;
+								}
+								if (dGet('hudlogin-password-password-textbox') != null) {
+									dGet('hudlogin-password-password-textbox').value = atob(zpassword);
+								}
+								if (dGet('hudlogin-check-remember-textbox') != null) {
+									dGet('hudlogin-check-remember-textbox').checked = true;
+								}
+							} else {
+								if (dGet('hudlogin-check-remember-textbox') != null) {
+									dGet('hudlogin-check-remember-textbox').checked = false;
+								}
+							}
+						}
+					}
 				}
 			} else if (WTW.selectedMoldName.indexOf('-button-') > -1) {
 				zshowtext = '';

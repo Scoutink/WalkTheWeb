@@ -308,6 +308,7 @@ WTWJS.prototype.newMold = function() {
 				'vscale':'0.00',
 				'level':'0',
 				'receiveshadows':'0',
+				'castshadows':'0',
 				'waterreflection':'0',
 				'webimageind':'0',
 				'webimages':zwebimages
@@ -675,7 +676,8 @@ WTWJS.prototype.newAvatarDef = function() {
 			'graphics':
 			{
 				'waterreflection':'1',
-				'receiveshadows':'0'
+				'receiveshadows':'0',
+				'castshadows':'1'
 			},
 			'objects':
 			{
