@@ -532,9 +532,8 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 				zmold.receiveShadows = zreceiveshadows;
 			}
 			if (zcastshadows) {
-				WTW.addShadowToMold(zmold, WTW.shadows);
+				WTW.addShadowToMold(zmold);
 			}
-//			WTW.addShadowToMold(zmold, WTW.shadows);
 			
 			/* work in progress - currently disabled, freeze world matrix can speed up the scene with less calculations */
 			if (WTW.AdminView == 0 && zparentname.indexOf('actionzone') == -1 && zparentname != '') {

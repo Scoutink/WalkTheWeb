@@ -1213,7 +1213,16 @@ WTWJS.prototype.reloadShadows = function() {
 					if (WTW.communitiesMolds[i].moldname != undefined) {
 						var zmold = WTW.getMeshOrNodeByID(WTW.communitiesMolds[i].moldname);
 						if (zmold != null) {
-							WTW.shadows.getShadowMap().renderList.push(zmold);
+							var zchildmeshes = zmold.getChildren();
+							if (zchildmeshes != null) {
+								for (var j=0;j<zchildmeshes.length;j++) {
+									if (zchildmeshes[j] != null) {
+										WTW.shadows.getShadowMap().renderList.push(zchildmeshes[j]);
+									}
+								}
+							} else {
+								WTW.shadows.getShadowMap().renderList.push(zmold);
+							}
 						}
 					}
 				}
@@ -1225,7 +1234,16 @@ WTWJS.prototype.reloadShadows = function() {
 					if (WTW.buildingMolds[i].moldname != undefined) {
 						var zmold = WTW.getMeshOrNodeByID(WTW.buildingMolds[i].moldname);
 						if (zmold != null) {
-							WTW.shadows.getShadowMap().renderList.push(zmold);
+							var zchildmeshes = zmold.getChildren();
+							if (zchildmeshes != null) {
+								for (var j=0;j<zchildmeshes.length;j++) {
+									if (zchildmeshes[j] != null) {
+										WTW.shadows.getShadowMap().renderList.push(zchildmeshes[j]);
+									}
+								}
+							} else {
+								WTW.shadows.getShadowMap().renderList.push(zmold);
+							}
 						}
 					}
 				}
@@ -1237,7 +1255,16 @@ WTWJS.prototype.reloadShadows = function() {
 					if (WTW.thingMolds[i].moldname != undefined) {
 						var zmold = WTW.getMeshOrNodeByID(WTW.thingMolds[i].moldname);
 						if (zmold != null) {
-							WTW.shadows.getShadowMap().renderList.push(zmold);
+							var zchildmeshes = zmold.getChildren();
+							if (zchildmeshes != null) {
+								for (var j=0;j<zchildmeshes.length;j++) {
+									if (zchildmeshes[j] != null) {
+										WTW.shadows.getShadowMap().renderList.push(zchildmeshes[j]);
+									}
+								}
+							} else {
+								WTW.shadows.getShadowMap().renderList.push(zmold);
+							}
 						}
 					}
 				}

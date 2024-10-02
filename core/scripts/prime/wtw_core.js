@@ -449,7 +449,6 @@ WTWJS.prototype.initEnvironment = async function() {
 			
 			WTW.clickVRStartButton();
 		}
-		
 		/* set fog if enabled */
 		WTW.setFog();
 				

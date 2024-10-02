@@ -676,36 +676,81 @@ WTWJS.prototype.addShadowToMold = function(zmold, zshadowmap) {
 	/* add shadow to mold via the shadowmap selected */
 	try {
 		window.setTimeout(function(){
-			var zfound = false;
-			var zfoundind = -1;
-			var znextind = -1;
-			if (zshadowmap != null) {
-				if (zshadowmap.getShadowMap() != null) {
-					znextind = zshadowmap.getShadowMap().renderList.length;
-					for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
-						if (zshadowmap.getShadowMap().renderList[i] == null) {
-							if (i < znextind) {
-								znextind = i;
-							}
-						}
-						if (zmold != null) {
-							if (zmold.name != undefined) {
-								if (zshadowmap.getShadowMap().renderList[i].name == zmold.name) {
-									zfound = true;
-									zfoundind = i;
+			if (zshadowmap == undefined) {
+				zshadowmap = WTW.shadows;
+			}
+			var zchildmeshes = zmold.getChildren();
+			if (zchildmeshes != null) {
+				for (var j = 0;j < zchildmeshes.length;j++) {
+					if (zchildmeshes[j] != null) {
+						var zfound = false;
+						var zfoundind = -1;
+						var znextind = -1;
+						if (zshadowmap != null) {
+							if (zshadowmap.getShadowMap() != null) {
+								znextind = zshadowmap.getShadowMap().renderList.length;
+								for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
+									if (zshadowmap.getShadowMap().renderList[i] == null) {
+										if (i < znextind) {
+											znextind = i;
+										}
+									}
+									if (zchildmeshes[j] != null) {
+										if (zchildmeshes[j].name != undefined) {
+											if (zshadowmap.getShadowMap().renderList[i].name == zchildmeshes[j].name) {
+												zfound = true;
+												zfoundind = i;
+											}
+										}
+									}
+								}
+								if (zfound == false) {
+									if (zchildmeshes[j] != null) {
+										var zopacity = 1;
+										if (zchildmeshes[j].material != null) {
+											if (zchildmeshes[j].material.alpha != undefined) {
+												zopacity = zchildmeshes[j].material.alpha;
+											}
+										}
+										zshadowmap.addShadowCaster(zchildmeshes[j], true);
+									}
 								}
 							}
 						}
 					}
-					if (zfound == false) {
-						if (zmold != null) {
-							var zopacity = 1;
-							if (zmold.material != null) {
-								if (zmold.material.alpha != undefined) {
-									zopacity = zmold.material.alpha;
+				}
+			} else {
+				var zfound = false;
+				var zfoundind = -1;
+				var znextind = -1;
+				if (zshadowmap != null) {
+					if (zshadowmap.getShadowMap() != null) {
+						znextind = zshadowmap.getShadowMap().renderList.length;
+						for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
+							if (zshadowmap.getShadowMap().renderList[i] == null) {
+								if (i < znextind) {
+									znextind = i;
 								}
 							}
-							zshadowmap.addShadowCaster(zmold, true);
+							if (zmold != null) {
+								if (zmold.name != undefined) {
+									if (zshadowmap.getShadowMap().renderList[i].name == zmold.name) {
+										zfound = true;
+										zfoundind = i;
+									}
+								}
+							}
+						}
+						if (zfound == false) {
+							if (zmold != null) {
+								var zopacity = 1;
+								if (zmold.material != null) {
+									if (zmold.material.alpha != undefined) {
+										zopacity = zmold.material.alpha;
+									}
+								}
+								zshadowmap.addShadowCaster(zmold, true);
+							}
 						}
 					}
 				}

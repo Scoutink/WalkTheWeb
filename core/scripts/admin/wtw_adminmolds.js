@@ -1726,6 +1726,43 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 										for (var j=0; j<zmoldchildren.length;j++) {
 											if (zmoldchildren[j] != null) {
 												try {
+													if (typeof zmoldchildren[j].getBoundingInfo == 'function') {
+														var zmin = zmoldchildren[j].getBoundingInfo().boundingBox.minimum;
+														var zmax = zmoldchildren[j].getBoundingInfo().boundingBox.maximum;
+														if (zlastmin == null && zlastmax == null) {
+															zlastmin = zmin;
+															zlastmax = zmax;
+														} else {
+															zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+															zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+														}
+													}
+												} catch (ex) {}
+											}
+										}
+									}
+								} else if (zchildmolds[i].id.indexOf('molds-') > -1) {
+									/* if mold without children */
+									try {
+										if (typeof zchildmolds[i].getBoundingInfo == 'function') {
+											var zmin = zchildmolds[i].getBoundingInfo().boundingBox.minimum;
+											var zmax = zchildmolds[i].getBoundingInfo().boundingBox.maximum;
+											if (zlastmin == null && zlastmax == null) {
+												zlastmin = zmin;
+												zlastmax = zmax;
+											} else {
+												zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+												zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+											}
+										}
+									} catch (ex) {}
+								} else if (zchildmolds[i].id.indexOf('-actionzone') > -1) {
+									/* if action zone is the parent */
+									var zmoldchildren = zchildmolds[i].getChildren();
+									for (var j=0; j<zmoldchildren.length;j++) {
+										if (zmoldchildren[j] != null) {
+											if (zmoldchildren[j].id.indexOf('molds-') > -1) {
+												if (typeof zmoldchildren[j].getBoundingInfo == 'function') {
 													var zmin = zmoldchildren[j].getBoundingInfo().boundingBox.minimum;
 													var zmax = zmoldchildren[j].getBoundingInfo().boundingBox.maximum;
 													if (zlastmin == null && zlastmax == null) {
@@ -1735,37 +1772,6 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 														zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
 														zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
 													}
-												} catch (ex) {}
-											}
-										}
-									}
-								} else if (zchildmolds[i].id.indexOf('molds-') > -1) {
-									/* if mold without children */
-									try {
-										var zmin = zchildmolds[i].getBoundingInfo().boundingBox.minimum;
-										var zmax = zchildmolds[i].getBoundingInfo().boundingBox.maximum;
-										if (zlastmin == null && zlastmax == null) {
-											zlastmin = zmin;
-											zlastmax = zmax;
-										} else {
-											zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-											zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
-										}
-									} catch (ex) {}
-								} else if (zchildmolds[i].id.indexOf('-actionzone') > -1) {
-									/* if action zone is the parent */
-									var zmoldchildren = zchildmolds[i].getChildren();
-									for (var j=0; j<zmoldchildren.length;j++) {
-										if (zmoldchildren[j] != null) {
-											if (zmoldchildren[j].id.indexOf('molds-') > -1) {
-												var zmin = zmoldchildren[j].getBoundingInfo().boundingBox.minimum;
-												var zmax = zmoldchildren[j].getBoundingInfo().boundingBox.maximum;
-												if (zlastmin == null && zlastmax == null) {
-													zlastmin = zmin;
-													zlastmax = zmax;
-												} else {
-													zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-													zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
 												}
 											} else if (zmoldchildren[j].id.indexOf('-actionzone') > -1) {
 												/* if axle action zone is parent */
@@ -1774,14 +1780,16 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 													if (zazchildren[k] != null) {
 														if (zazchildren[k].id.indexOf('molds-') > -1) {
 															try {
-																var zmin = zazchildren[k].getBoundingInfo().boundingBox.minimum;
-																var zmax = zazchildren[k].getBoundingInfo().boundingBox.maximum;
-																if (zlastmin == null && zlastmax == null) {
-																	zlastmin = zmin;
-																	zlastmax = zmax;
-																} else {
-																	zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-																	zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																if (typeof zazchildren[k].getBoundingInfo == 'function') {
+																	var zmin = zazchildren[k].getBoundingInfo().boundingBox.minimum;
+																	var zmax = zazchildren[k].getBoundingInfo().boundingBox.maximum;
+																	if (zlastmin == null && zlastmax == null) {
+																		zlastmin = zmin;
+																		zlastmax = zmax;
+																	} else {
+																		zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+																		zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																	}
 																}
 															} catch (ex) {}
 														} else if (zazchildren[k].id.indexOf('-actionzone') > -1) {
@@ -1808,15 +1816,19 @@ WTWJS.prototype.openEditPoles = function(zmold) {
 																			}
 																		}
 																	} else if (zaz2children[l].id.indexOf('molds-') > -1) {
-																		var zmin = zaz2children[l].getBoundingInfo().boundingBox.minimum;
-																		var zmax = zaz2children[l].getBoundingInfo().boundingBox.maximum;
-																		if (zlastmin == null && zlastmax == null) {
-																			zlastmin = zmin;
-																			zlastmax = zmax;
-																		} else {
-																			zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-																			zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
-																		}
+																		try {
+																			if (typeof zaz2children[l].getBoundingInfo == 'function') {
+																				var zmin = zaz2children[l].getBoundingInfo().boundingBox.minimum;
+																				var zmax = zaz2children[l].getBoundingInfo().boundingBox.maximum;
+																				if (zlastmin == null && zlastmax == null) {
+																					zlastmin = zmin;
+																					zlastmax = zmax;
+																				} else {
+																					zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+																					zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+																				}
+																			}
+																		} catch (ex) {}
 																	}
 																}
 															}													
@@ -3370,14 +3382,14 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 				if (zmolds[zmoldind].graphics.castshadows != undefined) {
 					if (dGet('wtw_tmoldcastshadows').checked) {
 						if (zmolds[zmoldind].graphics.castshadows != '1') {
-							zcastshadowsupdate = true;
+//							zcastshadowsupdate = true;
 						}
 						zmolds[zmoldind].graphics.castshadows = '1';
 						zcastshadows = true;
 						zrebuildmold = 1;
 					} else {
 						if (zmolds[zmoldind].graphics.castshadows != '0') {
-							zcastshadowsupdate = true;
+//							zcastshadowsupdate = true;
 							zrebuildmold = 1;
 						}
 						zmolds[zmoldind].graphics.castshadows = '0';
@@ -3526,7 +3538,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 									WTW.shadows.recreateShadowMap();
 								}
 								if (zcastshadowsupdate && zcastshadows) {
-									WTW.addShadowToMold(zchildmeshes[i], WTW.shadows);
+									WTW.addShadowToMold(zchildmeshes[i]);
 									WTW.shadows.recreateShadowMap();
 								} else if (zcastshadowsupdate) {
 									WTW.shadows.removeShadowCaster(zchildmeshes[i], true);
@@ -3540,15 +3552,19 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 									}
 								}
 								if (WTW.adminView == 1 && zchildmeshes[i].id.indexOf('line') == -1 && zchildmeshes[i].id.indexOf('move') == -1) {
-									var zmin = zchildmeshes[i].getBoundingInfo().boundingBox.minimum;
-									var zmax = zchildmeshes[i].getBoundingInfo().boundingBox.maximum;
-									if (zlastmin == null && zlastmax == null) {
-										zlastmin = zmin;
-										zlastmax = zmax;
-									} else {
-										zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-										zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
-									}
+									try {
+										if (typeof zchildmeshes[i].getBoundingInfo == 'function') {
+											var zmin = zchildmeshes[i].getBoundingInfo().boundingBox.minimum;
+											var zmax = zchildmeshes[i].getBoundingInfo().boundingBox.maximum;
+											if (zlastmin == null && zlastmax == null) {
+												zlastmin = zmin;
+												zlastmax = zmax;
+											} else {
+												zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+												zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+											}
+										}
+									} catch (ex) {}
 								}
 							}
 						}
@@ -3558,7 +3574,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 							WTW.shadows.recreateShadowMap();
 						}
 						if (zcastshadowsupdate && zcastshadows) {
-							WTW.addShadowToMold(znode, WTW.shadows);
+							WTW.addShadowToMold(znode);
 							WTW.shadows.recreateShadowMap();
 						} else if (zcastshadowsupdate) {
 							WTW.shadows.removeShadowCaster(znode, true);
@@ -4071,7 +4087,7 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 						}
 						zmold.receiveShadows = zreceiveshadows;
 						if (zcastshadows) {
-							WTW.addShadowToMold(zmold, WTW.shadows);
+							WTW.addShadowToMold(zmold);
 						}
 
 						if (zwaterreflection && WTW.waterMat != null) {

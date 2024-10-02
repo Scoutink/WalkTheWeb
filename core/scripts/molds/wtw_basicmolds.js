@@ -1687,7 +1687,7 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 									/* turn on or off receive shadows */
 									zresults.meshes[i].receiveShadows = zreceiveshadows;
 									if (zcastshadows) {
-										WTW.addShadowToMold(zresults.meshes[i], WTW.shadows);
+										WTW.addShadowToMold(zresults.meshes[i]);
 									}
 									
 									/* add reflection on water if set */
@@ -1735,15 +1735,19 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 										zresults.meshes[i].dispose();
 									}
 									if (WTW.adminView == 1) {
-										var zmin = zresults.meshes[i].getBoundingInfo().boundingBox.minimum;
-										var zmax = zresults.meshes[i].getBoundingInfo().boundingBox.maximum;
-										if (zlastmin == null && zlastmax == null) {
-											zlastmin = zmin;
-											zlastmax = zmax;
-										} else {
-											zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
-											zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
-										}
+										try {
+											if (typeof zresults.meshes[i].getBoundingInfo == 'function') {
+												var zmin = zresults.meshes[i].getBoundingInfo().boundingBox.minimum;
+												var zmax = zresults.meshes[i].getBoundingInfo().boundingBox.maximum;
+												if (zlastmin == null && zlastmax == null) {
+													zlastmin = zmin;
+													zlastmax = zmax;
+												} else {
+													zlastmin = BABYLON.Vector3.Minimize(zlastmin, zmin);
+													zlastmax = BABYLON.Vector3.Maximize(zlastmax, zmax);
+												}
+											}
+										} catch(ex) {}
 									}
 								}
 							}
