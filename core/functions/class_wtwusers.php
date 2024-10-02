@@ -1051,7 +1051,7 @@ class wtwusers {
 		return $zresponse;
 	}
 
-	public function saveMyProfile($zuserid, $zdisplayname, $zuseremail, $zfirstname, $zlastname, $zgender, $zdob) {
+	public function saveMyProfile($zuserid, $zuseravatarid, $zdisplayname, $zuseremail, $zfirstname, $zlastname, $zgender, $zdob) {
 		/* update the local user profile */
 		global $wtwhandlers;
 		$zresponse = "";
@@ -1102,6 +1102,16 @@ class wtwusers {
 						updateuserid='".$wtwhandlers->userid."'
 					where userid='".$wtwhandlers->userid."'
 						and deleted=0;");
+				if (isset($zuseravatarid) && !empty($zuseravatarid)) {
+					$wtwhandlers->query("
+						update ".wtw_tableprefix."useravatars
+						set displayname='".addslashes($zdisplayname)."',
+							updatedate=now(),
+							updateuserid='".$wtwhandlers->userid."'
+						where userid='".$wtwhandlers->userid."'
+							and useravatarid='".$zuseravatarid."'
+							and deleted=0;");
+				}
 			}
 		} catch (Exception $e) {
 			$wtwhandlers->serror("core-functions-class_wtwusers.php-saveMyProfile=".$e->getMessage());

@@ -68,10 +68,16 @@ try {
 	$zsundirectionx = $wtwhandlers->getPost('sundirectionx','999');
 	$zsundirectiony = $wtwhandlers->getPost('sundirectiony','-999');
 	$zsundirectionz = $wtwhandlers->getPost('sundirectionz','999');
+	$zsunpositionx = $wtwhandlers->getPost('sunpositionx','0');
+	$zsunpositiony = $wtwhandlers->getPost('sunpositiony','1000');
+	$zsunpositionz = $wtwhandlers->getPost('sunpositionz','0');
 	$zbacklightintensity = $wtwhandlers->getPost('backlightintensity','.5');
 	$zbacklightdirectionx = $wtwhandlers->getPost('backlightdirectionx','-999');
 	$zbacklightdirectiony = $wtwhandlers->getPost('backlightdirectiony','999');
 	$zbacklightdirectionz = $wtwhandlers->getPost('backlightdirectionz','-999');
+	$zbacklightpositionx = $wtwhandlers->getPost('backlightpositionx','0');
+	$zbacklightpositiony = $wtwhandlers->getPost('backlightpositiony','1000');
+	$zbacklightpositionz = $wtwhandlers->getPost('backlightpositionz','0');
 	$zbacklightdiffusecolor = $wtwhandlers->getPost('backlightdiffusecolor','#ffffff');
 	$zbacklightspecularcolor = $wtwhandlers->getPost('backlightspecularcolor','#ffffff');
 	$zskytype = $wtwhandlers->getPost('skytype','');
@@ -138,7 +144,7 @@ try {
 			$wtwcommunities->saveCommunityGravity($zcommunityid, $zgravity);
 			break;
 		case "savecommunityscene":
-			$wtwcommunities->saveCommunityScene($zcommunityid, $zsceneambientcolor, $zsceneclearcolor, $zsceneuseclonedmeshmap, $zsceneblockmaterialdirtymechanism, $zscenefogenabled, $zscenefogmode, $zscenefogdensity, $zscenefogstart, $zscenefogend, $zscenefogcolor, $zsundirectionalintensity, $zsundiffusecolor, $zsunspecularcolor, $zsungroundcolor, $zsundirectionx, $zsundirectiony, $zsundirectionz, $zbacklightintensity, $zbacklightdirectionx, $zbacklightdirectiony, $zbacklightdirectionz, $zbacklightdiffusecolor, $zbacklightspecularcolor);
+			$wtwcommunities->saveCommunityScene($zcommunityid, $zsceneambientcolor, $zsceneclearcolor, $zsceneuseclonedmeshmap, $zsceneblockmaterialdirtymechanism, $zscenefogenabled, $zscenefogmode, $zscenefogdensity, $zscenefogstart, $zscenefogend, $zscenefogcolor, $zsundirectionalintensity, $zsundiffusecolor, $zsunspecularcolor, $zsungroundcolor, $zsundirectionx, $zsundirectiony, $zsundirectionz, $zsunpositionx, $zsunpositiony, $zsunpositionz, $zbacklightintensity, $zbacklightdirectionx, $zbacklightdirectiony, $zbacklightdirectionz, $zbacklightpositionx, $zbacklightpositiony, $zbacklightpositionz, $zbacklightdiffusecolor, $zbacklightspecularcolor);
 			break;
 		case "savecommunitysky":
 			$wtwcommunities->saveCommunitySky($zcommunityid, $zskydomeid, $zskytype, $zskysize, $zskyboxfolder, $zskyboxfile, $zskyboximageleft, $zskyboximageup, $zskyboximagefront, $zskyboximageright, $zskyboximagedown, $zskyboximageback, $zskypositionoffsetx, $zskypositionoffsety, $zskypositionoffsetz, $zskyboxmicrosurface, $zskyboxpbr, $zskyboxasenvironmenttexture, $zskyboxblur, $zskyboxdiffusecolor, $zskyboxspecularcolor, $zskyboxambientcolor, $zskyboxemissivecolor, $zskyinclination, $zskyluminance, $zskyazimuth, $zskyrayleigh, $zskyturbidity, $zskymiedirectionalg, $zskymiecoefficient);

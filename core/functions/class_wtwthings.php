@@ -1042,6 +1042,7 @@ class wtwthings {
 						t3.billboard,
 						t3.waterreflection,
 						t3.receiveshadows,
+						t3.castshadows,
 						t3.subdivisions,
 						t3.minheight,
 						t3.maxheight,
@@ -1115,6 +1116,7 @@ class wtwthings {
 					$zbillboard = $zrow["billboard"];
 					$zwaterreflection = $zrow["waterreflection"];
 					$zreceiveshadows = $zrow["receiveshadows"];
+					$zcastshadows = $zrow["castshadows"];
 					$zsubdivisions = $zrow["subdivisions"];
 					$zminheight = $zrow["minheight"];
 					$zmaxheight = $zrow["maxheight"];
@@ -1188,6 +1190,7 @@ class wtwthings {
 							billboard,
 							waterreflection,
 							receiveshadows,
+							castshadows,
 							subdivisions,
 							minheight,
 							maxheight,
@@ -1263,6 +1266,7 @@ class wtwthings {
 							".$wtwhandlers->checkNumber($zbillboard,0).",
 							".$wtwhandlers->checkNumber($zwaterreflection,0).",
 							".$wtwhandlers->checkNumber($zreceiveshadows,0).",
+							".$wtwhandlers->checkNumber($zcastshadows,0).",
 							".$wtwhandlers->checkNumber($zsubdivisions,12).",
 							".$wtwhandlers->checkNumber($zminheight,0).",
 							".$wtwhandlers->checkNumber($zmaxheight,30).",

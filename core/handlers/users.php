@@ -69,7 +69,7 @@ try {
 			$wtwusers->logout();
 			break;
 		case "savemyprofile":
-			$zserror = $wtwusers->saveMyProfile($zuserid, $zdisplayname, $zuseremail, $zfirstname, $zlastname, $zgender, $zdob);
+			$zserror = $wtwusers->saveMyProfile($zuserid, $zuseravatarid, $zdisplayname, $zuseremail, $zfirstname, $zlastname, $zgender, $zdob);
 			$zresponse = array(
 				'serror'=> $zserror
 			);

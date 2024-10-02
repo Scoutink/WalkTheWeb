@@ -1761,6 +1761,7 @@ class wtwadminmenu {
 			$zmenu .= "			</div>\r\n";
 			$zmenu .= "			<div id='wtw_moldshadowreflectiondiv' style='text-align:left;'><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldreceiveshadows' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Allow Shadows on Surface</span><br /><br />\r\n";
+			$zmenu .= "				<input type='checkbox' id='wtw_tmoldcastshadows' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Allow to Cast Shadows</span><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldwaterreflection' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to Reflect on Water</span><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldcheckcollisions' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to Check Collisions</span><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldispickable' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to be Pickable in Browse Mode (Always on for Admin Mode)</span><br /><br />\r\n";
@@ -2021,7 +2022,7 @@ class wtwadminmenu {
 			$zmenu .= "			<div class='wtw-onecol'>Wind Direction Z (left,-right)<br />\r\n";
 			$zmenu .= "				<input type='text' id='wtw_twaterwinddirectionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setGroundWater();\" />\r\n";
 			$zmenu .= "				<input type='button' id='wtw_beditwindz4' class='wtw-smallprint' value='-.1' onmousedown=\"WTW.changeNumberValue('wtw_twaterwinddirectionz', -.1);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "				<input type='button' id='wtw_beditwindx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_twaterwinddirectionz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "				<input type='button' id='wtw_beditwindz3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_twaterwinddirectionz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "				<input type='button' id='wtw_beditwindz2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_twaterwinddirectionz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "				<input type='button' id='wtw_beditwindz1' class='wtw-smallprint' value='+.1' onmousedown=\"WTW.changeNumberValue('wtw_twaterwinddirectionz', .1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			</div><br />\r\n";
@@ -2079,6 +2080,7 @@ class wtwadminmenu {
 		$zmenu = '';
 		try {
 			$zmenu .= "<div id='wtw_adminmenu46b' class='wtw-hide' onclick='WTW.blockPassThrough();'>\r\n";
+			
 			/* scene settings */
 			$zmenu .= "		<h2>Scene Settings</h2>\r\n";
 			$zmenu .= "		<h4 class='wtw-marginbottom'>Ambient Color (Environment)</h4>\r\n";
@@ -2098,28 +2100,48 @@ class wtwadminmenu {
 			$zmenu .= "			</div>\r\n";
 			$zmenu .= "		<div class='wtw-clear'></div><br /></div>\r\n";
 			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
-			/* sun and back light */
-			$zmenu .= "		<h2>Sun and Back Lighting</h2>\r\n";
+			
+			/* sun light */
+			$zmenu .= "		<h2>Sun Lighting</h2>\r\n";
+			
 			$zmenu .= "		<div class='wtw-onecol'>Sun Intensity<br />\r\n";
 			$zmenu .= "			<input type='text' id='wtw_tsundirectionalintensity' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsunintensity4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', -1);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "			<input type='button' id='wtw_beditsunintensity3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "			<input type='button' id='wtw_beditsunintensity2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunintensity3' class='wtw-smallprint' value='-.1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', -.1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunintensity2' class='wtw-smallprint' value='+.1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', .1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsunintensity1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionalintensity', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "		<div class='wtw-clear'></div><br /></div>\r\n";
-			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Diffuse Color (Base)</h4>\r\n";
-			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
-			$zmenu .= "		<input type='text' id='wtw_tsundiffusecolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Sun Diffuse Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
-			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Specular Color (Highlight)</h4>\r\n";
-			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
-			$zmenu .= "		<input type='text' id='wtw_tsunspecularcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Sun Specular Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
-			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Ground Color (absorbed)</h4>\r\n";
-			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #000000)</div><br />\r\n";
-			$zmenu .= "		<input type='text' id='wtw_tsungroundcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Ground Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+			
+			$zmenu .= "		<div class='wtw-hide'><hr class='wtw-menuhr' />\r\n";
+
+			$zmenu .= "		<div class='wtw-onecol'>Sun Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tsunpositionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionz4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionz', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionz3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionz2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionz', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionz1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionz', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Sun Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tsunpositionx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionx4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionx', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionx3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionx2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositionx1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositionx', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Sun Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tsunpositiony' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositiony4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositiony', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositiony3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositiony', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositiony2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositiony', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsunpositiony1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tsunpositiony', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br /></div>\r\n";
+			
+			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
+
 			$zmenu .= "		<div class='wtw-onecol'>Sun Direction Z (left,-right)<br />\r\n";
 			$zmenu .= "			<input type='text' id='wtw_tsundirectionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectionz4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionz', -10);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "			<input type='button' id='wtw_beditsundirectionx3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditsundirectionz3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectionz2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionz', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectionz1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectionz', 10);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "		</div><br />\r\n";
@@ -2136,26 +2158,63 @@ class wtwadminmenu {
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectiony3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectiony', -1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectiony2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectiony', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditsundirectiony1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tsundirectiony', 10);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		</div><br />\r\n";			
+
+			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
+			
+			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Diffuse Color (Base)</h4>\r\n";
+			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
+			$zmenu .= "		<input type='text' id='wtw_tsundiffusecolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Sun Diffuse Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Specular Color (Highlight)</h4>\r\n";
+			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
+			$zmenu .= "		<input type='text' id='wtw_tsunspecularcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Sun Specular Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+			$zmenu .= "		<h4 class='wtw-marginbottom'>Sun Ground Color (absorbed)</h4>\r\n";
+			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #000000)</div><br />\r\n";
+			$zmenu .= "		<input type='text' id='wtw_tsungroundcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Ground Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+
 			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
 
-			$zmenu .= "		<div class='wtw-onecol'>Back Light Intensity<br />(Light in the Shadows)<br />\r\n";
+			/* back lighting */
+			$zmenu .= "		<h2>Back Lighting<div class='wtw-onecol' style='font-size:.6em;text-align:center;'>(Light in the Shadows)</div></h2>\r\n";
+
+			$zmenu .= "		<div class='wtw-onecol'>Back Light Intensity<br />\r\n";
 			$zmenu .= "			<input type='text' id='wtw_tbacklightintensity' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightintensity4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightintensity', -1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightintensity3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightintensity', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightintensity2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightintensity', .01);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightintensity1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightintensity', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "		<div class='wtw-clear'></div><br /></div>\r\n";
-			$zmenu .= "		<h4 class='wtw-marginbottom'>Back Light Diffuse Color (Base)</h4>\r\n";
-			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
-			$zmenu .= "		<input type='text' id='wtw_tbacklightdiffusecolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Back Light Diffuse Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
-			$zmenu .= "		<h4 class='wtw-marginbottom'>Back Light Specular Color (Highlight)</h4>\r\n";
-			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
-			$zmenu .= "		<input type='text' id='wtw_tbacklightspecularcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Back Light Specular Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+			
+			$zmenu .= "		<div class='wtw-hide'><hr class='wtw-menuhr' />\r\n";
+
+			$zmenu .= "		<div class='wtw-onecol'>Back Light Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tbacklightpositionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionz4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionz', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionz3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionz2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionz', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionz1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionz', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Back Light Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tbacklightpositionx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionx4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionx', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionx3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionx2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositionx1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositionx', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Back Light Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tbacklightpositiony' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositiony4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositiony', -10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositiony3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositiony', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositiony2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositiony', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightpositiony1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightpositiony', 10);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br /></div>\r\n";
+
+			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
+
 			$zmenu .= "		<div class='wtw-onecol'>Back Light Direction Z (left,-right)<br />\r\n";
 			$zmenu .= "			<input type='text' id='wtw_tbacklightdirectionz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setCommunityScene();\" />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectionz4' class='wtw-smallprint' value='-10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectionz', -10);\" onmouseup='WTW.changeStop();' />\r\n";
-			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectionx3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectionz3' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectionz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectionz2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectionz', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectionz1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectionz', 10);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "		</div><br />\r\n";
@@ -2173,11 +2232,21 @@ class wtwadminmenu {
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectiony2' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectiony', 1);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "			<input type='button' id='wtw_beditbacklightdirectiony1' class='wtw-smallprint' value='+10' onmousedown=\"WTW.changeNumberValue('wtw_tbacklightdirectiony', 10);\" onmouseup='WTW.changeStop();' />\r\n";
 			$zmenu .= "		</div><br />\r\n";
-
+			
+			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
+			
+			$zmenu .= "		<h4 class='wtw-marginbottom'>Back Light Diffuse Color (Base)</h4>\r\n";
+			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
+			$zmenu .= "		<input type='text' id='wtw_tbacklightdiffusecolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Back Light Diffuse Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
+			$zmenu .= "		<h4 class='wtw-marginbottom'>Back Light Specular Color (Highlight)</h4>\r\n";
+			$zmenu .= "		<div class='wtw-mainmenuvalue'>(Example: #ffffff)</div><br />\r\n";
+			$zmenu .= "		<input type='text' id='wtw_tbacklightspecularcolor' maxlength='7' class='wtw-smallprintinput' onfocus=\"WTW.openColorSelector(this, 'Back Light Specular Color');\" onblur='WTW.closeColorSelector(false);WTW.setCommunityScene();' onchange='WTW.setCommunityScene();' onkeyup='WTW.setCommunityScene();' /><br />\r\n";
 
 			$zmenu .= "		<hr class='wtw-menuhr' />\r\n";
+
 			/* fog settings */
 			$zmenu .= "		<h2>Fog Settings</h2>\r\n";
+
 			$zmenu .= "		<div class='wtw-onecol'>\r\n";
 			$zmenu .= "			<div class='wtw-onecol'>\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tscenefogenabled' class='wtw-secondcolcontent wtw-smallprintinput' onchange='WTW.setCommunityScene();' /> Enable Fog\r\n";

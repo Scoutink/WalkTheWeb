@@ -22,7 +22,7 @@ class wtw {
 	
 	/* declare public $wtw variables */
 	public $version = '3.7.6';
-	public $dbversion = '1.2.23';
+	public $dbversion = '1.2.25';
 	public $versiondate = '2024-08-07';
 	public $defaultbabylonversion = 'v7.x.x';
 	public $oldversion = '';
@@ -2137,10 +2137,16 @@ class wtw {
 				'sundirectionx' => 999,
 				'sundirectiony' => -999,
 				'sundirectionz' => 999,
+				'sunpositionx' => 0,
+				'sunpositiony' => 1000,
+				'sunpositionz' => 0,
 				'backlightintensity' => .5,
 				'backlightdirectionx' => -999,
 				'backlightdirectiony' => 999,
 				'backlightdirectionz' => -999,
+				'backlightpositionx' => 0,
+				'backlightpositiony' => 1000,
+				'backlightpositionz' => 0,
 				'backlightdiffusecolor' => '#ffffff',
 				'backlightspecularcolor' => '#ffffff',
 				'skytype' => '',
@@ -2251,10 +2257,16 @@ class wtw {
 					$zcommunityinfo['sundirectionx'] = $zrow['sundirectionx'];
 					$zcommunityinfo['sundirectiony'] = $zrow['sundirectiony'];
 					$zcommunityinfo['sundirectionz'] = $zrow['sundirectionz'];
+					$zcommunityinfo['sunpositionx'] = $zrow['sunpositionx'];
+					$zcommunityinfo['sunpositiony'] = $zrow['sunpositiony'];
+					$zcommunityinfo['sunpositionz'] = $zrow['sunpositionz'];
 					$zcommunityinfo['backlightintensity'] = $zrow['backlightintensity'];
 					$zcommunityinfo['backlightdirectionx'] = $zrow['backlightdirectionx'];
 					$zcommunityinfo['backlightdirectiony'] = $zrow['backlightdirectiony'];
 					$zcommunityinfo['backlightdirectionz'] = $zrow['backlightdirectionz'];
+					$zcommunityinfo['backlightpositionx'] = $zrow['backlightpositionx'];
+					$zcommunityinfo['backlightpositiony'] = $zrow['backlightpositiony'];
+					$zcommunityinfo['backlightpositionz'] = $zrow['backlightpositionz'];
 					$zcommunityinfo['backlightdiffusecolor'] = $zrow['backlightdiffusecolor'];
 					$zcommunityinfo['backlightspecularcolor'] = $zrow['backlightspecularcolor'];
 					$zcommunityinfo['skytype'] = $zrow['skytype'];

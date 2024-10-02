@@ -293,10 +293,16 @@ class wtwadmin {
 			$zhiddenfields .= "<input type='hidden' id='wtw_tsundirectionxbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tsundirectionybackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tsundirectionzbackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tsunpositionxbackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tsunpositionybackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tsunpositionzbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightintensitybackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightdirectionxbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightdirectionybackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightdirectionzbackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightpositionxbackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightpositionybackup' />\r\n";
+			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightpositionzbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightdiffusecolorbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tbacklightspecularcolorbackup' />\r\n";
 			$zhiddenfields .= "<input type='hidden' id='wtw_tskytypebackup' />\r\n";

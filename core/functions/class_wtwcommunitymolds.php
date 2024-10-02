@@ -20,7 +20,7 @@ class wtwcommunitymolds {
 		}
 	}
 	
-	function saveCommunityMold($zcommunitymoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zmoldpath1points, $zmoldpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain) {
+	function saveCommunityMold($zcommunitymoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zmoldpath1points, $zmoldpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain) {
 		/* save a community mold settings */
 		global $wtwhandlers;
 		try {
@@ -60,6 +60,7 @@ class wtwcommunitymolds {
 							uploadobjectid='".$zuploadobjectid."',
 							subdivisions=".$wtwhandlers->checkNumber($zsubdivisions,12).",
 							receiveshadows=".$wtwhandlers->checkNumber($zreceiveshadows,0).",
+							castshadows=".$wtwhandlers->checkNumber($zcastshadows,0).",
 							graphiclevel=".$wtwhandlers->checkNumber($zgraphiclevel,0).",
 							checkcollisions=".$wtwhandlers->checkNumber($zcheckcollisions,1).",
 							ispickable=".$wtwhandlers->checkNumber($zispickable,1).",
@@ -124,6 +125,7 @@ class wtwcommunitymolds {
 							uploadobjectid,
 							subdivisions,
 							receiveshadows,
+							castshadows,
 							graphiclevel,
 							checkcollisions,
 							ispickable,
@@ -191,6 +193,7 @@ class wtwcommunitymolds {
 							'".$zuploadobjectid."',
 							".$wtwhandlers->checkNumber($zsubdivisions,12).",
 							".$wtwhandlers->checkNumber($zreceiveshadows,0).",
+							".$wtwhandlers->checkNumber($zcastshadows,0).",
 							".$wtwhandlers->checkNumber($zgraphiclevel,0).",
 							".$wtwhandlers->checkNumber($zcheckcollisions,1).",
 							".$wtwhandlers->checkNumber($zispickable,1).",

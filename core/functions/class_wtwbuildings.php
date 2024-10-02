@@ -1024,6 +1024,7 @@ class wtwbuildings {
 						t3.billboard,
 						t3.waterreflection,
 						t3.receiveshadows,
+						t3.castshadows,
 						t3.subdivisions,
 						t3.minheight,
 						t3.maxheight,
@@ -1047,7 +1048,7 @@ class wtwbuildings {
 					$zbuildingmoldid = $wtwhandlers->getRandomString(16,1);
 					$zpastbuildingmoldid = $zrow["pastbuildingmoldid"];
 					$zloadactionzoneid = $zrow["loadactionzoneid"];
-					$zunloadactionzoneid = '';
+					$zunloadactionzoneid = $zrow["unloadactionzoneid"];
 					$zshape = $zrow["shape"];
 					$zcovering = $zrow["covering"];
 					$zpositionx = $zrow["positionx"];
@@ -1101,6 +1102,7 @@ class wtwbuildings {
 					$zbillboard = $zrow["billboard"];
 					$zwaterreflection = $zrow["waterreflection"];
 					$zreceiveshadows = $zrow["receiveshadows"];
+					$zcastshadows = $zrow["castshadows"];
 					$zsubdivisions = $zrow["subdivisions"];
 					$zminheight = $zrow["minheight"];
 					$zmaxheight = $zrow["maxheight"];
@@ -1113,10 +1115,6 @@ class wtwbuildings {
 					$zalttag = $zrow["alttag"];
 					$zjsfunction = $zrow["jsfunction"];
 					$zjsparameters = $zrow["jsparameters"];
-					if (isset($zrow["unloadactionzoneid"]) && !empty($zrow["unloadactionzoneid"])) {
-						$zunloadactionzoneid = $zrow["unloadactionzoneid"];
-					}
-
 					$wtwhandlers->query("
 						INSERT INTO ".wtw_tableprefix."buildingmolds
 							(buildingmoldid,
@@ -1177,6 +1175,7 @@ class wtwbuildings {
 							billboard,
 							waterreflection,
 							receiveshadows,
+							castshadows,
 							subdivisions,
 							minheight,
 							maxheight,
@@ -1252,6 +1251,7 @@ class wtwbuildings {
 							".$wtwhandlers->checkNumber($zbillboard,0).",
 							".$wtwhandlers->checkNumber($zwaterreflection,0).",
 							".$wtwhandlers->checkNumber($zreceiveshadows,0).",
+							".$wtwhandlers->checkNumber($zcastshadows,0).",
 							".$wtwhandlers->checkNumber($zsubdivisions,12).",
 							".$wtwhandlers->checkNumber($zminheight,0).",
 							".$wtwhandlers->checkNumber($zmaxheight,30).",
