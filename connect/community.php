@@ -189,10 +189,16 @@ try {
 			'sundirectionx' => $zrow["sundirectionx"],
 			'sundirectiony' => $zrow["sundirectiony"],
 			'sundirectionz' => $zrow["sundirectionz"],
+			'sunpositionx' => $zrow["sunpositionx"],
+			'sunpositiony' => $zrow["sunpositiony"],
+			'sunpositionz' => $zrow["sunpositionz"],
 			'backlightintensity' => $zrow["backlightintensity"],
 			'backlightdirectionx' => $zrow["backlightdirectionx"],
 			'backlightdirectiony' => $zrow["backlightdirectiony"],
 			'backlightdirectionz' => $zrow["backlightdirectionz"],
+			'backlightpositionx' => $zrow["backlightpositionx"],
+			'backlightpositiony' => $zrow["backlightpositiony"],
+			'backlightpositionz' => $zrow["backlightpositionz"],
 			'backlightdiffusecolor' => $zrow["backlightdiffusecolor"],
 			'backlightspecularcolor' => $zrow["backlightspecularcolor"]
 		);

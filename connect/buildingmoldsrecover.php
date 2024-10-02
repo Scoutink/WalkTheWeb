@@ -336,6 +336,7 @@ try {
 			'vscale'=> $zrow["vscale"],
 			'level'=> $zrow["graphiclevel"],
 			'receiveshadows'=> $zrow["receiveshadows"],
+			'castshadows'=> $zrow["castshadows"],
 			'waterreflection'=> $zrow["waterreflection"], 
 			'webimages'=> $wtwconnect->getwebimages("", $zrow["buildingmoldid"], "",-1)
 		);

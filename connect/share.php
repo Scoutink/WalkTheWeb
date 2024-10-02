@@ -753,6 +753,7 @@ try {
 					'billboard'=>$zrowmolds["billboard"],
 					'waterreflection'=>$zrowmolds["waterreflection"],
 					'receiveshadows'=>$zrowmolds["receiveshadows"],
+					'castshadows'=>$zrowmolds["castshadows"],
 					'subdivisions'=>$zrowmolds["subdivisions"],
 					'minheight'=>$zrowmolds["minheight"],
 					'maxheight'=>$zrowmolds["maxheight"],
@@ -834,10 +835,16 @@ try {
 			$zsundirectionx = 999;
 			$zsundirectiony = -999;
 			$zsundirectionz = 999;
+			$zsunpositionx = 0;
+			$zsunpositiony = 1000;
+			$zsunpositionz = 0;
 			$zbacklightintensity = 0.5;
 			$zbacklightdirectionx = -999;
 			$zbacklightdirectiony = 999;
 			$zbacklightdirectionz = -999;
+			$zbacklightpositionx = 0;
+			$zbacklightpositiony = 1000;
+			$zbacklightpositionz = 0;
 			$zbacklightdiffusecolor = '#ffffff';
 			$zbacklightspecularcolor = '#ffffff';
 			$zskytype = '';
@@ -944,6 +951,15 @@ try {
 				if (isset($zrow["sundirectionz"])) {
 					$zsundirectionz = $zrow["sundirectionz"];
 				}
+				if (isset($zrow["sunpositionx"])) {
+					$zsunpositionx = $zrow["sunpositionx"];
+				}
+				if (isset($zrow["sunpositiony"])) {
+					$zsunpositiony = $zrow["sunpositiony"];
+				}
+				if (isset($zrow["sunpositionz"])) {
+					$zsunpositionz = $zrow["sunpositionz"];
+				}
 				if (isset($zrow["backlightintensity"])) {
 					$zbacklightintensity = $zrow["backlightintensity"];
 				}
@@ -955,6 +971,15 @@ try {
 				}
 				if (isset($zrow["backlightdirectionz"])) {
 					$zbacklightdirectionz = $zrow["backlightdirectionz"];
+				}
+				if (isset($zrow["backlightpositionx"])) {
+					$zbacklightpositionx = $zrow["backlightpositionx"];
+				}
+				if (isset($zrow["backlightpositiony"])) {
+					$zbacklightpositiony = $zrow["backlightpositiony"];
+				}
+				if (isset($zrow["backlightpositionz"])) {
+					$zbacklightpositionz = $zrow["backlightpositionz"];
 				}
 				$zbacklightdiffusecolor = $zrow["backlightdiffusecolor"];
 				$zbacklightspecularcolor = $zrow["backlightspecularcolor"];
@@ -1106,10 +1131,16 @@ try {
 				'sundirectionx' => $zsundirectionx,
 				'sundirectiony' => $zsundirectiony,
 				'sundirectionz' => $zsundirectionz,
+				'sunpositionx' => $zsunpositionx,
+				'sunpositiony' => $zsunpositiony,
+				'sunpositionz' => $zsunpositionz,
 				'backlightintensity' => $zbacklightintensity,
 				'backlightdirectionx' => $zbacklightdirectionx,
 				'backlightdirectiony' => $zbacklightdirectiony,
 				'backlightdirectionz' => $zbacklightdirectionz,
+				'backlightpositionx' => $zbacklightpositionx,
+				'backlightpositiony' => $zbacklightpositiony,
+				'backlightpositionz' => $zbacklightpositionz,
 				'backlightdiffusecolor' => $zbacklightdiffusecolor,
 				'backlightspecularcolor' => $zbacklightspecularcolor,
 				'scenefogenabled' => $zscenefogenabled,
