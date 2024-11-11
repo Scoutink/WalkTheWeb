@@ -363,6 +363,41 @@ try {
 			'coneoutergain' => $zrow["soundconeoutergain"],
 			'sound' => ''
 		);
+		$zphysics = array(
+			'enabled'=>$zrow["physicsenabled"],
+			'center'=>array(
+				'x'=>$zrow["physicscenterx"],
+				'y'=>$zrow["physicscentery"],
+				'z'=>$zrow["physicscenterz"]
+			),
+			'extents'=>array(
+				'x'=>$zrow["physicsextentsx"],
+				'y'=>$zrow["physicsextentsy"],
+				'z'=>$zrow["physicsextentsz"]
+			),
+			'friction'=>$zrow["physicsfriction"],
+			'istriggershape'=>$zrow["physicsistriggershape"],
+			'mass'=>$zrow["physicsmass"],
+			'pointa'=>array(
+				'x'=>$zrow["physicspointax"],
+				'y'=>$zrow["physicspointay"],
+				'z'=>$zrow["physicspointaz"]
+			),
+			'pointb'=>array(
+				'x'=>$zrow["physicspointbx"],
+				'y'=>$zrow["physicspointby"],
+				'z'=>$zrow["physicspointbz"]
+			),
+			'radius'=>$zrow["physicsradius"],
+			'restitution'=>$zrow["physicsrestitution"],
+			'rotation'=>array(
+				'x'=>$zrow["physicsrotationx"],
+				'y'=>$zrow["physicsrotationy"],
+				'z'=>$zrow["physicsrotationz"],
+				'w'=>$zrow["physicsrotationw"]
+			),
+			'startasleep'=>$zrow["physicsstartasleep"]
+		);
 		$zmolds[$i] = array(
 			'communityinfo'=> $zcommunityinfo, 
 			'buildinginfo'=> $zbuildinginfo, 
@@ -382,6 +417,7 @@ try {
 			'paths'=> $zpaths,
 			'color'=> $zcolor,
 			'sound'=> $zsound,
+			'physics'=> $zphysics,
 			'subdivisions'=> $zrow["subdivisions"], 
 			'subdivisionsshown'=>'0',
 			'shown'=>'0',

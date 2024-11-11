@@ -267,27 +267,29 @@ try {
 			order by loadpriority desc, animationevent, animationfriendlyname, avataranimationid;");
 		$zanim = 0;
 		foreach ($zresultsa as $zrowa) {
-			$zavataranimationdefs[$zanim] = array(
-				'avataranimationid'=>$zrowa["avataranimationid"],
-				'pastavataranimationid'=>$zrowa["pastavataranimationid"],
-				'loadpriority'=>$zrowa["loadpriority"],
-				'animationevent'=>$zrowa["animationevent"],
-				'animationfriendlyname'=>$zrowa["animationfriendlyname"],
-				'animationicon'=>$zrowa["animationicon"],
-				'objectfolder'=>$zrowa["objectfolder"],
-				'objectfile'=>$zrowa["objectfile"],
-				'startframe'=>$zrowa["startframe"],
-				'endframe'=>$zrowa["endframe"],
-				'animationloop'=>$zrowa["animationloop"],
-				'speedratio'=>$zrowa["speedratio"],
-				'soundid'=>$zrowa["soundid"],
-				'soundmaxdistance'=>$zrowa["soundmaxdistance"],
-				'createdate'=>$zrowa["createdate"],
-				'createuserid'=>$zrowa["createuserid"],
-				'updatedate'=>$zrowa["updatedate"],
-				'updateuserid'=>$zrowa["updateuserid"]
-			);
-			$zanim += 1;
+			if (!empty($zrowa["endframe"])) {
+				$zavataranimationdefs[$zanim] = array(
+					'avataranimationid'=>$zrowa["avataranimationid"],
+					'pastavataranimationid'=>$zrowa["pastavataranimationid"],
+					'loadpriority'=>$zrowa["loadpriority"],
+					'animationevent'=>$zrowa["animationevent"],
+					'animationfriendlyname'=>$zrowa["animationfriendlyname"],
+					'animationicon'=>$zrowa["animationicon"],
+					'objectfolder'=>$zrowa["objectfolder"],
+					'objectfile'=>$zrowa["objectfile"],
+					'startframe'=>$zrowa["startframe"],
+					'endframe'=>$zrowa["endframe"],
+					'animationloop'=>$zrowa["animationloop"],
+					'speedratio'=>$zrowa["speedratio"],
+					'soundid'=>$zrowa["soundid"],
+					'soundmaxdistance'=>$zrowa["soundmaxdistance"],
+					'createdate'=>$zrowa["createdate"],
+					'createuserid'=>$zrowa["createuserid"],
+					'updatedate'=>$zrowa["updatedate"],
+					'updateuserid'=>$zrowa["updateuserid"]
+				);
+				$zanim += 1;
+			}
 			addUserID($zrowa["createuserid"]);
 			addUserID($zrowa["updateuserid"]);
 		}

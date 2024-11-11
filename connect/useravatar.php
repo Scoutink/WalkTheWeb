@@ -258,29 +258,31 @@ try {
 					and a3.deleted=0
 			order by loadpriority desc, animationevent, animationfriendlyname, useravataranimationid;");
 		foreach ($zresults as $zrow) {
-			$zavataranimationdefs[$i] = array(
-				'animationind'=> $i,
-				'useravataranimationid'=> $zrow["useravataranimationid"],
-				'avataranimationid'=> $zrow["avataranimationid"],
-				'animationevent'=> $zrow["animationevent"],
-				'animationfriendlyname'=> addslashes($zrow["animationfriendlyname"]),
-				'loadpriority'=> $zrow["loadpriority"],
-				'animationicon'=> $zrow["animationicon"],
-				'defaultspeedratio'=> $zrow["speedratio"],
-				'speedratio'=> $zrow["speedratio"],
-				'objectfolder'=> $zrow["objectfolder"],
-				'objectfile'=> $zrow["objectfile"],
-				'startframe'=> $zrow["startframe"],
-				'endframe'=> $zrow["endframe"],
-				'animationloop'=> $zrow["animationloop"],
-				'walkspeed'=> $zrow["walkspeed"],
-				'soundid'=> $zrow["soundid"],
-				'soundmaxdistance'=> $zrow["soundmaxdistance"],
-				'totalframes' => '0',
-				'totalstartframe' => '0',
-				'totalendframe' => '0'
-			);
-			$i += 1;
+			if (!empty($zrow["endframe"])) {
+				$zavataranimationdefs[$i] = array(
+					'animationind'=> $i,
+					'useravataranimationid'=> $zrow["useravataranimationid"],
+					'avataranimationid'=> $zrow["avataranimationid"],
+					'animationevent'=> $zrow["animationevent"],
+					'animationfriendlyname'=> addslashes($zrow["animationfriendlyname"]),
+					'loadpriority'=> $zrow["loadpriority"],
+					'animationicon'=> $zrow["animationicon"],
+					'defaultspeedratio'=> $zrow["speedratio"],
+					'speedratio'=> $zrow["speedratio"],
+					'objectfolder'=> $zrow["objectfolder"],
+					'objectfile'=> $zrow["objectfile"],
+					'startframe'=> $zrow["startframe"],
+					'endframe'=> $zrow["endframe"],
+					'animationloop'=> $zrow["animationloop"],
+					'walkspeed'=> $zrow["walkspeed"],
+					'soundid'=> $zrow["soundid"],
+					'soundmaxdistance'=> $zrow["soundmaxdistance"],
+					'totalframes' => '0',
+					'totalstartframe' => '0',
+					'totalendframe' => '0'
+				);
+				$i += 1;
+			}
 		}
 	} else {
 		if (!isset($zfoundavatarid) || empty($zfoundavatarid)) {
@@ -360,31 +362,34 @@ try {
 			);
 			$i += 1;
 		}
-		
-		/* get the avatar animations (the wait idle is stored in the avatars table) */
-		$zavataranimationdefs[0] = array(
-			'animationind'=> 0,
-			'useravataranimationid'=> '',
-			'avataranimationid'=> '',
-			'animationevent'=> 'onwait',
-			'animationfriendlyname'=> 'Wait',
-			'loadpriority'=> 100,
-			'animationicon'=> '',
-			'defaultspeedratio'=> 1.00,
-			'speedratio'=> 1.00,
-			'objectfolder'=> $zobjectfolder,
-			'objectfile'=> $zobjectfile,
-			'startframe'=> $zstartframe,
-			'endframe'=> $zendframe,
-			'animationloop'=> 1,
-			'soundid'=> '',
-			'soundmaxdistance'=> 100,
-			'walkspeed'=> '1',
-			'totalframes' => '0',
-			'totalstartframe' => '0',
-			'totalendframe' => '0'
-		);
-		$i = 1;
+		if (!empty($zstartframe) && !empty($zendframe)) {
+			/* get the avatar animations (the wait idle is stored in the avatars table) */
+			$zavataranimationdefs[0] = array(
+				'animationind'=> 0,
+				'useravataranimationid'=> '',
+				'avataranimationid'=> '',
+				'animationevent'=> 'onwait',
+				'animationfriendlyname'=> 'Wait',
+				'loadpriority'=> 100,
+				'animationicon'=> '',
+				'defaultspeedratio'=> 1.00,
+				'speedratio'=> 1.00,
+				'objectfolder'=> $zobjectfolder,
+				'objectfile'=> $zobjectfile,
+				'startframe'=> $zstartframe,
+				'endframe'=> $zendframe,
+				'animationloop'=> 1,
+				'soundid'=> '',
+				'soundmaxdistance'=> 100,
+				'walkspeed'=> '1',
+				'totalframes' => '0',
+				'totalstartframe' => '0',
+				'totalendframe' => '0'
+			);
+			$i = 1;
+		} else {
+			$i = 0;
+		}
 		/* get the avatar animations (the rest are stored in the avataranimations table) */
 		$zresults = $wtwconnect->query("
 			select * 
@@ -393,29 +398,31 @@ try {
 				and deleted=0
 			order by loadpriority desc, avataranimationid;");
 		foreach ($zresults as $zrow) {
-			$zavataranimationdefs[$i] = array(
-				'animationind'=> $i,
-				'useravataranimationid'=> '',
-				'avataranimationid'=> $zrow["avataranimationid"],
-				'animationevent'=> $zrow["animationevent"],
-				'animationfriendlyname'=> addslashes($zrow["animationfriendlyname"]),
-				'loadpriority'=> $zrow["loadpriority"],
-				'animationicon'=> $zrow["animationicon"],
-				'defaultspeedratio'=> $zrow["speedratio"],
-				'speedratio'=> $zrow["speedratio"],
-				'objectfolder'=> $zrow["objectfolder"],
-				'objectfile'=> $zrow["objectfile"],
-				'startframe'=> $zrow["startframe"],
-				'endframe'=> $zrow["endframe"],
-				'animationloop'=> $zrow["animationloop"],
-				'soundid'=> $zrow["soundid"],
-				'soundmaxdistance'=> $zrow["soundmaxdistance"],
-				'walkspeed'=> '1',
-				'totalframes' => '0',
-				'totalstartframe' => '0',
-				'totalendframe' => '0'
-			);
-			$i += 1;
+			if (!empty($zrow["endframe"])) {
+				$zavataranimationdefs[$i] = array(
+					'animationind'=> $i,
+					'useravataranimationid'=> '',
+					'avataranimationid'=> $zrow["avataranimationid"],
+					'animationevent'=> $zrow["animationevent"],
+					'animationfriendlyname'=> addslashes($zrow["animationfriendlyname"]),
+					'loadpriority'=> $zrow["loadpriority"],
+					'animationicon'=> $zrow["animationicon"],
+					'defaultspeedratio'=> $zrow["speedratio"],
+					'speedratio'=> $zrow["speedratio"],
+					'objectfolder'=> $zrow["objectfolder"],
+					'objectfile'=> $zrow["objectfile"],
+					'startframe'=> $zrow["startframe"],
+					'endframe'=> $zrow["endframe"],
+					'animationloop'=> $zrow["animationloop"],
+					'soundid'=> $zrow["soundid"],
+					'soundmaxdistance'=> $zrow["soundmaxdistance"],
+					'walkspeed'=> '1',
+					'totalframes' => '0',
+					'totalstartframe' => '0',
+					'totalendframe' => '0'
+				);
+				$i += 1;
+			}
 		}
 
 	}

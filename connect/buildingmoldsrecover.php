@@ -373,6 +373,69 @@ try {
 			'coneoutergain' => $zrow["soundconeoutergain"],
 			'sound' => ''
 		);
+		$zphysics = array(
+			'enabled'=>$zrow["physicsenabled"],
+			'center'=>array(
+				'x'=>$zrow["physicscenterx"],
+				'y'=>$zrow["physicscentery"],
+				'z'=>$zrow["physicscenterz"]
+			),
+			'extents'=>array(
+				'x'=>$zrow["physicsextentsx"],
+				'y'=>$zrow["physicsextentsy"],
+				'z'=>$zrow["physicsextentsz"]
+			),
+			'friction'=>$zrow["physicsfriction"],
+			'istriggershape'=>$zrow["physicsistriggershape"],
+			'mass'=>$zrow["physicsmass"],
+			'pointa'=>array(
+				'x'=>$zrow["physicspointax"],
+				'y'=>$zrow["physicspointay"],
+				'z'=>$zrow["physicspointaz"]
+			),
+			'pointb'=>array(
+				'x'=>$zrow["physicspointbx"],
+				'y'=>$zrow["physicspointby"],
+				'z'=>$zrow["physicspointbz"]
+			),
+			'radius'=>$zrow["physicsradius"],
+			'restitution'=>$zrow["physicsrestitution"],
+			'rotation'=>array(
+				'x'=>$zrow["physicsrotationx"],
+				'y'=>$zrow["physicsrotationy"],
+				'z'=>$zrow["physicsrotationz"],
+				'w'=>$zrow["physicsrotationw"]
+			),
+			'startasleep'=>$zrow["physicsstartasleep"]
+		);
+		
+
+				  `physicsenabled` int DEFAULT '0',
+				  `physicscenterx` decimal(18,2) DEFAULT '0.00',
+				  `physicscentery` decimal(18,2) DEFAULT '0.00',
+				  `physicscenterz` decimal(18,2) DEFAULT '0.00',
+				  `physicsextentsx` decimal(18,2) DEFAULT '0.00',
+				  `physicsextentsy` decimal(18,2) DEFAULT '0.00',
+				  `physicsextentsz` decimal(18,2) DEFAULT '0.00',
+				  `physicsfriction` decimal(18,2) DEFAULT '0.00',
+				  `physicsistriggershape` int DEFAULT '0',
+				  `physicsmass` decimal(18,2) DEFAULT '0.00',
+				  `physicspointax` decimal(18,2) DEFAULT '0.00',
+				  `physicspointay` decimal(18,2) DEFAULT '0.00',
+				  `physicspointaz` decimal(18,2) DEFAULT '0.00',
+				  `physicspointbx` decimal(18,2) DEFAULT '0.00',
+				  `physicspointby` decimal(18,2) DEFAULT '0.00',
+				  `physicspointbz` decimal(18,2) DEFAULT '0.00',
+				  `physicsradius` decimal(18,2) DEFAULT '0.00',
+				  `physicsrestitution` decimal(18,2) DEFAULT '0.00',
+				  `physicsrotationw` decimal(18,2) DEFAULT '0.00',
+				  `physicsrotationx` decimal(18,2) DEFAULT '0.00',
+				  `physicsrotationy` decimal(18,2) DEFAULT '0.00',
+				  `physicsrotationz` decimal(18,2) DEFAULT '0.00',
+				  `physicsstartasleep` int DEFAULT '0',
+
+
+		
 		$zmolds[$i] = array(
 			'communityinfo'=> $zcommunityinfo, 
 			'buildinginfo'=> $zbuildinginfo, 
@@ -392,6 +455,7 @@ try {
 			'paths'=> $zpaths,
 			'color'=> $zcolor,
 			'sound'=> $zsound,
+			'physics'=> $zphysics,
 			'subdivisions'=> $zrow["subdivisions"], 
 			'subdivisionsshown'=>'0',
 			'shown'=>'0',

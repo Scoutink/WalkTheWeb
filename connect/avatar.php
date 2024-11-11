@@ -165,34 +165,35 @@ try {
 	}
 
 	foreach ($zresults as $zrow) {
-
-		/* load the onwait animation if it is part of the main avatar file */
-		$zavataranimationdefs[$zanimationind] = array(
-			'animationind'=> -1,
-			'useravataranimationid'=> '',
-			'avataranimationid'=> '',
-			'avatarid'=> $zrow["avatarid"],
-			'loadpriority'=> 100,
-			'animationevent'=> 'onwait',
-			'animationfriendlyname'=> 'Default',
-			'animationicon'=> '',
-			'objectfolder'=> $zrow["objectfolder"],
-			'objectfile'=> $zrow["objectfile"],
-			'startframe'=> $zrow["startframe"],
-			'endframe'=> $zrow["endframe"],
-			'animationloop'=> true,
-			'defaultspeedratio'=> 1,
-			'speedratio'=> 1,
-			'startweight'=> '0',
-			'onanimationend'=> null,
-			'walkspeed'=> '1',
-			'totalframes'=> '0',
-			'totalstartframe'=> '0',
-			'totalendframe'=> '0',
-			'soundid'=> '',
-			'soundpath'=> '',
-			'soundmaxdistance'=> 100
-		);
+		if (!empty($zrow["endframe"])) {
+			/* load the onwait animation if it is part of the main avatar file */
+			$zavataranimationdefs[$zanimationind] = array(
+				'animationind'=> -1,
+				'useravataranimationid'=> '',
+				'avataranimationid'=> '',
+				'avatarid'=> $zrow["avatarid"],
+				'loadpriority'=> 100,
+				'animationevent'=> 'onwait',
+				'animationfriendlyname'=> 'Default',
+				'animationicon'=> '',
+				'objectfolder'=> $zrow["objectfolder"],
+				'objectfile'=> $zrow["objectfile"],
+				'startframe'=> $zrow["startframe"],
+				'endframe'=> $zrow["endframe"],
+				'animationloop'=> true,
+				'defaultspeedratio'=> 1,
+				'speedratio'=> 1,
+				'startweight'=> '0',
+				'onanimationend'=> null,
+				'walkspeed'=> '1',
+				'totalframes'=> '0',
+				'totalstartframe'=> '0',
+				'totalendframe'=> '0',
+				'soundid'=> '',
+				'soundpath'=> '',
+				'soundmaxdistance'=> 100
+			);
+		}
 		
 		usort($zavataranimationdefs, "arraysort");
 		
