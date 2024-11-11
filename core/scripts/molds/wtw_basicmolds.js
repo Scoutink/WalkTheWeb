@@ -1708,7 +1708,7 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 										if (zbillboard == '1') {
 											zresults.meshes[i].parent = zmoldrot;
 										} else {
-											zresults.meshes[i].parent = zmold;
+											zresults.meshes[i].parent = znode;
 										}
 									}
 
@@ -1718,7 +1718,7 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 									} else if (zresults.meshes[i].name.indexOf('sides') > -1) {
 //										zresults.meshes[i].physicsImpostor = new BABYLON.PhysicsImpostor(zresults.meshes[i], BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 1, restitution: 0.9 }, scene);
 									} else if (zresults.meshes[i].name.indexOf('hull') > -1) {
-//										zmold.physicsImpostor = new BABYLON.PhysicsImpostor(zresults.meshes[i], BABYLON.PhysicsImpostor.MeshImpostor, {ignoreParent: false,  mass: 1, friction: 1, restitution: .5 }, scene);
+//										znode.physicsImpostor = new BABYLON.PhysicsImpostor(zresults.meshes[i], BABYLON.PhysicsImpostor.MeshImpostor, {ignoreParent: false,  mass: 1, friction: 1, restitution: .5 }, scene);
 									}
 									/* overwrite material to wireframe if selected */
 									if (zmeshname.indexOf('WireFrame') > -1) {
@@ -1730,7 +1730,7 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 										zhasanimation = true;
 										WTW.addMoldAnimation(zmoldname, zmeshname, zresults.meshes[i], zobjectanimations);
 									}
-									if (zmold == null || zmold.parent == null) {
+									if (znode == null || znode.parent == null) {
 										/* if the parent has been deleted after this async process began (avoiding orphaned objects)*/
 										zresults.meshes[i].dispose();
 									}
@@ -1751,9 +1751,14 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 									}
 								}
 							}
+							if (zmolddef.physics != undefined) {
+								if (zmolddef.physics.enabled == 1 && havokInstance != null) {
+									WTW.addMoldPhysics(znode, zmolddef, 'babylonfile');
+								}
+							}
 							if (WTW.adminView == 1) {
-								zmold.WTW = [];
-								zmold.WTW = {
+								znode.WTW = [];
+								znode.WTW = {
 									'bounding': {
 										'min':zlastmin,
 										'max':zlastmax
@@ -1778,18 +1783,18 @@ WTWJS.prototype.addMoldBabylonFile = function(zmoldname, zmolddef, zlenx, zleny,
 										if (zbillboard == '1') {
 											zresults.skeletons[i].parent = zmoldrot;
 										} else {
-											zresults.skeletons[i].parent = zmold;
+											zresults.skeletons[i].parent = znode;
 										}
 									}
-									if (zmold == null || zmold.parent == null) {
+									if (znode == null || znode.parent == null) {
 										/* if the parent has been deleted after this async process began (avoiding orphaned objects) */
 										zresults.skeletons[i].dispose();
 									}
 								}
 							}
 						}
-						zmold = WTW.getMeshOrNodeByID(zmoldname);
-						if (zmold == null || zmold.parent == null) {
+						znode = WTW.getMeshOrNodeByID(zmoldname);
+						if (znode == null || znode.parent == null) {
 							/* if the parent has been deleted after this async process began (avoiding orphaned objects) */
 							WTW.disposeClean(zmoldname);
 						} else {

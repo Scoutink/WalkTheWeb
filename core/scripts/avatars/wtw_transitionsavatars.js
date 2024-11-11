@@ -511,6 +511,14 @@ WTWJS.prototype.avatarEnter = function(zavatarname) {
 				break;
 		}
 		WTW.pluginsEnterAvatar(zavatarname);
+		/* add physics to avatar meshes */
+		if (havokInstance != null) {
+			for (var i=0; i<zavatarparts.length; i++) {
+				if (zavatarparts[i] != null) {
+					zavatarparts[i].aggregate = new BABYLON.PhysicsAggregate(zavatarparts[i], BABYLON.PhysicsShapeType.MESH, { mass:0 }, scene);
+				}
+			}
+		}
     } catch (ex) {
 		WTW.log('core-scripts-avatars-wtw_transitionsavatars.js-avatarEnter=' + ex.message);
     }

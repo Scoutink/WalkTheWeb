@@ -101,6 +101,13 @@ WTWJS.prototype.openMoldForm = async function(zmoldind, zshape, zwebtype, zsavep
 					dGet('wtw_tmoldispickable').checked = false;
 				}
 			}
+			if (zmolds[zmoldind].physics != null) {
+				if (zmolds[zmoldind].physics.enabled == '1') {
+					dGet('wtw_tmoldphysicsenabled').checked = true;
+				} else {
+					dGet('wtw_tmoldphysicsenabled').checked = false;
+				}
+			}
 			dGet('wtw_tmolddiffusecolor').value = zmolds[zmoldind].color.diffusecolor;
 			dGet('wtw_tmoldemissivecolor').value = zmolds[zmoldind].color.emissivecolor;
 			dGet('wtw_tmoldspecularcolor').value = zmolds[zmoldind].color.specularcolor;
@@ -464,6 +471,41 @@ WTWJS.prototype.loadMoldForm = function(zmolddef) {
 		dGet('wtw_tmoldsoundconeinnerangle').value = zmolddef.sound.coneinnerangle;
 		dGet('wtw_tmoldsoundconeouterangle').value = zmolddef.sound.coneouterangle;
 		dGet('wtw_tmoldsoundconeoutergain').value = zmolddef.sound.coneoutergain;
+		if (zmolddef.physics.enabled == 1) {
+			dGet('wtw_tmoldphysicsenabled').checked == true;
+		} else {
+			dGet('wtw_tmoldphysicsenabled').checked == false;
+		}
+		if (zmolddef.physics.istriggershape == 1) {
+			dGet('wtw_tmoldphysicsistriggershape').checked = true;
+		} else {
+			dGet('wtw_tmoldphysicsistriggershape').checked = false;
+		}
+		if (zmolddef.physics.startasleep == 1) {
+			dGet('wtw_tmoldphysicsstartasleep').checked = true;
+		} else {
+			dGet('wtw_tmoldphysicsstartasleep').checked = false;
+		}
+		dGet('wtw_tmoldphysicscenterx').value = zmolddef.physics.center.x;
+		dGet('wtw_tmoldphysicscentery').value = zmolddef.physics.center.y;
+		dGet('wtw_tmoldphysicscenterz').value = zmolddef.physics.center.z;
+		dGet('wtw_tmoldphysicsextentsx').value = zmolddef.physics.extents.x;
+		dGet('wtw_tmoldphysicsextentsy').value = zmolddef.physics.extents.y;
+		dGet('wtw_tmoldphysicsextentsz').value = zmolddef.physics.extents.z;
+		dGet('wtw_tmoldphysicsfriction').value = zmolddef.physics.friction;
+		dGet('wtw_tmoldphysicsmass').value = zmolddef.physics.mass;
+		dGet('wtw_tmoldphysicspointax').value = zmolddef.physics.pointa.x;
+		dGet('wtw_tmoldphysicspointay').value = zmolddef.physics.pointa.y;
+		dGet('wtw_tmoldphysicspointaz').value = zmolddef.physics.pointa.z;
+		dGet('wtw_tmoldphysicspointbx').value = zmolddef.physics.pointb.x;
+		dGet('wtw_tmoldphysicspointby').value = zmolddef.physics.pointb.y;
+		dGet('wtw_tmoldphysicspointbz').value = zmolddef.physics.pointb.z;
+		dGet('wtw_tmoldphysicsradius').value = zmolddef.physics.radius;
+		dGet('wtw_tmoldphysicsrestitution').value = zmolddef.physics.restitution;
+		dGet('wtw_tmoldphysicsrotationw').value = zmolddef.physics.rotation.w;
+		dGet('wtw_tmoldphysicsrotationx').value = zmolddef.physics.rotation.x;
+		dGet('wtw_tmoldphysicsrotationy').value = zmolddef.physics.rotation.y;
+		dGet('wtw_tmoldphysicsrotationz').value = zmolddef.physics.rotation.z;
 		dGet('wtw_tmoldmaxheight').value = zmolddef.graphics.heightmap.maxheight;
 		dGet('wtw_tmolduoffset').value = WTW.formatNumber(zmolddef.graphics.uoffset,2);
 		dGet('wtw_tmoldvoffset').value = WTW.formatNumber(zmolddef.graphics.voffset,2);
@@ -609,32 +651,32 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 		zmolds[zmoldind].objects.folder = dGet('wtw_tmoldobjectfolder').value;
 		zmolds[zmoldind].objects.file = dGet('wtw_tmoldobjectfile').value;
 		zmolds[zmoldind].graphics.texture.backupid = '';
-		if (dGet('wtw_tmoldreceiveshadows').checked == true) {
+		if (dGet('wtw_tmoldreceiveshadows').checked) {
 			zmolds[zmoldind].graphics.receiveshadows = '1';
 		} else {
 			zmolds[zmoldind].graphics.receiveshadows = '0';
 		}
-		if (dGet('wtw_tmoldcastshadows').checked == true) {
+		if (dGet('wtw_tmoldcastshadows').checked) {
 			zmolds[zmoldind].graphics.castshadows = '1';
 		} else {
 			zmolds[zmoldind].graphics.castshadows = '0';
 		}
-		if (dGet('wtw_tmoldgraphiclevel').checked == true) {
+		if (dGet('wtw_tmoldgraphiclevel').checked) {
 			zmolds[zmoldind].graphics.level = '1';
 		} else {
 			zmolds[zmoldind].graphics.level = '0';
 		}
-		if (dGet('wtw_tmoldwaterreflection').checked == true) {
+		if (dGet('wtw_tmoldwaterreflection').checked) {
 			zmolds[zmoldind].graphics.waterreflection = '1';
 		} else {
 			zmolds[zmoldind].graphics.waterreflection = '0';
 		}
-		if (dGet('wtw_tmoldcheckcollisions').checked == true) {
+		if (dGet('wtw_tmoldcheckcollisions').checked) {
 			zmolds[zmoldind].checkcollisions = '1';
 		} else {
 			zmolds[zmoldind].checkcollisions = '0';
 		}
-		if (dGet('wtw_tmoldispickable').checked == true) {
+		if (dGet('wtw_tmoldispickable').checked) {
 			zmolds[zmoldind].ispickable = '1';
 		} else {
 			zmolds[zmoldind].ispickable = '0';
@@ -669,7 +711,7 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 			zsoundattenuation = dGet('wtw_tmoldsoundattenuation').options[dGet('wtw_tmoldsoundattenuation').selectedIndex].value;
 		}
 		zmolds[zmoldind].sound.attenuation = zsoundattenuation;
-		if (dGet('wtw_tmoldsoundloop').checked == true) {
+		if (dGet('wtw_tmoldsoundloop').checked) {
 			zmolds[zmoldind].sound.loop = '1';
 		} else {
 			zmolds[zmoldind].sound.loop = '0';
@@ -680,6 +722,41 @@ WTWJS.prototype.openAddNewMold = function(zwebtype, zshape) {
 		zmolds[zmoldind].sound.coneinnerangle = dGet('wtw_tmoldsoundconeinnerangle').value;
 		zmolds[zmoldind].sound.coneouterangle = dGet('wtw_tmoldsoundconeouterangle').value;
 		zmolds[zmoldind].sound.coneoutergain = dGet('wtw_tmoldsoundconeoutergain').value;
+		if (dGet('wtw_tmoldphysicsenabled').checked) {
+			zmolds[zmoldind].physics.enabled = 1;
+		} else {
+			zmolds[zmoldind].physics.enabled = 0;
+		}
+		if (dGet('wtw_tmoldphysicsistriggershape').checked) {
+			zmolds[zmoldind].physics.istriggershape = 1;
+		} else {
+			zmolds[zmoldind].physics.istriggershape = 0;
+		}
+		if (dGet('wtw_tmoldphysicsstartasleep').checked) {
+			zmolds[zmoldind].physics.startasleep = 1;
+		} else {
+			zmolds[zmoldind].physics.startasleep = 0;
+		}
+		zmolds[zmoldind].physics.center.x = dGet('wtw_tmoldphysicscenterx').value;
+		zmolds[zmoldind].physics.center.y = dGet('wtw_tmoldphysicscentery').value;
+		zmolds[zmoldind].physics.center.z = dGet('wtw_tmoldphysicscenterz').value;
+		zmolds[zmoldind].physics.extents.x = dGet('wtw_tmoldphysicsextentsx').value;
+		zmolds[zmoldind].physics.extents.y = dGet('wtw_tmoldphysicsextentsy').value;
+		zmolds[zmoldind].physics.extents.z = dGet('wtw_tmoldphysicsextentsz').value;
+		zmolds[zmoldind].physics.friction = dGet('wtw_tmoldphysicsfriction').value;
+		zmolds[zmoldind].physics.mass = dGet('wtw_tmoldphysicsmass').value;
+		zmolds[zmoldind].physics.pointa.x = dGet('wtw_tmoldphysicspointax').value;
+		zmolds[zmoldind].physics.pointa.y = dGet('wtw_tmoldphysicspointay').value;
+		zmolds[zmoldind].physics.pointa.z = dGet('wtw_tmoldphysicspointaz').value;
+		zmolds[zmoldind].physics.pointb.x = dGet('wtw_tmoldphysicspointbx').value;
+		zmolds[zmoldind].physics.pointb.y = dGet('wtw_tmoldphysicspointby').value;
+		zmolds[zmoldind].physics.pointb.z = dGet('wtw_tmoldphysicspointbz').value;
+		zmolds[zmoldind].physics.radius = dGet('wtw_tmoldphysicsradius').value;
+		zmolds[zmoldind].physics.restitution = dGet('wtw_tmoldphysicsrestitution').value;
+		zmolds[zmoldind].physics.rotation.w = dGet('wtw_tmoldphysicsrotationw').value;
+		zmolds[zmoldind].physics.rotation.x = dGet('wtw_tmoldphysicsrotationx').value;
+		zmolds[zmoldind].physics.rotation.y = dGet('wtw_tmoldphysicsrotationy').value;
+		zmolds[zmoldind].physics.rotation.z = dGet('wtw_tmoldphysicsrotationz').value;
 		zmolds[zmoldind].graphics.heightmap.maxheight = dGet('wtw_tmoldmaxheight').value;
 		zmolds[zmoldind].color.diffusecolor = dGet('wtw_tmolddiffusecolor').value;
 		zmolds[zmoldind].color.emissivecolor = dGet('wtw_tmoldemissivecolor').value;
@@ -1446,6 +1523,41 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 			} else {
 				zmolds[zmoldind].csg.action = '';
 			}
+			if (dGet('wtw_tmoldphysicsenabled').checked) {
+				zmolds[zmoldind].physics.enabled = 1;
+			} else {
+				zmolds[zmoldind].physics.enabled = 0;
+			}
+			if (dGet('wtw_tmoldphysicsistriggershape').checked) {
+				zmolds[zmoldind].physics.istriggershape = 1;
+			} else {
+				zmolds[zmoldind].physics.istriggershape = 0;
+			}
+			if (dGet('wtw_tmoldphysicsstartasleep').checked) {
+				zmolds[zmoldind].physics.startasleep = 1;
+			} else {
+				zmolds[zmoldind].physics.startasleep = 0;
+			}
+			zmolds[zmoldind].physics.center.x = dGet('wtw_tmoldphysicscenterx').value;
+			zmolds[zmoldind].physics.center.y = dGet('wtw_tmoldphysicscentery').value;
+			zmolds[zmoldind].physics.center.z = dGet('wtw_tmoldphysicscenterz').value;
+			zmolds[zmoldind].physics.extents.x = dGet('wtw_tmoldphysicsextentsx').value;
+			zmolds[zmoldind].physics.extents.y = dGet('wtw_tmoldphysicsextentsy').value;
+			zmolds[zmoldind].physics.extents.z = dGet('wtw_tmoldphysicsextentsz').value;
+			zmolds[zmoldind].physics.friction = dGet('wtw_tmoldphysicsfriction').value;
+			zmolds[zmoldind].physics.mass = dGet('wtw_tmoldphysicsmass').value;
+			zmolds[zmoldind].physics.pointa.x = dGet('wtw_tmoldphysicspointax').value;
+			zmolds[zmoldind].physics.pointa.y = dGet('wtw_tmoldphysicspointay').value;
+			zmolds[zmoldind].physics.pointa.z = dGet('wtw_tmoldphysicspointaz').value;
+			zmolds[zmoldind].physics.pointb.x = dGet('wtw_tmoldphysicspointbx').value;
+			zmolds[zmoldind].physics.pointb.y = dGet('wtw_tmoldphysicspointby').value;
+			zmolds[zmoldind].physics.pointb.z = dGet('wtw_tmoldphysicspointbz').value;
+			zmolds[zmoldind].physics.radius = dGet('wtw_tmoldphysicsradius').value;
+			zmolds[zmoldind].physics.restitution = dGet('wtw_tmoldphysicsrestitution').value;
+			zmolds[zmoldind].physics.rotation.w = dGet('wtw_tmoldphysicsrotationw').value;
+			zmolds[zmoldind].physics.rotation.x = dGet('wtw_tmoldphysicsrotationx').value;
+			zmolds[zmoldind].physics.rotation.y = dGet('wtw_tmoldphysicsrotationy').value;
+			zmolds[zmoldind].physics.rotation.z = dGet('wtw_tmoldphysicsrotationz').value;
 			zmolds[zmoldind].webtext.webtext = WTW.encode(dGet('wtw_tmoldwebtext').value);
 			zmolds[zmoldind].webtext.webstyle = WTW.encode(dGet('wtw_tmoldwebstyle').value);
 			zmolds[zmoldind].color.diffusecolor = dGet('wtw_tmolddiffusecolor').value;
@@ -1523,6 +1635,29 @@ WTWJS.prototype.submitMoldForm = async function(zselect) {
 				'ispickable': zmolds[zmoldind].ispickable,
 				'csgmoldid': zmolds[zmoldind].csg.moldid,
 				'csgaction': zmolds[zmoldind].csg.action,
+				'physicsenabled': zmolds[zmoldind].physics.enabled,
+				'physicsistriggershape': zmolds[zmoldind].physics.istriggershape,
+				'physicsstartasleep': zmolds[zmoldind].physics.startasleep,
+				'physicscenterx': zmolds[zmoldind].physics.center.x,
+				'physicscentery': zmolds[zmoldind].physics.center.y,
+				'physicscenterz': zmolds[zmoldind].physics.center.z,
+				'physicsextentsx': zmolds[zmoldind].physics.extents.x,
+				'physicsextentsy': zmolds[zmoldind].physics.extents.y,
+				'physicsextentsz': zmolds[zmoldind].physics.extents.z,
+				'physicsfriction': zmolds[zmoldind].physics.friction,
+				'physicsmass': zmolds[zmoldind].physics.mass,
+				'physicspointax': zmolds[zmoldind].physics.pointa.x,
+				'physicspointay': zmolds[zmoldind].physics.pointa.y,
+				'physicspointaz': zmolds[zmoldind].physics.pointa.z,
+				'physicspointbx': zmolds[zmoldind].physics.pointb.x,
+				'physicspointby': zmolds[zmoldind].physics.pointb.y,
+				'physicspointbz': zmolds[zmoldind].physics.pointb.z,
+				'physicsradius': zmolds[zmoldind].physics.radius,
+				'physicsrestitution': zmolds[zmoldind].physics.restitution,
+				'physicsrotationw': zmolds[zmoldind].physics.rotation.w,
+				'physicsrotationx': zmolds[zmoldind].physics.rotation.x,
+				'physicsrotationy': zmolds[zmoldind].physics.rotation.y,
+				'physicsrotationz': zmolds[zmoldind].physics.rotation.z,
 				'imageid': '',
 				'imageind': zmolds[zmoldind].graphics.webimageind,
 				'imagepath': '',
@@ -1657,6 +1792,29 @@ WTWJS.prototype.clearEditMold = function() {
 		dGet('wtw_tmoldaddimageclickid').value = '';
 		dGet('wtw_tmoldimagejsfunction').value = '';
 		dGet('wtw_tmoldimagejsparameters').value = '';
+		dGet('wtw_tmoldphysicsenabled').checked = false;
+		dGet('wtw_tmoldphysicsistriggershape').checked = false;
+		dGet('wtw_tmoldphysicsstartasleep').checked = false;
+		dGet('wtw_tmoldphysicscenterx').value = '0.00';
+		dGet('wtw_tmoldphysicscentery').value = '0.00';
+		dGet('wtw_tmoldphysicscenterz').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsx').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsy').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsz').value = '0.00';
+		dGet('wtw_tmoldphysicsfriction').value = '0.00';
+		dGet('wtw_tmoldphysicsmass').value = '0.00';
+		dGet('wtw_tmoldphysicspointax').value = '0.00';
+		dGet('wtw_tmoldphysicspointay').value = '0.00';
+		dGet('wtw_tmoldphysicspointaz').value = '0.00';
+		dGet('wtw_tmoldphysicspointbx').value = '0.00';
+		dGet('wtw_tmoldphysicspointby').value = '0.00';
+		dGet('wtw_tmoldphysicspointbz').value = '0.00';
+		dGet('wtw_tmoldphysicsradius').value = '0.00';
+		dGet('wtw_tmoldphysicsrestitution').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationw').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationx').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationy').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationz').value = '0.00';
 		WTW.pluginsClearEditMold();
 		scene.render();
 		WTW.closeEditPoles();
@@ -3348,6 +3506,30 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 			var zparentname = '';
 			var zlastmin = null;
 			var zlastmax = null;
+			var zphysicsenabled = 0;
+			var zphysicscenterx = '0.00';
+			var zphysicscentery = '0.00';
+			var zphysicscenterz = '0.00';
+			var zphysicsextentsx = '0.00';
+			var zphysicsextentsy = '0.00';
+			var zphysicsextentsz = '0.00';
+			var zphysicsfriction = '0.00';
+			var zphysicsistriggershape = 0;
+			var zphysicsmass = '0.00';
+			var zphysicspointax = '0.00';
+			var zphysicspointay = '0.00';
+			var zphysicspointaz = '0.00';
+			var zphysicspointbx = '0.00';
+			var zphysicspointby = '0.00';
+			var zphysicspointbz = '0.00';
+			var zphysicsradius = '0.00';
+			var zphysicsrestitution = '0.00';
+			var zphysicsrotationw = '0.00';
+			var zphysicsrotationx = '0.00';
+			var zphysicsrotationy = '0.00';
+			var zphysicsrotationz = '0.00';
+			var zphysicsstartasleep = 0;
+
 			if (zmold != null) {
 				try {
 					zmoldparent = zmold.parent;
@@ -4108,6 +4290,146 @@ WTWJS.prototype.setNewMold = function(zrebuildmold) {
 						}
 					}
 				}
+				/* process physics values */
+				if (dGet('wtw_tmoldphysicsenabled').checked) {
+					zphysicsenabled = 1;
+					zrebuildmold = 1;
+					WTW.show('wtw_moldphysicsdiv');
+				} else {
+					WTW.hide('wtw_moldphysicsdiv');
+				}
+				if (dGet('wtw_tmoldphysicsistriggershape').checked) {
+					zphysicsistriggershape = 1;
+				}
+				if (dGet('wtw_tmoldphysicsstartasleep').checked) {
+					zphysicsstartasleep = 1;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicscenterx').value)) {
+					zphysicscenterx = Number(dGet('wtw_tmoldphysicscenterx').value);
+				} else {
+					dGet('wtw_tmoldphysicscenterx').value = zphysicscenterx;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicscentery').value)) {
+					zphysicscentery = Number(dGet('wtw_tmoldphysicscentery').value);
+				} else {
+					dGet('wtw_tmoldphysicscentery').value = zphysicscentery;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicscenterz').value)) {
+					zphysicscenterz = Number(dGet('wtw_tmoldphysicscenterz').value);
+				} else {
+					dGet('wtw_tmoldphysicscenterz').value = zphysicscenterz;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsextentsx').value)) {
+					zphysicsextentsx = Number(dGet('wtw_tmoldphysicsextentsx').value);
+				} else {
+					dGet('wtw_tmoldphysicsextentsx').value = zphysicsextentsx;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsextentsy').value)) {
+					zphysicsextentsy = Number(dGet('wtw_tmoldphysicsextentsy').value);
+				} else {
+					dGet('wtw_tmoldphysicsextentsy').value = zphysicsextentsy;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsextentsz').value)) {
+					zphysicsextentsz = Number(dGet('wtw_tmoldphysicsextentsz').value);
+				} else {
+					dGet('wtw_tmoldphysicsextentsz').value = zphysicsextentsz;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsfriction').value)) {
+					zphysicsfriction = Number(dGet('wtw_tmoldphysicsfriction').value);
+				} else {
+					dGet('wtw_tmoldphysicsfriction').value = zphysicsfriction;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsmass').value)) {
+					zphysicsmass = Number(dGet('wtw_tmoldphysicsmass').value);
+				} else {
+					dGet('wtw_tmoldphysicsmass').value = zphysicsmass;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointax').value)) {
+					zphysicspointax = Number(dGet('wtw_tmoldphysicspointax').value);
+				} else {
+					dGet('wtw_tmoldphysicspointax').value = zphysicspointax;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointay').value)) {
+					zphysicspointay = Number(dGet('wtw_tmoldphysicspointay').value);
+				} else {
+					dGet('wtw_tmoldphysicspointay').value = zphysicspointay;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointaz').value)) {
+					zphysicspointaz = Number(dGet('wtw_tmoldphysicspointaz').value);
+				} else {
+					dGet('wtw_tmoldphysicspointaz').value = zphysicspointaz;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointbx').value)) {
+					zphysicspointbx = Number(dGet('wtw_tmoldphysicspointbx').value);
+				} else {
+					dGet('wtw_tmoldphysicspointbx').value = zphysicspointbx;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointby').value)) {
+					zphysicspointby = Number(dGet('wtw_tmoldphysicspointby').value);
+				} else {
+					dGet('wtw_tmoldphysicspointby').value = zphysicspointby;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicspointbz').value)) {
+					zphysicspointbz = Number(dGet('wtw_tmoldphysicspointbz').value);
+				} else {
+					dGet('wtw_tmoldphysicspointbz').value = zphysicspointbz;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsradius').value)) {
+					zphysicsradius = Number(dGet('wtw_tmoldphysicsradius').value);
+				} else {
+					dGet('wtw_tmoldphysicsradius').value = zphysicsradius;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsrestitution').value)) {
+					zphysicsrestitution = Number(dGet('wtw_tmoldphysicsrestitution').value);
+				} else {
+					dGet('wtw_tmoldphysicsrestitution').value = zphysicsrestitution;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsrotationw').value)) {
+					zphysicsrotationw = Number(dGet('wtw_tmoldphysicsrotationw').value);
+				} else {
+					dGet('wtw_tmoldphysicsrotationw').value = zphysicsrotationw;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsrotationx').value)) {
+					zphysicsrotationx = Number(dGet('wtw_tmoldphysicsrotationx').value);
+				} else {
+					dGet('wtw_tmoldphysicsrotationx').value = zphysicsrotationx;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsrotationy').value)) {
+					zphysicsrotationy = Number(dGet('wtw_tmoldphysicsrotationy').value);
+				} else {
+					dGet('wtw_tmoldphysicsrotationy').value = zphysicsrotationy;
+				}
+				if (WTW.isNumeric(dGet('wtw_tmoldphysicsrotationz').value)) {
+					zphysicsrotationz = Number(dGet('wtw_tmoldphysicsrotationz').value);
+				} else {
+					dGet('wtw_tmoldphysicsrotationz').value = zphysicsrotationz;
+				}
+
+				zmolds[zmoldind].physics.enabled = zphysicsenabled;
+				zmolds[zmoldind].physics.istriggershape = zphysicsistriggershape;
+				zmolds[zmoldind].physics.startasleep = zphysicsstartasleep;
+				zmolds[zmoldind].physics.center.x = zphysicscenterx;
+				zmolds[zmoldind].physics.center.y = zphysicscentery;
+				zmolds[zmoldind].physics.center.z = zphysicscenterz;
+				zmolds[zmoldind].physics.extents.x = zphysicsextentsx;
+				zmolds[zmoldind].physics.extents.y = zphysicsextentsy;
+				zmolds[zmoldind].physics.extents.z = zphysicsextentsz;
+				zmolds[zmoldind].physics.friction = zphysicsfriction;
+				zmolds[zmoldind].physics.mass = zphysicsmass;
+				zmolds[zmoldind].physics.pointa.x = zphysicspointax;
+				zmolds[zmoldind].physics.pointa.y = zphysicspointay;
+				zmolds[zmoldind].physics.pointa.z = zphysicspointaz;
+				zmolds[zmoldind].physics.pointb.x = zphysicspointbx;
+				zmolds[zmoldind].physics.pointb.y = zphysicspointby;
+				zmolds[zmoldind].physics.pointb.z = zphysicspointbz;
+				zmolds[zmoldind].physics.radius = zphysicsradius;
+				zmolds[zmoldind].physics.restitution = zphysicsrestitution;
+				zmolds[zmoldind].physics.rotation.w = zphysicsrotationw;
+				zmolds[zmoldind].physics.rotation.x = zphysicsrotationx;
+				zmolds[zmoldind].physics.rotation.y = zphysicsrotationy;
+				zmolds[zmoldind].physics.rotation.z = zphysicsrotationz;
+				
+
 				var zhasdependents = 0;
 				for (var i=0;i<zmolds.length;i++) {
 					if (zmolds[i] != null) {

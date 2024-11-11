@@ -5,10 +5,11 @@
 /* constructor function code WTWJS() creates the JavaScript WTW class and sets most global default values for WalkTheWeb */
 /* additional PHP derived yet JavaScript global values can be found at /core/functions/class_wtw-initsession.php loadInitJSData() function */
 
-var scene;
-var engine;
-var canvas;
+let scene;
+let engine;
+let canvas;
 let havokInstance = null;
+let havokPlugin = null;
 let hk = null;
 
 function WTWJS() {

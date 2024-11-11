@@ -432,7 +432,7 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 				}
 			}
 			if (zcoveringname == 'hidden' || znamepart[1] == 'actionzone' || znamepart[1] == 'connectinggrid') {
-				/* some molds do not ned coverings (came with - or not necessary) */
+				/* some molds do not need coverings (came with - or not necessary) */
 				zmold.isVisible = false;
 			} else {
 				/* molds that require coverings to be added */
@@ -534,7 +534,13 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 			if (zcastshadows) {
 				WTW.addShadowToMold(zmold);
 			}
-			
+			if (zshape != 'babylonfile') {
+				if (zmolddef.physics != undefined) {
+					if (zmolddef.physics.enabled == 1 && havokInstance != null) {
+						zmold = WTW.addMoldPhysics(zmold, zmolddef, zshape);
+					}
+				}
+			}
 			/* work in progress - currently disabled, freeze world matrix can speed up the scene with less calculations */
 			if (WTW.AdminView == 0 && zparentname.indexOf('actionzone') == -1 && zparentname != '') {
 				zmold.freezeWorldMatrix();
@@ -573,6 +579,137 @@ WTWJS.prototype.completeMold = function(zmold, zmoldname, zparentname, zmolddef,
 	} 
 	return zmold;
 }
+
+WTWJS.prototype.addMoldPhysics = function(zmold, zmolddef, zshape) {
+	try {
+		var zparameters = {};
+		zparameters.mass = 0;
+		if (zmolddef.physics.mass != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.mass)) {
+				if (Number(zmolddef.physics.mass) != 0) {
+					zparameters.mass = zmolddef.physics.mass;
+				}
+			}
+		}
+		if (zmolddef.physics.istriggershape != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.istriggershape)) {
+				if (Number(zmolddef.physics.istriggershape) == 1) {
+					zparameters.isTriggerShape = true;
+				}
+			}
+		}
+		if (zmolddef.physics.startasleep != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.startasleep)) {
+				if (Number(zmolddef.physics.startasleep) == 1) {
+					zparameters.startAsleep = true;
+				}
+			}
+		}
+		if (zmolddef.physics.center != undefined) {
+			if (zmolddef.physics.center.x != undefined && zmolddef.physics.center.y != undefined && zmolddef.physics.center.z != undefined) {
+				if (WTW.isNumeric(zmolddef.physics.center.x) && WTW.isNumeric(zmolddef.physics.center.y) && WTW.isNumeric(zmolddef.physics.center.z)) {
+					if (Number(zmolddef.physics.center.x) != 0 || Number(zmolddef.physics.center.y) != 0 || Number(zmolddef.physics.center.z) != 0) {
+						zparameters.center = new BABYLON.Vector3(zmolddef.physics.center.x,zmolddef.physics.center.y,zmolddef.physics.center.z);
+					}
+				}
+			}
+		}
+		if (zmolddef.physics.extents != undefined) {
+			if (zmolddef.physics.extents.x != undefined && zmolddef.physics.extents.y != undefined && zmolddef.physics.extents.z != undefined) {
+				if (WTW.isNumeric(zmolddef.physics.extents.x) && WTW.isNumeric(zmolddef.physics.extents.y) && WTW.isNumeric(zmolddef.physics.extents.z)) {
+					if (Number(zmolddef.physics.extents.x) != 0 || Number(zmolddef.physics.extents.y) != 0 || Number(zmolddef.physics.extents.z) != 0) {
+						zparameters.extents = new BABYLON.Vector3(zmolddef.physics.extents.x,zmolddef.physics.extents.y,zmolddef.physics.extents.z);
+					}
+				}
+			}
+		}
+		if (zmolddef.physics.friction != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.friction)) {
+				if (Number(zmolddef.physics.friction) != 0) {
+					zparameters.friction = zmolddef.physics.friction;
+				}
+			}
+		}
+		if (zmolddef.physics.pointa != undefined) {
+			if (zmolddef.physics.pointa.x != undefined && zmolddef.physics.pointa.y != undefined && zmolddef.physics.pointa.z != undefined) {
+				if (WTW.isNumeric(zmolddef.physics.pointa.x) && WTW.isNumeric(zmolddef.physics.pointa.y) && WTW.isNumeric(zmolddef.physics.pointa.z)) {
+					if (Number(zmolddef.physics.pointa.x) != 0 || Number(zmolddef.physics.pointa.y) != 0 || Number(zmolddef.physics.pointa.z) != 0) {
+						zparameters.pointa = new BABYLON.Vector3(zmolddef.physics.pointa.x,zmolddef.physics.pointa.y,zmolddef.physics.pointa.z);
+					}
+				}
+			}
+		}
+		if (zmolddef.physics.pointb != undefined) {
+			if (zmolddef.physics.pointb.x != undefined && zmolddef.physics.pointb.y != undefined && zmolddef.physics.pointb.z != undefined) {
+				if (WTW.isNumeric(zmolddef.physics.pointb.x) && WTW.isNumeric(zmolddef.physics.pointb.y) && WTW.isNumeric(zmolddef.physics.pointb.z)) {
+					if (Number(zmolddef.physics.pointb.x) != 0 || Number(zmolddef.physics.pointb.y) != 0 || Number(zmolddef.physics.pointb.z) != 0) {
+						zparameters.pointb = new BABYLON.Vector3(zmolddef.physics.pointb.x,zmolddef.physics.pointb.y,zmolddef.physics.pointb.z);
+					}
+				}
+			}
+		}
+		if (zmolddef.physics.radius != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.radius)) {
+				if (Number(zmolddef.physics.radius) != 0) {
+					zparameters.radius = zmolddef.physics.radius;
+				}
+			}
+		}
+		if (zmolddef.physics.restitution != undefined) {
+			if (WTW.isNumeric(zmolddef.physics.restitution)) {
+				if (Number(zmolddef.physics.restitution) != 0) {
+					zparameters.restitution = zmolddef.physics.restitution;
+				}
+			}
+		}
+		if (zmolddef.physics.rotation != undefined) {
+			if (zmolddef.physics.rotation.x != undefined && zmolddef.physics.rotation.y != undefined && zmolddef.physics.rotation.z != undefined && zmolddef.physics.rotation.w != undefined) {
+				if (WTW.isNumeric(zmolddef.physics.rotation.x) && WTW.isNumeric(zmolddef.physics.rotation.y) && WTW.isNumeric(zmolddef.physics.rotation.z) && WTW.isNumeric(zmolddef.physics.rotation.w)) {
+					if (zmolddef.physics.rotation.x != 0 || zmolddef.physics.rotation.y != 0 || zmolddef.physics.rotation.z != 0 || zmolddef.physics.rotation.w != 0) {
+						zparameters.rotation = new BABYLON.Quaternion(zmolddef.physics.rotation.x,zmolddef.physics.rotation.y,zmolddef.physics.rotation.z,zmolddef.physics.rotation.w);
+					}
+				}
+			}
+		}
+
+		var zshapetype = BABYLON.PhysicsShapeType.MESH;
+		switch (zshape) {
+			case 'box':
+			case 'wall':
+			case 'floor':
+				zshapetype = BABYLON.PhysicsShapeType.BOX;
+				break;
+			case 'sphere':
+				zshapetype = BABYLON.PhysicsShapeType.SPHERE;
+				break;
+			case 'cylinder':
+				zshapetype = BABYLON.PhysicsShapeType.CYLINDER
+				break;
+			case 'tube':
+				zshapetype = BABYLON.PhysicsShapeType.CAPSULE
+				break;
+			case 'babylonfile':
+				zshapetype = BABYLON.PhysicsShapeType.CONVEX_HULL;
+				for (var i = 0; i < scene.meshes.length;i++) {
+					if (scene.meshes[i] != null) {
+						if (scene.meshes[i].id.indexOf(zmold.id) > -1) {
+							try {
+								scene.meshes[i].aggregate = new BABYLON.PhysicsAggregate(scene.meshes[i], zshapetype, zparameters, scene);
+							} catch (ex) {}
+						}
+					}
+				}
+				break;
+		}
+		if (zshape != 'babylonfile') {
+			zmold.aggregate = new BABYLON.PhysicsAggregate(zmold, zshapetype, zparameters, scene);
+		}
+	} catch (ex) {
+		WTW.log('core-scripts-molds-addmoldlist\r\n addMoldPhysics=' + ex.message);
+	} 
+	return zmold;
+}
+
 
 WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 	/* For each new mold and new web mold, these are the default values when created using the admin form */
@@ -679,6 +816,29 @@ WTWJS.prototype.setNewMoldDefaults = function(zshape) {
 		dGet('wtw_tmolduscale').value = '0.00';
 		dGet('wtw_tmoldvscale').value = '0.00';
 		dGet('wtw_tmoldsubdivisions').value = '12';
+		dGet('wtw_tmoldphysicsenabled').checked = false;
+		dGet('wtw_tmoldphysicsistriggershape').checked = false;
+		dGet('wtw_tmoldphysicsstartasleep').checked = false;
+		dGet('wtw_tmoldphysicscenterx').value = '0.00';
+		dGet('wtw_tmoldphysicscentery').value = '0.00';
+		dGet('wtw_tmoldphysicscenterz').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsx').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsy').value = '0.00';
+		dGet('wtw_tmoldphysicsextentsz').value = '0.00';
+		dGet('wtw_tmoldphysicsfriction').value = '0.00';
+		dGet('wtw_tmoldphysicsmass').value = '0.00';
+		dGet('wtw_tmoldphysicspointax').value = '0.00';
+		dGet('wtw_tmoldphysicspointay').value = '0.00';
+		dGet('wtw_tmoldphysicspointaz').value = '0.00';
+		dGet('wtw_tmoldphysicspointbx').value = '0.00';
+		dGet('wtw_tmoldphysicspointby').value = '0.00';
+		dGet('wtw_tmoldphysicspointbz').value = '0.00';
+		dGet('wtw_tmoldphysicsradius').value = '0.00';
+		dGet('wtw_tmoldphysicsrestitution').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationw').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationx').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationy').value = '0.00';
+		dGet('wtw_tmoldphysicsrotationz').value = '0.00';
 		switch (zshapevalue) {
 			case 'cylinder':
 				dGet('wtw_tmoldrotationy').value = '0.00';

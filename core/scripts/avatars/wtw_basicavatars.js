@@ -228,11 +228,18 @@ WTWJS.prototype.addAvatarPlaceholder = function(zavatarname, zavatardef) {
 		/* right foot parents to right foot */
 		var zrightfoot = WTW.getMeshOrNodeByID(zavatarname + '-rightfoot');
 		if (zrightfoot == null) {
-			zrightfoot = new BABYLON.TransformNode(zavatarname + '-rightfoot');
+//			zrightfoot = new BABYLON.TransformNode(zavatarname + '-rightfoot');
+			zrightfoot = new BABYLON.MeshBuilder.CreateBox(zavatarname + '-rightfoot', {}, scene);
+
 			zrightfoot.position = new BABYLON.Vector3(0, .25, .5);
 			zrightfoot.rotation = new BABYLON.Vector3(0,0,0);
 			zrightfoot.scaling = new BABYLON.Vector3(1/zscalingx, 1/zscalingy, 1/zscalingz);
 			zrightfoot.parent = zavatar;
+/*
+			if (havokInstance != null) {
+				zrightfoot.aggregate = new BABYLON.PhysicsAggregate(zrightfoot, BABYLON.PhysicsShapeType.BOX, { mass:0 }, scene);
+			}
+*/
 		}
 		/* left foot parents to left foot */
 		var zleftfoot = WTW.getMeshOrNodeByID(zavatarname + '-leftfoot');
@@ -351,7 +358,7 @@ WTWJS.prototype.addAvatar3DObject = function(zavatarname, zavatardef) {
 		if (zavatar == null) {
 			zavatar = BABYLON.MeshBuilder.CreateBox(zavatarname, {}, scene);
 			zavatar.material = new BABYLON.StandardMaterial('mat' + zavatarname, scene);
-			zavatar.material.alpha = 0;
+			zavatar.material.alpha = 1;
 			zavatar.applyGravity = true;
 			zavatar.showBoundingBox = false;
 			zavatar.ellipsoid = new BABYLON.Vector3(3, 7, 3);
@@ -465,7 +472,7 @@ WTWJS.prototype.addAvatar3DObject = function(zavatarname, zavatardef) {
 								zresults.meshes[i].renderingGroupId = 1;
 //								zresults.meshes[i].convertToUnIndexedMesh();
 								zresults.meshes[i].isVisible = false;
-								
+
 								/* set custom colors to avatar parts */
 								let zdiffusecolor = '#ffffff';
 								let zemissivecolor = '#000000';
@@ -601,14 +608,7 @@ WTWJS.prototype.addAvatar3DObject = function(zavatarname, zavatardef) {
 											} else if (zbonename.indexOf('leftfoot') > -1 && zleftfootbone == -1) {
 												zleftfootbone = j;
 											}
-/*											if (j == 0) {
-												zresults.skeletons[i].bones[j].parent = zavatarparent;
-											} else {
-												if (zresults.skeletons[i].bones[j].parent == null) {
-													zresults.skeletons[i].bones[j].parent = zresults.skeletons[i].bones[0];
-												}
-											}
-*/										}
+										}
 									}
 									if (zheadtopbone > -1) {
 										/* headtop box parents to top of head */
@@ -668,10 +668,12 @@ WTWJS.prototype.addAvatar3DObject = function(zavatarname, zavatardef) {
 										/* right foot parents to right foot */
 										var zrightfoot = WTW.getMeshOrNodeByID(zavatarname + '-rightfoot');
 										if (zrightfoot == null) {
-											zrightfoot = new BABYLON.TransformNode(zavatarname + '-rightfoot');
+//											zrightfoot = new BABYLON.TransformNode(zavatarname + '-rightfoot');
+											zrightfoot = new BABYLON.MeshBuilder.CreateBox(zavatarname + '-rightfoot', {}, scene);
 										}
 										zrightfoot.scaling = new BABYLON.Vector3(1/zscalingx, 1/zscalingy, 1/zscalingz);
 										zrightfoot.attachToBone(zresults.skeletons[i].bones[zrightfootbone], zresults.meshes[0]);
+										
 									}
 									if (zleftfootbone > -1) {
 										/* left foot parents to left foot */

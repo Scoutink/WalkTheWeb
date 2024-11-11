@@ -408,7 +408,7 @@ WTWJS.prototype.getSelectThingsList = async function(zfilter) {
 WTWJS.prototype.editThing = function(zthingid) {
 	/* load a select 3D Thing into the editor */
 	try {
-		WTW.openWebpage(wtw_domainurl + '/admin.php?thingid=' + zthingid + '&hmenu=35');
+		WTW.openWebpage(wtw_domainurl + '/admin.php?thingid=' + zthingid);
 	} catch (ex) {
 		WTW.log('core-scripts-admin-wtw_adminthings.js-editThing=' + ex.message);
 	}

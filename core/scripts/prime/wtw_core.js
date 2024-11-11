@@ -352,8 +352,6 @@ WTWJS.prototype.initEnvironment = async function() {
 			WTW.doNotHandleContextLost = false;
 		}
 
-//		engine = new BABYLON.Engine(canvas, true, {deterministicLockstep: false, lockstepMaxSteps: 4, doNotHandleContextLost: WTW.doNotHandleContextLost, stencil: true});
-//		engine = new BABYLON.Engine(canvas, true);
 		engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: false, stencil: true, disableWebGL2Support: false });
 
 		/* add WalkTheWeb version to the console.log */
@@ -361,9 +359,9 @@ WTWJS.prototype.initEnvironment = async function() {
 		
 		/* optional optimization settings */
 		if (WTW.adminView == 1) {
-//			engine.enableOfflineSupport = WTW.enableOfflineSupportAdmin;
+			/* engine.enableOfflineSupport = WTW.enableOfflineSupportAdmin; */
 		} else {
-//			engine.enableOfflineSupport = WTW.enableOfflineSupport;
+			/* engine.enableOfflineSupport = WTW.enableOfflineSupport; */
 		}
 		/* prevent 3d Scene unloading when browser tab is not in focus */
 		engine.renderEvenInBackground = true;
@@ -376,11 +374,12 @@ WTWJS.prototype.initEnvironment = async function() {
 		switch (WTW.physicsEngine) {
 			case 'havok':
 				if (WTW.babylonVersion == 'v7.x.x' || WTW.babylonVersion == 'v6.x.x') {
-					/* initialize Havok physics engine */
-					HavokPhysics().then((havok) => {
-						/* Havok is now available */
-						havokInstance = havok;
-					});
+					havokInstance = await HavokPhysics();
+					// pass the engine to the plugin
+					hk = await new BABYLON.HavokPlugin(true, havokInstance);
+					scene.enablePhysics(new BABYLON.Vector3(0, -WTW.init.gravity, 0), hk);
+				} else {
+					scene.gravity = new BABYLON.Vector3(0, -WTW.init.gravity, 0);
 				}
 				break;
 			case 'cannon':
@@ -400,20 +399,21 @@ WTWJS.prototype.initEnvironment = async function() {
 		scene.autoClearDepthAndStencil = false;
 		scene.collisionsEnabled = true;
 		scene.doNotHandleCursors = true;
-//		scene.skipPointerMovePicking = true;
-//		scene.constantlyUpdateMeshUnderPointer = false;
-//		scene.getAnimationRatio();
-//		scene.useGeometryIdsMap = true;
-//		scene.useMaterialMeshMap = true;
-		
-//		scene.useClonedMeshMap = WTW.init.sceneUseClonedMeshMap;
-		/* set scene to be clearer */
-//		scene.blockMaterialDirtyMechanism = WTW.init.sceneBlockMaterialDirtyMechanism;
-		
-//		scene.performancePriority = BABYLON.ScenePerformancePriority.Intermediate;
-		
-		/* Add Scene Optimizer */
-/*		var zoptions = new BABYLON.SceneOptimizerOptions(30, 2000);
+/*		/ * optional settings * /
+		scene.skipPointerMovePicking = true;
+		scene.constantlyUpdateMeshUnderPointer = false;
+		scene.getAnimationRatio();
+		scene.useGeometryIdsMap = true;
+		scene.useMaterialMeshMap = true;
+	
+		scene.useClonedMeshMap = WTW.init.sceneUseClonedMeshMap;
+		/ * set scene to be clearer * /
+		scene.blockMaterialDirtyMechanism = WTW.init.sceneBlockMaterialDirtyMechanism;
+	
+		scene.performancePriority = BABYLON.ScenePerformancePriority.Intermediate;
+	
+		/ * Add Scene Optimizer * /
+		var zoptions = new BABYLON.SceneOptimizerOptions(30, 2000);
 		zoptions.addOptimization(new BABYLON.ShadowsOptimization(0));
 		zoptions.addOptimization(new BABYLON.LensFlaresOptimization(0));
 		zoptions.addOptimization(new BABYLON.PostProcessesOptimization(1));
@@ -422,10 +422,11 @@ WTWJS.prototype.initEnvironment = async function() {
 		zoptions.addOptimization(new BABYLON.RenderTargetsOptimization(3));
 		zoptions.addOptimization(new BABYLON.HardwareScalingOptimization(4, 4));
 		var zoptimizer = new BABYLON.SceneOptimizer(scene, zoptions);
-		//zoptimizer.start();
+		zoptimizer.start();
 */		
+		/* scene light setting  */
 		scene.ambientColor = new BABYLON.Color3.FromHexString(WTW.init.sceneAmbientColor);
-		scene.clearColor = new BABYLON.Color3.FromHexString(WTW.init.sceneClearColor); //optional light setting  */
+		scene.clearColor = new BABYLON.Color3.FromHexString(WTW.init.sceneClearColor); 
 		
 		/* initialize an action manager for the scene */
 		scene.actionManager = new BABYLON.ActionManager(scene);
@@ -460,15 +461,6 @@ WTWJS.prototype.initEnvironment = async function() {
 		
 		/* create the extended ground that never ends while the avatar walks */
 		WTW.setExtendedGround();
-
-		if (WTW.physicsEngine == 'havok' && (WTW.babylonVersion == 'v7.x.x' || WTW.babylonVersion == 'v6.x.x')) {
-			/* initialize Havok physics engine */
-			havokInstance = await HavokPhysics();
-			hk = new BABYLON.HavokPlugin(true, havokInstance);
-//			scene.enablePhysics(new BABYLON.Vector3(0, -WTW.init.gravity, 0), hk);
-			scene.gravity = new BABYLON.Vector3(0, -WTW.init.gravity, 0);
-//			var zgroundaggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
-		}
 
 		/* start render cycle */
 		WTW.startRender();

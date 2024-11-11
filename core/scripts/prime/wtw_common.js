@@ -681,39 +681,76 @@ WTWJS.prototype.addShadowToMold = function(zmold, zshadowmap) {
 			}
 			var zchildmeshes = zmold.getChildren();
 			if (zchildmeshes != null) {
-				for (var j = 0;j < zchildmeshes.length;j++) {
-					if (zchildmeshes[j] != null) {
-						var zfound = false;
-						var zfoundind = -1;
-						var znextind = -1;
-						if (zshadowmap != null) {
-							if (zshadowmap.getShadowMap() != null) {
-								znextind = zshadowmap.getShadowMap().renderList.length;
-								for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
-									if (zshadowmap.getShadowMap().renderList[i] == null) {
-										if (i < znextind) {
-											znextind = i;
+				if (zchildmeshes.length > 0) {
+					for (var j = 0;j < zchildmeshes.length;j++) {
+						if (zchildmeshes[j] != null) {
+							var zfound = false;
+							var zfoundind = -1;
+							var znextind = -1;
+							if (zshadowmap != null) {
+								if (zshadowmap.getShadowMap() != null) {
+									znextind = zshadowmap.getShadowMap().renderList.length;
+									for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
+										if (zshadowmap.getShadowMap().renderList[i] == null) {
+											if (i < znextind) {
+												znextind = i;
+											}
+										}
+										if (zchildmeshes[j] != null) {
+											if (zchildmeshes[j].name != undefined) {
+												if (zshadowmap.getShadowMap().renderList[i].name == zchildmeshes[j].name) {
+													zfound = true;
+													zfoundind = i;
+												}
+											}
 										}
 									}
-									if (zchildmeshes[j] != null) {
-										if (zchildmeshes[j].name != undefined) {
-											if (zshadowmap.getShadowMap().renderList[i].name == zchildmeshes[j].name) {
-												zfound = true;
-												zfoundind = i;
+									if (zfound == false) {
+										if (zchildmeshes[j] != null) {
+											var zopacity = 1;
+											if (zchildmeshes[j].material != null) {
+												if (zchildmeshes[j].material.alpha != undefined) {
+													zopacity = zchildmeshes[j].material.alpha;
+												}
 											}
+											zshadowmap.addShadowCaster(zchildmeshes[j], true);
 										}
 									}
 								}
-								if (zfound == false) {
-									if (zchildmeshes[j] != null) {
-										var zopacity = 1;
-										if (zchildmeshes[j].material != null) {
-											if (zchildmeshes[j].material.alpha != undefined) {
-												zopacity = zchildmeshes[j].material.alpha;
-											}
-										}
-										zshadowmap.addShadowCaster(zchildmeshes[j], true);
+							}
+						}
+					}
+				} else {
+					var zfound = false;
+					var zfoundind = -1;
+					var znextind = -1;
+					if (zshadowmap != null) {
+						if (zshadowmap.getShadowMap() != null) {
+							znextind = zshadowmap.getShadowMap().renderList.length;
+							for (var i=0; i < zshadowmap.getShadowMap().renderList.length; i++) {
+								if (zshadowmap.getShadowMap().renderList[i] == null) {
+									if (i < znextind) {
+										znextind = i;
 									}
+								}
+								if (zmold != null) {
+									if (zmold.name != undefined) {
+										if (zshadowmap.getShadowMap().renderList[i].name == zmold.name) {
+											zfound = true;
+											zfoundind = i;
+										}
+									}
+								}
+							}
+							if (zfound == false) {
+								if (zmold != null) {
+									var zopacity = 1;
+									if (zmold.material != null) {
+										if (zmold.material.alpha != undefined) {
+											zopacity = zmold.material.alpha;
+										}
+									}
+									zshadowmap.addShadowCaster(zmold, true);
 								}
 							}
 						}
@@ -1481,7 +1518,7 @@ WTWJS.prototype.setExtendedGround = function () {
 		/* set physics on ground */
 		switch (WTW.physicsEngine) {
 			case 'havok':
-//				var zgroundaggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
+				WTW.extraGround.aggregate = new BABYLON.PhysicsAggregate(WTW.extraGround, BABYLON.PhysicsShapeType.BOX, { mass: 0 }, scene);
 				break;
 			case 'oimo':
 			case 'cannon':
@@ -2001,6 +2038,10 @@ WTWJS.prototype.disposeClean = function(zmoldname, zcheck) {
 						WTW.disposeClean(zmoldname + '-sprite');
 					}
 				}
+				/* dispose of any physics aggregate */
+				if (zmold.aggregate != undefined) {
+					zmold.aggregate.dispose();
+				}
 				try {
 					if (zmoldname.indexOf('babylonfile') > -1 || zmoldname.indexOf('actionzone') > -1 || zmoldname.indexOf('myavatar') > -1 || zmoldname.indexOf('person') > -1 || zmoldname.indexOf('editavatar') > -1 || zmoldname == 'hud' || zmoldname == 'hudlogin') {
 						/* dispose of child objects from imported meshes */
@@ -2009,6 +2050,9 @@ WTWJS.prototype.disposeClean = function(zmoldname, zcheck) {
 							for (var i=0; i < zchildmeshes.length; i++) {
 								if (zchildmeshes[i] != null) {
 									WTW.removeReflectionRefraction(zchildmeshes[i].name);
+									if (zchildmeshes[i].aggregate != undefined) {
+										zchildmeshes[i].aggregate.dispose();
+									}
 									zchildmeshes[i].dispose();
 								}
 							}

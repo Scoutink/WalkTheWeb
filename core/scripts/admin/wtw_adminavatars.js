@@ -310,6 +310,12 @@ WTWJS.prototype.loadNewAvatarFilesForm = function() {
 	/* load new 3D Avatar Files Form */
 	try {
 		dGet('wtw_taddnewavatarerror').innerHTML = '';
+		if (dGet('wtw_tnewavatarstartframe').value == '' || WTW.isNumeric(dGet('wtw_tnewavatarstartframe').value) == false) {
+			dGet('wtw_tnewavatarstartframe').value = '0';
+		}
+		if (dGet('wtw_tnewavatarendframe').value == '' || WTW.isNumeric(dGet('wtw_tnewavatarendframe').value) == false) {
+			dGet('wtw_tnewavatarendframe').value = '0';
+		}
 		var zrequest = {
 			'avatarid':dGet('wtw_teditavatarid').value,
 			'displayname':dGet('wtw_tnewavatarname').value,
