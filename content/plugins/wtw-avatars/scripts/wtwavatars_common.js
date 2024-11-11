@@ -487,6 +487,47 @@ WTWJS.prototype.newMold = function() {
 				'coneoutergain':'.5',
 				'sound':''
 			},
+			'physics':
+			{
+				'enabled':'0',
+				'center':
+				{
+					'x':'0.00',
+					'y':'0.00',
+					'z':'0.00'
+				},
+				'extents':
+				{
+					'x':'0.00',
+					'y':'0.00',
+					'z':'0.00'
+				},
+				'friction':'0.00',
+				'istriggershape':'0',
+				'mass':'0.00',
+				'pointa':
+				{
+					'x':'0.00',
+					'y':'0.00',
+					'z':'0.00'
+				},
+				'pointb':
+				{
+					'x':'0.00',
+					'y':'0.00',
+					'z':'0.00'
+				},
+				'radius':'0.00',
+				'restitution':'0.00',
+				'rotation':
+				{
+					'x':'0.00',
+					'y':'0.00',
+					'z':'0.00',
+					'w':'0.00'
+				},
+				'startasleep':'0'
+			},
 			'objects':
 			{
 				'light':'',
