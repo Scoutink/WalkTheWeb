@@ -1034,6 +1034,29 @@ class wtwbuildings {
 						t3.actionzone2id,
 						t3.csgmoldid,
 						t3.csgaction,
+						t3.physicsenabled,
+						t3.physicscenterx,
+						t3.physicscentery,
+						t3.physicscenterz,
+						t3.physicsextentsx,
+						t3.physicsextentsy,
+						t3.physicsextentsz,
+						t3.physicsfriction,
+						t3.physicsistriggershape,
+						t3.physicsmass,
+						t3.physicspointax,
+						t3.physicspointay,
+						t3.physicspointaz,
+						t3.physicspointbx,
+						t3.physicspointby,
+						t3.physicspointbz,
+						t3.physicsradius,
+						t3.physicsrestitution,
+						t3.physicsrotationw,
+						t3.physicsrotationx,
+						t3.physicsrotationy,
+						t3.physicsrotationz,
+						t3.physicsstartasleep,
 						t3.alttag,
 						t3.jsfunction,
 						t3.jsparameters,
@@ -1112,6 +1135,29 @@ class wtwbuildings {
 					$zactionzone2id = $zrow["actionzone2id"];
 					$zcsgmoldid = $zrow["csgmoldid"];
 					$zcsgaction = $zrow["csgaction"];
+					$zphysicsenabled = $zrow["physicsenabled"];
+					$zphysicscenterx = $zrow["physicscenterx"];
+					$zphysicscentery = $zrow["physicscentery"];
+					$zphysicscenterz = $zrow["physicscenterz"];
+					$zphysicsextentsx = $zrow["physicsextentsx"];
+					$zphysicsextentsy = $zrow["physicsextentsy"];
+					$zphysicsextentsz = $zrow["physicsextentsz"];
+					$zphysicsfriction = $zrow["physicsfriction"];
+					$zphysicsistriggershape = $zrow["physicsistriggershape"];
+					$zphysicsmass = $zrow["physicsmass"];
+					$zphysicspointax = $zrow["physicspointax"];
+					$zphysicspointay = $zrow["physicspointay"];
+					$zphysicspointaz = $zrow["physicspointaz"];
+					$zphysicspointbx = $zrow["physicspointbx"];
+					$zphysicspointby = $zrow["physicspointby"];
+					$zphysicspointbz = $zrow["physicspointbz"];
+					$zphysicsradius = $zrow["physicsradius"];
+					$zphysicsrestitution = $zrow["physicsrestitution"];
+					$zphysicsrotationw = $zrow["physicsrotationw"];
+					$zphysicsrotationx = $zrow["physicsrotationx"];
+					$zphysicsrotationy = $zrow["physicsrotationy"];
+					$zphysicsrotationz = $zrow["physicsrotationz"];
+					$zphysicsstartasleep = $zrow["physicsstartasleep"];
 					$zalttag = $zrow["alttag"];
 					$zjsfunction = $zrow["jsfunction"];
 					$zjsparameters = $zrow["jsparameters"];
@@ -1185,6 +1231,29 @@ class wtwbuildings {
 							actionzone2id,
 							csgmoldid,
 							csgaction,
+							physicsenabled,
+							physicscenterx,
+							physicscentery,
+							physicscenterz,
+							physicsextentsx,
+							physicsextentsy,
+							physicsextentsz,
+							physicsfriction,
+							physicsistriggershape,
+							physicsmass,
+							physicspointax,
+							physicspointay,
+							physicspointaz,
+							physicspointbx,
+							physicspointby,
+							physicspointbz,
+							physicsradius,
+							physicsrestitution,
+							physicsrotationw,
+							physicsrotationx,
+							physicsrotationy,
+							physicsrotationz,
+							physicsstartasleep,
 							alttag,
 							jsfunction,
 							jsparameters,
@@ -1261,6 +1330,29 @@ class wtwbuildings {
 							'".$zactionzone2id."',
 							'".$zcsgmoldid."',
 							'".$zcsgaction."',
+							".$wtwhandlers->checkNumber($zphysicsenabled,0).",
+							".$wtwhandlers->checkNumber($zphysicscenterx,0).",
+							".$wtwhandlers->checkNumber($zphysicscentery,0).",
+							".$wtwhandlers->checkNumber($zphysicscenterz,0).",
+							".$wtwhandlers->checkNumber($zphysicsextentsx,0).",
+							".$wtwhandlers->checkNumber($zphysicsextentsy,0).",
+							".$wtwhandlers->checkNumber($zphysicsextentsz,0).",
+							".$wtwhandlers->checkNumber($zphysicsfriction,0).",
+							".$wtwhandlers->checkNumber($zphysicsistriggershape,0).",
+							".$wtwhandlers->checkNumber($zphysicsmass,0).",
+							".$wtwhandlers->checkNumber($zphysicspointax,0).",
+							".$wtwhandlers->checkNumber($zphysicspointay,0).",
+							".$wtwhandlers->checkNumber($zphysicspointaz,0).",
+							".$wtwhandlers->checkNumber($zphysicspointbx,0).",
+							".$wtwhandlers->checkNumber($zphysicspointby,0).",
+							".$wtwhandlers->checkNumber($zphysicspointbz,0).",
+							".$wtwhandlers->checkNumber($zphysicsradius,0).",
+							".$wtwhandlers->checkNumber($zphysicsrestitution,0).",
+							".$wtwhandlers->checkNumber($zphysicsrotationw,0).",
+							".$wtwhandlers->checkNumber($zphysicsrotationx,0).",
+							".$wtwhandlers->checkNumber($zphysicsrotationy,0).",
+							".$wtwhandlers->checkNumber($zphysicsrotationz,0).",
+							".$wtwhandlers->checkNumber($zphysicsstartasleep,0).",
 							'".$wtwhandlers->escapeHTML($zalttag)."',
 							'".$zjsfunction."',
 							'".$zjsparameters."',

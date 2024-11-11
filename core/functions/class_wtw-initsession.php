@@ -22,7 +22,7 @@ class wtw {
 	
 	/* declare public $wtw variables */
 	public $version = '3.8.0';
-	public $dbversion = '1.2.25';
+	public $dbversion = '1.2.26';
 	public $versiondate = '2024-10-02';
 	public $defaultbabylonversion = 'v7.x.x';
 	public $oldversion = '';
@@ -114,7 +114,7 @@ class wtw {
 			} 
 		} catch (Exception $e) {}
 		return $zclientip; 
-	}	
+	}
 
 	public function checkHost(){ 
 		/* checks for https, traps load balancers from having to fully load a page, and loads the public variables */
@@ -2753,6 +2753,15 @@ class wtw {
 				switch (wtw_physicsengine) {
 					case 'havok':
 						$zjsdata .= "<script src='/core/scripts/engine/".$zbabylonversion."/HavokPhysics_umd.js?x=".$zver."'></script>\r\n";
+/*
+$zjsdata .= "<script type='module'>\r\n";
+$zjsdata .= "  import HavokPhysics from '/core/scripts/engine/".$zbabylonversion."/HavokPhysics_umd.js';\r\n";
+$zjsdata .= "  let havokInstance;\r\n";
+$zjsdata .= "  HavokPhysics().then((havok) => {\r\n";
+$zjsdata .= "    havokInstance = havok;\r\n";
+$zjsdata .= "  });\r\n";
+$zjsdata .= "</script>\r\n";
+*/
 						break;
 					case 'cannon':
 						$zjsdata .= "<script src='/core/scripts/engine/".$zbabylonversion."/cannon.js?x=".$zver."'></script>\r\n";

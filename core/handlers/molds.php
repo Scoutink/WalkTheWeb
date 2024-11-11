@@ -80,6 +80,29 @@ try {
 	$zsoundconeinnerangle = $wtwhandlers->getPost('soundconeinnerangle','90');
 	$zsoundconeouterangle = $wtwhandlers->getPost('soundconeouterangle','180');
 	$zsoundconeoutergain = $wtwhandlers->getPost('soundconeoutergain','.5');
+	$zphysicsenabled = $wtwhandlers->getPost('physicsenabled','0');
+	$zphysicscenterx = $wtwhandlers->getPost('physicscenterx','0');
+	$zphysicscentery = $wtwhandlers->getPost('physicscentery','0');
+	$zphysicscenterz = $wtwhandlers->getPost('physicscenterz','0');
+	$zphysicsextentsx = $wtwhandlers->getPost('physicsextentsx','0');
+	$zphysicsextentsy = $wtwhandlers->getPost('physicsextentsy','0');
+	$zphysicsextentsz = $wtwhandlers->getPost('physicsextentsz','0');
+	$zphysicsfriction = $wtwhandlers->getPost('physicsfriction','0');
+	$zphysicsistriggershape = $wtwhandlers->getPost('physicsistriggershape','0');
+	$zphysicsmass = $wtwhandlers->getPost('physicsmass','0');
+	$zphysicspointax = $wtwhandlers->getPost('physicspointax','0');
+	$zphysicspointay = $wtwhandlers->getPost('physicspointay','0');
+	$zphysicspointaz = $wtwhandlers->getPost('physicspointaz','0');
+	$zphysicspointbx = $wtwhandlers->getPost('physicspointbx','0');
+	$zphysicspointby = $wtwhandlers->getPost('physicspointby','0');
+	$zphysicspointbz = $wtwhandlers->getPost('physicspointbz','0');
+	$zphysicsradius = $wtwhandlers->getPost('physicsradius','0');
+	$zphysicsrestitution = $wtwhandlers->getPost('physicsrestitution','0');
+	$zphysicsrotationw = $wtwhandlers->getPost('physicsrotationw','0');
+	$zphysicsrotationx = $wtwhandlers->getPost('physicsrotationx','0');
+	$zphysicsrotationy = $wtwhandlers->getPost('physicsrotationy','0');
+	$zphysicsrotationz = $wtwhandlers->getPost('physicsrotationz','0');
+	$zphysicsstartasleep = $wtwhandlers->getPost('physicsstartasleep','0');
 	$zimageind = $wtwhandlers->getPost('imageind','');
 	$zimageid = $wtwhandlers->getPost('imageid','');
 	$zimagehoverid = $wtwhandlers->getPost('imagehoverid','');
@@ -99,21 +122,21 @@ try {
 			if (!empty($zcommunityid)) {
 				require_once(wtw_rootpath.'/core/functions/class_wtwcommunitymolds.php');
 				global $wtwcommunitymolds;
-				$zmoldid = $wtwcommunitymolds->saveCommunityMold($zmoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain);
+				$zmoldid = $wtwcommunitymolds->saveCommunityMold($zmoldid, $zcommunityid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zsubdivisions, $zminheight, $zmaxheight, $zcheckcollisions, $zispickable, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain, $zphysicsenabled, $zphysicscenterx, $zphysicscentery, $zphysicscenterz, $zphysicsextentsx, $zphysicsextentsy, $zphysicsextentsz, $zphysicsfriction, $zphysicsistriggershape, $zphysicsmass, $zphysicspointax, $zphysicspointay, $zphysicspointaz, $zphysicspointbx, $zphysicspointby, $zphysicspointbz, $zphysicsradius, $zphysicsrestitution, $zphysicsrotationw, $zphysicsrotationx, $zphysicsrotationy, $zphysicsrotationz, $zphysicsstartasleep);
 				if ($zimageind != "-1") {
 					$wtwmoldscommon->saveWebImage('', '', $zmoldid, $zimageind, $zimageid, $zimagehoverid, $zimageclickid, $zjsfunction, $zjsparameters);
 				}
 			} else if (!empty($zbuildingid)) {
 				require_once(wtw_rootpath.'/core/functions/class_wtwbuildingmolds.php');
 				global $wtwbuildingmolds;
-				$zmoldid = $wtwbuildingmolds->saveBuildingMold($zmoldid, $zbuildingid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zsubdivisions, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zcheckcollisions, $zispickable, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain);
+				$zmoldid = $wtwbuildingmolds->saveBuildingMold($zmoldid, $zbuildingid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zsubdivisions, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zcheckcollisions, $zispickable, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain, $zphysicsenabled, $zphysicscenterx, $zphysicscentery, $zphysicscenterz, $zphysicsextentsx, $zphysicsextentsy, $zphysicsextentsz, $zphysicsfriction, $zphysicsistriggershape, $zphysicsmass, $zphysicspointax, $zphysicspointay, $zphysicspointaz, $zphysicspointbx, $zphysicspointby, $zphysicspointbz, $zphysicsradius, $zphysicsrestitution, $zphysicsrotationw, $zphysicsrotationx, $zphysicsrotationy, $zphysicsrotationz, $zphysicsstartasleep);
 				if ($zimageind != "-1") {
 					$wtwmoldscommon->saveWebImage('', $zmoldid, '', $zimageind, $zimageid, $zimagehoverid, $zimageclickid, $zjsfunction, $zjsparameters);
 				}
 			} else if (!empty($zthingid)) {
 				require_once(wtw_rootpath.'/core/functions/class_wtwthingmolds.php');
 				global $wtwthingmolds;
-				$zmoldid = $wtwthingmolds->saveThingMold($zmoldid, $zthingid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zsubdivisions, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zcheckcollisions, $zispickable, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain);
+				$zmoldid = $wtwthingmolds->saveThingMold($zmoldid, $zthingid, $zloadactionzoneid, $zunloadactionzoneid, $zshape, $zcovering, $zpositionx, $zpositiony, $zpositionz, $zscalingx, $zscalingy, $zscalingz, $zrotationx, $zrotationy, $zrotationz, $zspecial1, $zspecial2, $zuoffset, $zvoffset, $zuscale, $zvscale, $zuploadobjectid, $zsubdivisions, $zreceiveshadows, $zcastshadows, $zgraphiclevel, $zcheckcollisions, $zispickable, $zvideoid, $zvideoposterid, $ztextureid, $ztexturebumpid, $zheightmapid, $zmixmapid, $ztexturerid, $ztexturegid, $ztexturebid, $ztexturebumprid, $ztexturebumpgid, $ztexturebumpbid, $zopacity, $zwaterreflection, $zactionzoneid, $zactionzone2id, $zcsgmoldid, $zcsgaction, $zalttag, $zwebtext, $zwebstyle, $zpath1points, $zpath2points, $zdiffusecolor, $zspecularcolor, $zemissivecolor, $zambientcolor, $zsoundid, $zsoundname, $zsoundattenuation, $zsoundloop, $zsoundmaxdistance, $zsoundrollofffactor, $zsoundrefdistance, $zsoundconeinnerangle, $zsoundconeouterangle, $zsoundconeoutergain, $zphysicsenabled, $zphysicscenterx, $zphysicscentery, $zphysicscenterz, $zphysicsextentsx, $zphysicsextentsy, $zphysicsextentsz, $zphysicsfriction, $zphysicsistriggershape, $zphysicsmass, $zphysicspointax, $zphysicspointay, $zphysicspointaz, $zphysicspointbx, $zphysicspointby, $zphysicspointbz, $zphysicsradius, $zphysicsrestitution, $zphysicsrotationw, $zphysicsrotationx, $zphysicsrotationy, $zphysicsrotationz, $zphysicsstartasleep);
 				if ($zimageind != "-1") {
 					$wtwmoldscommon->saveWebImage($zmoldid, '', '', $zimageind, $zimageid, $zimagehoverid, $zimageclickid, $zjsfunction, $zjsparameters);
 				}

@@ -1717,6 +1717,7 @@ class wtwadminmenu {
 			$zmenu .= "				<hr class='wtw-menuhr' /><br />\r\n";
 			$zmenu .= "			</div><br /><br />\r\n";
 			$zmenu .= "		</div>\r\n";
+
 			$zmenu .= "		<div id='wtw_pointlistdiv' class='wtw-leftalign'>\r\n";
 			$zmenu .= "			<div id='wtw_pointeditdiv' style='background: rgba(256,200,200,0.6);border:2px solid red;'>\r\n";
 			$zmenu .= "				<div style='float:right;cursor:pointer;font-size:.8em;' onclick='WTW.editEndPoint();'>close [x]</div>\r\n";
@@ -1764,16 +1765,17 @@ class wtwadminmenu {
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldcastshadows' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Allow to Cast Shadows</span><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldwaterreflection' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to Reflect on Water</span><br /><br />\r\n";
 			$zmenu .= "				<input type='checkbox' id='wtw_tmoldcheckcollisions' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to Check Collisions</span><br /><br />\r\n";
-			$zmenu .= "				<input type='checkbox' id='wtw_tmoldispickable' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Select to be Pickable in Browse Mode (Always on for Admin Mode)</span><br /><br />\r\n";
+			$zmenu .= "				<input type='checkbox' id='wtw_tmoldispickable' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Pickable in Browse Mode<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Always on in Admin Mode)</span><br /><br />\r\n";
 			$zmenu .= "			</div>\r\n";
 			$zmenu .= "			<div id='wtw_moldtexturesetdiv'>\r\n";
-			$zmenu .= "				<input type='checkbox' id='wtw_tmoldgraphiclevel' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Force Original Graphic</span><br /><br />\r\n";
+			$zmenu .= "				<div style='text-align:left;'><input type='checkbox' id='wtw_tmoldgraphiclevel' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Force Original Graphic</span></div><br /><br />\r\n";
 			$zmenu .= "				<div id='wtw_alttagdiv'>\r\n";
 			$zmenu .= "					<hr class='wtw-menuhr' />\r\n";
 			$zmenu .= "					<h2 class='wtw-marginbottom'>Alt Tag for 3D Mold</h2>\r\n";
 			$zmenu .= "					<input type='text' id='wtw_tmoldalttag' maxlength='255' onclick=\"WTW.checkKey(this, 'displayname', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'displayname', 0, 0);\" onblur=\"WTW.checkKey(this, 'displayname', 0, 1);\" /><br />\r\n";
 			$zmenu .= "					<br />\r\n";
 			$zmenu .= "				</div>\r\n";
+
 			$zmenu .= "				<div id='wtw_moldscalediv'>\r\n";
 			$zmenu .= "					<h2 class='wtw-marginbottom'>Mold Texture Adjustment</h2>\r\n";
 			$zmenu .= "					<div class='wtw-onecol'>Scale Width (0 for auto)<br />\r\n";
@@ -1814,6 +1816,7 @@ class wtwadminmenu {
 			$zmenu .= "				</div>\r\n";
 			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
 			$zmenu .= "			</div><br />\r\n";
+			
 			$zmenu .= "			<div id='wtw_moldsubdivisions'>\r\n";
 			$zmenu .= "				<div class='wtw-onecol'>Subdivisions<br />\r\n";
 			$zmenu .= "					<input type='text' id='wtw_tmoldsubdivisions' maxlength='16' class='wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold(1);\" />\r\n";
@@ -1822,6 +1825,188 @@ class wtwadminmenu {
 			$zmenu .= "				</div><br />\r\n";
 			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
 			$zmenu .= "			</div>\r\n";
+
+			/* physics section */
+			
+			$zmenu .= "			<div>\r\n";
+			$zmenu .= "				<h2 class='wtw-marginbottom'>Mold Physics</h2>\r\n";
+			$zmenu .= "				<div style='text-align:left;'>\r\n";
+			$zmenu .= "					<input type='checkbox' id='wtw_tmoldphysicsenabled' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Enable Physics</span><br /><br />\r\n";
+			$zmenu .= "				</div>\r\n";
+			$zmenu .= "			</div>\r\n";
+			
+			$zmenu .= "			<div id='wtw_moldphysicsdiv' style='display:none;visibility:hidden;'>\r\n";
+			$zmenu .= "				<div style='text-align:left;'>\r\n";
+			$zmenu .= "					<input type='checkbox' id='wtw_tmoldphysicsistriggershape' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Is Trigger Shape</span><br /><br />\r\n";
+			$zmenu .= "					<input type='checkbox' id='wtw_tmoldphysicsstartasleep' class='wtw-smallprint' value='1' onchange='WTW.setNewMold(1);' /><span style='color:#c0c0c0;'> Start Asleep</span><br /><br />\r\n";
+			$zmenu .= "				</div>\r\n";
+
+			$zmenu .= "					<div class='wtw-onecol'>Physics Mass (0-Not Movable)<br />\r\n";
+			$zmenu .= "						<input type='text' id='wtw_tmoldphysicsmass' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold(1);\" />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpm4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsmass', -1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpm3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsmass', -.01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpm2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsmass', .01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpm1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsmass', 1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					</div><br />\r\n";
+
+			$zmenu .= "					<div class='wtw-onecol'>Physics Friction (0-Not Set)<br />\r\n";
+			$zmenu .= "						<input type='text' id='wtw_tmoldphysicsfriction' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold(1);\" />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpf4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsfriction', -1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpf3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsfriction', -.01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpf2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsfriction', .01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpf1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsfriction', 1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					</div><br />\r\n";
+
+			$zmenu .= "					<div class='wtw-onecol'>Physics Radius (0-Not Set)<br />\r\n";
+			$zmenu .= "						<input type='text' id='wtw_tmoldphysicsradius' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold(1);\" />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpr4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsradius', -1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpr3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsradius', -.01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpr2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsradius', .01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpr1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsradius', 1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					</div><br />\r\n";
+
+			$zmenu .= "					<div class='wtw-onecol'>Physics Restitution (0-Not Set)<br />\r\n";
+			$zmenu .= "						<input type='text' id='wtw_tmoldphysicsrestitution' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold(1);\" />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpt4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrestitution', -1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpt3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrestitution', -.01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpt2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrestitution', .01, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "						<input type='button' id='wtw_beditmoldpt1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrestitution', 1, 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "					</div><br />\r\n";
+
+			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
+			$zmenu .= "				<h2 class='wtw-marginbottom'>Advanced Physics Options</h2>\r\n";
+			$zmenu .= "		<h4>Physics Center</h4>\r\n";
+			$zmenu .= "		<div class='wtw-onecol wtw-nowrap'>Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicscenterz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpc4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpc3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpc2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpc1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicscenterx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpc4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpc3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterx', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpc2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterx', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpc1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscenterx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicscentery' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypc4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscentery', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypc3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscentery', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypc2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscentery', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypc1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicscentery', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+
+			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
+
+			$zmenu .= "		<h4>Physics Extents</h4>\r\n";
+			$zmenu .= "		<div class='wtw-onecol wtw-nowrap'>Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsextentsz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsextentsx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsx', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsx', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsextentsy' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsy', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsy', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsy', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsextentsy', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+
+			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
+
+			$zmenu .= "		<h4>Physics Point A</h4>\r\n";
+			$zmenu .= "		<div class='wtw-onecol wtw-nowrap'>Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointaz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpax4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointaz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpax3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointaz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpax2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointaz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpax1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointaz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointax' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpax4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointax', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpax3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointax', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpax2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointax', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpax1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointax', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointay' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypax4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointay', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypax3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointay', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypax2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointay', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypax1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointay', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+
+			$zmenu .= "		<h4>Physics Point B</h4>\r\n";
+			$zmenu .= "		<div class='wtw-onecol wtw-nowrap'>Position Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointbz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpbx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpbx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpbx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzpbx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointbx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpbx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpbx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbx', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpbx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbx', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxpbx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointbx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Position Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicspointby' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypbx4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointby', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypbx3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointby', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypbx2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointby', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldypbx1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicspointby', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+
+			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
+
+			$zmenu .= "		<h4>Physics Rotation</h4>\r\n";
+			$zmenu .= "		<div class='wtw-onecol wtw-nowrap'>Rotation Z (left,-right)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsrotationz' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzprr4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationz', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzprr3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationz', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzprr2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationz', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldzprr1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationz', 1);\" onmouseup='WTW.changeStop();' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Rotation X (front,-back)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsrotationx' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxprr4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationx', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxprr3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationx', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxprr2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationx', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldxprr1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationx', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Rotation Y (up,-down)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsrotationy' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldyprr4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationy', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldyprr3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationy', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldyprr2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationy', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldyprr1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationy', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "		<div class='wtw-onecol'>Rotation W (Quaternion)<br />\r\n";
+			$zmenu .= "			<input type='text' id='wtw_tmoldphysicsrotationw' maxlength='16' class='wtw-secondcolcontent wtw-smallprintinput' onclick=\"WTW.checkKey(this, 'number', 0, 0);\" onkeyup=\"WTW.checkKey(this, 'number', 0, 0);\" onblur=\"WTW.checkKey(this, 'number', 0, 1);WTW.setNewMold();\" />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldwprr4' class='wtw-smallprint' value='-1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationw', -1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldwprr3' class='wtw-smallprint' value='-.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationw', -.01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldwprr2' class='wtw-smallprint' value='+.01' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationw', .01);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "			<input type='button' id='wtw_beditmoldwprr1' class='wtw-smallprint' value='+1' onmousedown=\"WTW.changeNumberValue('wtw_tmoldphysicsrotationw', 1);\" onmouseup='WTW.changeStop();' />\r\n";
+			$zmenu .= "		</div><br />\r\n";
+			$zmenu .= "				<hr class='wtw-menuhr' />\r\n";
+			$zmenu .= "			</div>\r\n";
+
+			/* sound section */
+			
 			$zmenu .= "			<div id='wtw_moldsounddiv'>\r\n";
 			$zmenu .= "				<h2 class='wtw-marginbottom'>Attach Sound</h2>\r\n";
 			$zmenu .= "				<h4>Attentuation Distance Model</h4>\r\n";
