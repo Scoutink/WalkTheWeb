@@ -157,24 +157,26 @@ try {
 				order by loadpriority desc, animationevent, avataranimationid, useravataranimationid;");
 			$j = 0;
 			foreach ($zresults2 as $zrow2) {
-				$zavataranimationdefs[$j] = array(
-					'animationind'=> $j,
-					'useravataranimationid'=> $zrow2["useravataranimationid"],
-					'avataranimationid'=> $zrow2["avataranimationid"],
-					'animationevent'=> $zrow2["animationevent"],
-					'animationfriendlyname'=> $zrow2["animationfriendlyname"],
-					'loadpriority'=> $zrow2["loadpriority"],
-					'animationicon'=> $zrow2["animationicon"],
-					'speedratio'=> $zrow2["speedratio"],
-					'defaultspeedratio'=> $zrow2["speedratio"],
-					'objectfolder'=> $zrow2["objectfolder"],
-					'objectfile'=> $zrow2["objectfile"],
-					'startframe'=> $zrow2["startframe"],
-					'endframe'=> $zrow2["endframe"],
-					'animationloop'=> $zrow2["animationloop"],
-					'walkspeed'=> $zrow2["walkspeed"]
-				);
-				$j += 1;
+				if (!empty($zrow2["endframe"])) {
+					$zavataranimationdefs[$j] = array(
+						'animationind'=> $j,
+						'useravataranimationid'=> $zrow2["useravataranimationid"],
+						'avataranimationid'=> $zrow2["avataranimationid"],
+						'animationevent'=> $zrow2["animationevent"],
+						'animationfriendlyname'=> $zrow2["animationfriendlyname"],
+						'loadpriority'=> $zrow2["loadpriority"],
+						'animationicon'=> $zrow2["animationicon"],
+						'speedratio'=> $zrow2["speedratio"],
+						'defaultspeedratio'=> $zrow2["speedratio"],
+						'objectfolder'=> $zrow2["objectfolder"],
+						'objectfile'=> $zrow2["objectfile"],
+						'startframe'=> $zrow2["startframe"],
+						'endframe'=> $zrow2["endframe"],
+						'animationloop'=> $zrow2["animationloop"],
+						'walkspeed'=> $zrow2["walkspeed"]
+					);
+					$j += 1;
+				}
 			}
 			
 			/* format return data set */
