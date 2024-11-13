@@ -552,7 +552,15 @@ class wtwdb {
 		$zsuccess = true;
 		try {
 			$zfromurl = str_replace(' ', '%20', $zfromurl);
-			if (ini_get('allow_url_fopen') ) {
+			if (extension_loaded('curl')) {
+				$zgetfile = curl_init($zfromurl);
+				$zopenfile = fopen($zfilepath.$zfilename, 'wb');
+				curl_setopt($zgetfile, CURLOPT_FILE, $zopenfile);
+				curl_setopt($zgetfile, CURLOPT_HEADER, 0);
+				curl_exec($zgetfile);
+				curl_close($zgetfile);
+				fclose($zopenfile);
+			} else if (ini_get('allow_url_fopen') ) {
 				$zdata1 = @file_get_contents($zfromurl);
 				if ($zdata1 === false) {
 					$zsuccess = false;
@@ -563,14 +571,6 @@ class wtwdb {
 						$zsuccess = false;
 					}
 				}
-			} else if (extension_loaded('curl')) {
-				$zgetfile = curl_init($zfromurl);
-				$zopenfile = fopen($zfilepath.$zfilename, 'wb');
-				curl_setopt($zgetfile, CURLOPT_FILE, $zopenfile);
-				curl_setopt($zgetfile, CURLOPT_HEADER, 0);
-				curl_exec($zgetfile);
-				curl_close($zgetfile);
-				fclose($zopenfile);
 			}
 			umask(0);
 			chmod($zfilepath.$zfilename, octdec(wtw_chmod));
